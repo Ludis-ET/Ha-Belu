@@ -1,0 +1,44 @@
+{% extends 'teacher/channel/base-video.html' %}
+{% block base %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">{{web.full_name}} /</span> Library</h4>
+
+<a href="{% url 't_add_book' %}" class="btn btn-dark">Add New Book</a><br><br>
+    {% if lib %}
+    {% for l in lib %}
+    <div class="col-md-6 col-lg-4 mb-3">
+        <div class="card h-100">
+          <div class="card-body">
+            <h5 class="card-title">{{l.name}}</h5>
+            {% if l.author %}
+            <h6 class="card-subtitle text-muted">wriiten by:{{l.author}}</h6>
+            {% else %}
+            <h6 class="card-subtitle text-muted">Unknown Author</h6>
+            {% endif %}
+            <img
+              class="img-fluid d-flex mx-auto my-4"
+              src="{{l.cover.url}}"
+              alt="Card image cap"
+            />
+            <p class="card-text">{{l.disc}}</p>
+            <a href="{{l.file.url}}" class="btn btn-outline-primary">Download given book</a><br><br>
+            <div>
+                <form action="{% url 't_delete_course' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="text" name="id" value="{{l.id}}" hidden>
+                  <a href="{% url 't_edit_book' l.id %}" style="color:#fff;" class='btn btn-dark bx bx-edit-alt' ></a>
+                
+                <button type="submit" name="deletebook" style="color:#fff;" class='btn btn-danger bx bx-trash' ></button>
+                </form>
+            </div>
+          </div>
+        </div>
+    </div>
+    
+    {% endfor %}
+    {% else %}
+    <h1>No Books Found</h1>
+    {% endif %}
+</div>
+{% endblock %}
+         

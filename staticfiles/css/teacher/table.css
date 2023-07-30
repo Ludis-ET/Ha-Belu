@@ -1,0 +1,7 @@
+
+@media print{
+    @page{
+        size: A4 lanscape;
+        margin: 0;
+    }
+}

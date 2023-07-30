@@ -1,0 +1,143 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Post /</span> Files and Message</h4>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="javascript:void(0);"><i class="bx bx-link-alt me-1"></i> Post</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 't_add_course' %}"
+              ><i class="bx bx-video me-1"></i> Course</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 't_add_book' %}"
+              ><i class="bx bx-book me-1"></i> Books</a
+            >
+          </li>
+        </ul>
+        <div class="card mb-4">
+          <h5 class="card-header">Post by grade and every students can get your links ,messages and files</h5>
+          <!-- Account -->
+          <hr class="my-0" />
+          <div class="card-body">
+            <form id="formAccountSettings" method="POST" enctype="multipart/form-data" >
+              {% csrf_token %}
+              <div class="row">
+                <div class="mb-3">
+                  <label for="defaultSelect" class="form-label">For Grade</label>
+                  <select id="defaultSelect" class="form-select" name="for" required>
+                    {% for g in grade %}
+                    <option value="{{g.id}}">Grade {{g.name}}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="card mb-4">
+                  <div class="card-body">
+                    <div>
+                      <label for="defaultFormControlInput" class="form-label">Title</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="defaultFormControlInput"
+                        placeholder="Hey Students"
+                        name="title"
+                        required
+                        aria-describedby="defaultFormControlHelp"
+                      />
+                      <div id="defaultFormControlHelp" class="form-text">
+                        This is the main title appeared in your message.
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div>
+                  <label for="exampleFormControlTextarea1" class="form-label">Discription</label>
+                  <textarea class="form-control" name="disc" id="exampleFormControlTextarea1" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                  <label for="html5-url-input" class="col-md-2 col-form-label">Link 1 (optional)</label>
+                  <div class="col-md-10">
+                    <input
+                      class="form-control"
+                      type="url"
+                      name="link1"
+                      placeholder="https://yourlinkdomain"
+                      id="html5-url-input"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="html5-url-input" class="col-md-2 col-form-label">Link 2 (optional)</label>
+                  <div class="col-md-10">
+                    <input
+                    name="link2"
+                      class="form-control"
+                      type="url"
+                      placeholder="https://yourlinkdomain"
+                      id="html5-url-input"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="html5-url-input" class="col-md-2 col-form-label">Link 3 (optional)</label>
+                  <div class="col-md-10">
+                    <input
+                    name="link3"
+                      class="form-control"
+                      type="url"
+                      placeholder="https://yourlinkdomain"
+                      id="html5-url-input"
+                    />
+                  </div>
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">upload file 1 (optional)</label>
+                  <input class="form-control" name="file1" type="file" id="formFile" />
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">upload file 2 (optional)</label>
+                  <input class="form-control" name="file2" type="file" id="formFile" />
+                </div>
+                <div class="mb-3">
+                  <label for="formFile" class="form-label">upload file 2 (optional)</label>
+                  <input class="form-control" type="file" name="file3" id="formFile" />
+                </div>
+              </div>
+              <div class="mt-2">
+                <button type="submit" class="btn btn-primary me-2">Post</button>
+                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+              </div>
+            </form>
+          </div>
+          <!-- /Account -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+<script src="/static/student/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/static/student/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/static/student/assets/vendor/js/bootstrap.js"></script>
+    <script src="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="/static/student/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="/static/student/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/static/student/assets/js/pages-account-settings-account.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+{% endblock script %}
+

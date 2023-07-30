@@ -1,0 +1,192 @@
+.ppt{
+    position:fixed;
+    background:#333;
+    overflow:hidden;
+    z-index:1;
+    padding:20px;
+    height:100%;
+    width:250px;
+    color:#fff;
+    right:0;
+    top:0;
+}
+table{
+    border-collapse: collapse;
+}
+.scroll{
+    overflow-x:hidden;
+    overflow-y:scroll;
+    height:500px;
+    max-height:100%;
+}
+.ppt .control{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    font-size:20px;
+    align-items:ceter;
+}
+.ppt .control .input{
+    display:flex;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-left:15px;
+}
+.ppt .control .input button{
+    background:#f9a826;
+    border:none;
+    padding:10px;
+}
+.ppt .control .input input{
+    width:40px;
+    padding:8px;
+    outline:none;
+}
+.btn{
+    display:block;
+    background:#f9a826;
+    border:none;border-radius:10px;
+    padding:10px;
+    margin:20px;
+    transition:1s ease-in-out;
+}
+.btn:hover{
+    background:#fff;
+}
+.select{
+    width:100%;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    border-bottom:1px solid #fff;
+    padding:10px;
+}
+.select input{
+    width:40px;
+    outline:none;
+}
+.select select{
+    outline:none;
+    background:#f9a826;
+}
+.foot{
+    position:absolute;
+    bottom:40px;
+    height:70px;
+    width:100%;
+    display:flex;
+    margin-left:-20px;
+}
+#mysave{
+    position:fixed;
+    bottom:10%;
+    right:270px;
+    padding:10px;
+    background:#f9a826;
+    border:none;
+    border-radius:100%;
+    font-size:25px;
+}
+#mycheck{
+    position:fixed;
+    bottom:30%;
+    right:270px;
+    padding:10px;
+    background:#f9a826;
+    border:none;
+    border-radius:100%;
+    font-size:25px;
+}
+#myplus{
+    position:fixed;
+    bottom:20%;
+    right:270px;
+    padding:10px;
+    background:#f9a826;
+    border:none;
+    border-radius:100%;
+    font-size:25px;
+}
+#add{
+    position:fixed;
+    width:200px;
+    background:#333;
+    border-radius:20px;
+    height:200px;
+    top:300%;
+    left:30%;
+    overflow:hidden;
+    z-index:100;
+    padding:20px;
+    transition: 1s ease-in-out;
+}
+#add .form-control{
+    margin:10px;
+    color:#fff;
+    font-size:20px;
+    
+}
+#add button{
+    border:none;
+    padding:10px;
+    text-align:center;
+    align-items:center;
+    background:#f9a926;
+}
+button:hover{
+    background:#8e5d10;
+    color:#fff;
+}#choose{
+    position:fixed;
+    top:30%;
+    left:-300%;
+    transition: 1s ease-in-out;
+    background:gray;
+    padding:10px;
+    border-radius:10px;
+    width:250px;
+    height:250px;
+    display:flex;
+    z-index:100;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+}
+#choose button{
+    width:110px;
+    height:230px;
+}
+#choose .fa-times{
+    width:30px;
+    height:30px;
+}
+#text{
+    position:fixed;
+    top:3000%;
+    left:30%;
+    background:#333;
+    padding:10px;
+    z-index:100;
+    border-radius:10px;
+    transition: 1s ease-in-out;
+    padding-bottom: 30px;
+}
+#text .form-control input[type="text"]{
+    width:89%;
+    padding:10px;
+}
+#text .form-control label{
+    color:#fff;
+    font-size:20px;
+}
+#text button{
+    width:70%;
+    padding:10px;
+    margin-top:10px;
+}
+#text .fa-times{
+    width:25%;
+}
+textarea{
+    width:95%
+}

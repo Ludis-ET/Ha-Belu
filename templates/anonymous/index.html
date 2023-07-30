@@ -1,0 +1,115 @@
+{% extends 'anonymous/base.html' %}
+{% block main %}
+{% if main_page %}
+<!-- Carousel Start -->
+<div class="container-fluid p-0 pb-5 mb-5">
+    <div id="header-carousel" class="carousel slide carousel-fade" data-ride="carousel">
+        <ol class="carousel-indicators">
+            {% for a in all %}
+            <li data-target="#header-carousel" data-slide-to="{{a.id}}" class="active"></li>
+            {% endfor %}
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="min-height: 300px;">
+                <img class="position-relative w-100" src="{{main.image.url}}" style="min-height: 300px; object-fit: cover;">
+                <div class="carousel-caption d-flex align-items-center justify-content-center">
+                    <div class="p-5" style="width: 100%; max-width: 900px;">
+                        <h5 class="text-white text-uppercase mb-md-3">{{main.header}}</h5>
+                        <h1 class="display-3 text-white mb-md-4">{{main.body}}</h1>
+                        <a href="{% url 'login' %}" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Enter now!</a>
+                    </div>
+                </div>
+            </div>
+            {% for main in main_page %}
+            <div class="carousel-item" style="min-height: 300px;">
+                <img class="position-relative w-100" src="{{main.image.url}}" style="min-height: 300px; object-fit: cover;">
+                <div class="carousel-caption d-flex align-items-center justify-content-center">
+                    <div class="p-5" style="width: 100%; max-width: 900px;">
+                        <h5 class="text-white text-uppercase mb-md-3">{{main.header}}</h5>
+                        <h1 class="display-3 text-white mb-md-4">{{main.body}}</h1>
+                        <a href="{% url 'login' %}" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Enter now!</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<!-- Carousel End -->
+{% endif %}
+{% if web.about %}
+        <!-- About Start -->
+        <div class="container-fluid py-5">
+            <div class="container py-5">
+                <div class="row align-items-center">
+                    <div class="col-lg-5">
+                        <img class="img-fluid rounded mb-4 mb-lg-0" src="/static/anonymous/main/img/cat-5.jpg" alt="">
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="text-left mb-4">
+                            <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">About Us</h5>
+                            <h1>{{web.slogan}}</h1>
+                            <p>{{web.about|slice:":200"}}....</p>
+                        </div>
+                        <a href="{% url 'a_about' %}" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold mt-2">Learn More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+        <!-- About End -->
+        {% if web.show_register == True %}
+        <div class="containert container-fluid bg-registration py-5" style="margin: 90px 0;">
+            <h1>New Student Registration Dedline</h1>
+            <div class="countdown-containert">
+                <div class="elements days-c">
+                    <p class="big-text" id="days">0</p>
+                    <span>days</span>
+                </div>
+                <div class="elements hours-c">
+                    <p class="big-text" id="hours">0</p>
+                    <span>hours</span>
+                </div>
+                <div class="elements mins-c">
+                    <p class="big-text" id="mins">0</p>
+                    <span>minutes</span>
+                </div>
+                <div class="elements seconds-c">
+                    <p class="big-text" id="seconds">0</p>
+                    <span>seconds</span>
+                </div>
+            </div>
+        </div>
+        
+        {% endif %}
+        {% if blog %}
+        <!-- Blog Start -->
+        <div class="container-fluid py-5">
+            <div class="container pt-5 pb-3">
+                <div class="text-center mb-5">
+                    <h5 class="text-primary text-uppercase mb-3" style="letter-spacing: 5px;">Our Blog</h5>
+                    <h1>Latest From Our Blog</h1>
+                </div>
+                <div class="row pb-3">
+                    {% for b in blog|slice:':3' %}
+                    <div class="col-lg-4 mb-4">
+                        <div class="blog-item position-relative overflow-hidden rounded mb-2">
+                            {% if b.cover %}
+                            <img class="img-fluid" src="{{b.cover.url}}" alt="">
+                            {% else %}
+                            <img class="img-fluid" src="{{web.icon.url}}" alt="">
+                            {% endif %}
+                            <a class="blog-overlay text-decoration-none" href="{% url 'blog_post' b.id %}">
+
+                                <h5 class="text-white mb-3">{{b.name}}</h5>
+                                <p class="text-primary m-0">{{b.date |timesince}} ago</p>
+                            </a>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Blog End -->
+    {% endif %}
+{% endblock %}

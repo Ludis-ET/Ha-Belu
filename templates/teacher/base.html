@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style layout-menu-fixed"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="/static/student/assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>Teacher {{user.first_name}} {{user.last_name}} page in {{web.full_name}} official website</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{web.icon.url}}" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/static/student/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <link rel="stylesheet" href="/static/student/assets/vendor/libs/apex-charts/apex-charts.css" />
+
+    <!-- Page CSS -->
+{% block css %}
+
+{% endblock %}
+    <!-- Helpers -->
+    <script src="/static/student/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/static/student/assets/js/config.js"></script>
+
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6510615875274346"
+     crossorigin="anonymous"></script>
+  </head>
+
+  <body>
+    <!-- Layout wrapper -->
+    <div class="layout-wrapper layout-content-navbar">
+      <div class="layout-container">
+        <!-- Menu -->
+
+        <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+          <div class="app-brand demo">
+            <a href="{% url 'r_index' %}" class="app-brand-link">
+              <span class="app-brand-logo demo">
+              </span>
+              <span class="app-brand-text demo menu-text fw-bolder ms-2">{{web.full_name}}</span>
+            </a>
+
+            <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
+              <i class="bx bx-chevron-left bx-sm align-middle"></i>
+            </a>
+          </div>
+
+          <div class="menu-inner-shadow"></div>
+
+          <ul class="menu-inner py-1">
+            <!-- Dashboard -->
+            <li class="menu-item active">
+              <a href="{% url 'r_index' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                <div data-i18n="Analytics">Dashboard</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 't_all' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Analytics">{{teacher.subject}} Results</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 't_room' teacher.id %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-folder"></i>
+                <div data-i18n="Analytics">My Room</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 't_channel' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-broadcast"></i>
+                <div data-i18n="Analytics">My Channel</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bx bx-plus"></i>
+                <div data-i18n="Layouts">Add / Post</div>
+              </a>
+
+              <ul class="menu-sub">
+                <li class="menu-item">
+                  <a href="{% url 't_add_post' %}" class="menu-link">
+                    <div data-i18n="Without menu">Messages and Files </div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 't_add_book' %}" class="menu-link">
+                    <div data-i18n="Without menu">Add Books To Library</div>
+                  </a>
+                </li>
+                <li class="menu-item">
+                  <a href="{% url 't_add_course' %}" class="menu-link">
+                    <div data-i18n="Without menu">Add Courses</div>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'a_index' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-tv"></i>
+                <div data-i18n="Analytics">main website</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'a_blog' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-file"></i>
+                <div data-i18n="Analytics">Blog Post</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 't_profile' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-user"></i>
+                <div data-i18n="Analytics">My Profile</div>
+              </a>
+            </li>
+            <li class="menu-item">
+              <a href="{% url 'logout' %}" class="menu-link">
+                <i class="menu-icon tf-icons bx bx-power-off"></i>
+                <div data-i18n="Analytics">Logout</div>
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <!-- / Menu -->
+
+        <!-- Layout container -->
+        <div class="layout-page">
+          <!-- Navbar -->
+
+          <nav
+            class="layout-navbar container-xxl navbar navbar-expand-xl navbar-detached align-items-center bg-navbar-theme"
+            id="layout-navbar"
+          >
+            <div class="layout-menu-toggle navbar-nav align-items-xl-center me-3 me-xl-0 d-xl-none">
+              <a class="nav-item nav-link px-0 me-xl-4" href="javascript:void(0)">
+                <i class="bx bx-menu bx-sm"></i>
+              </a>
+            </div>
+
+            <div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
+              <!-- Search -->
+              <h4><strong>{{web.full_name}} </strong></h4>
+              <!-- /Search -->
+
+              <ul class="navbar-nav flex-row align-items-center ms-auto">
+                <!-- Place this tag where you want the button to render. -->
+                <!--li class="nav-item lh-1 me-3">
+                  <a
+                    class="github-button"
+                    href="https://github.com/LudisBeadis"
+                    data-icon="octicon-star"
+                    data-size="large"
+                    data-show-count="true"
+                    aria-label="this website developer on GitHub"
+                    >developer</a
+                  >
+                </li-->
+
+                <!-- User -->
+                <li class="nav-item navbar-dropdown dropdown-user dropdown">
+                  <a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown">
+                    <div class="avatar avatar-online">
+                      {% if teacher.profile_pic %}
+                      <img src="{{teacher.profile_pic.url}}" style="width: 40px; border-radius: 100%;"   />
+                              {% else %}
+                              <img src="{{web.icon.url}}" style="width: 40px; border-radius: 100%;"   />
+                              {% endif %}
+                    </div>
+                  </a>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                      <a class="dropdown-item" href="#">
+                        <div class="d-flex">
+                          <div class="flex-shrink-0 me-3">
+                            <div class="avatar avatar-online">
+                              {% if teacher.profile_pic %}
+                              <img src="{{teacher.profile_pic.url}}" style="width: 40px; border-radius: 100%;"   />
+                              {% else %}
+                              <img src="{{web.icon.url}}" style="width: 40px; border-radius: 100%;"   />
+                              {% endif %}
+                            </div>
+                          </div>
+                          <div class="flex-grow-1">
+                            <span class="fw-semibold d-block">{{user.first_name}} {{user.last_name}}</span>
+                            <small class="text-muted">@{{user.username}}</small>
+                          </div>
+                        </div>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 't_profile' %}">
+                        <i class="bx bx-user me-2"></i>
+                        <span class="align-middle">My Profile</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 't_channel' %}">
+                        <i class="bx bx-broadcast me-2"></i>
+                        <span class="align-middle">My Channel</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'a_index' %}">
+                        <span class="d-flex align-items-center align-middle">
+                          <i class="flex-shrink-0 bx bx-tv me-2"></i>
+                          <span class="flex-grow-1 align-middle">Main Website</span>
+                          <!--span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20">4</span-->
+                        </span>
+                      </a>
+                    </li>
+                    <li>
+                      <div class="dropdown-divider"></div>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="{% url 'logout' %}">
+                        <i class="bx bx-power-off me-2"></i>
+                        <span class="align-middle">Log Out</span>
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+                <!--/ User -->
+              </ul>
+            </div>
+          </nav>
+
+          <!-- / Navbar -->
+
+          <!-- Content wrapper -->
+          <div class="content-wrapper">
+            <!-- Content -->
+            <div style="padding:10px;">
+              {% if messages %}
+              {% for m in messages %}
+              {% if m.tags == 'success' %}
+            <div class="alert alert-success alert-dismissible" role="alert">
+              {{m}}{{messages.tag}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% else %}
+
+            <div class="alert alert-danger alert-dismissible" role="alert">
+              {{m}}
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+            {% endfor %}
+            {% endif %}
+          </div>
+            {% block content %}
+
+            {% endblock %}
+            <!-- / Content -->
+
+            <!-- Footer -->
+            <footer class="content-footer footer bg-footer-theme">
+              <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                <div class="mb-2 mb-md-0">
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  , made with ❤️ by
+                  <a href="mailto:leulsegedmelaku1020@gmail.com" target="_blank" class="footer-link fw-bolder">Leulseged Melaku</a>
+                </div>
+              </div>
+            </footer>
+            <!-- / Footer -->
+
+            <div class="content-backdrop fade"></div>
+          </div>
+          <!-- Content wrapper -->
+        </div>
+        <!-- / Layout page -->
+      </div>
+
+      <!-- Overlay -->
+      <div class="layout-overlay layout-menu-toggle"></div>
+    </div>
+    <!-- / Layout wrapper -->
+
+    <div class="buy-now">
+      <a
+        href="https://instagram.com/itz_leul"
+        target="_blank"
+        class="btn btn-danger btn-buy-now non-printable"
+
+        >contact developer</a
+      >
+    </div>
+{% block script %}
+
+
+{% endblock %}
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="/static/student/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/static/student/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/static/student/assets/vendor/js/bootstrap.js"></script>
+    <script src="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="/static/student/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+    <script src="/static/student/assets/vendor/libs/apex-charts/apexcharts.js"></script>
+
+    <!-- Main JS -->
+    <script src="/static/student/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/static/student/assets/js/dashboards-analytics.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

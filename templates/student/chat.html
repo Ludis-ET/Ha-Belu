@@ -1,0 +1,266 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700">
+<link rel="stylesheet" href="https://rawcdn.githack.com/Loopple/loopple-public-assets/ad60f16c8a16d1dcad75e176c00d7f9e69320cd4/argon-dashboard/css/nucleo/css/nucleo.css">
+<link rel="stylesheet" href="/static/student/chat/assets/css/theme.css">
+<link rel="stylesheet" href="/static/student/chat/assets/css/loopple/loopple.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+	$(document).ready(function(){
+	
+	setInterval(function(){
+		$.ajax({
+			type: 'GET',
+			url : "{% url 'get_chat' student.username %}",
+			success: function(response){
+				$("#scroll").load(location.href+" #scroll>*","");
+			},
+			error: function(response){
+				alert('An error occured')
+			}
+		});
+	},1000);
+	})
+</script>
+<script>
+	var element = document.getElementById("scroll");
+	element.scrollTop = element.scrollHeight;
+</script>
+{% endblock %}
+{% block content %}
+
+<div class="main-content" id="panel">
+	<div class="container-fluid pt-3">
+		<div class="row removable">
+			<div class="col-lg-12 px-sm-0">
+				<div class="card shadow-none px-0 bg-transparent mt-0 mb-4">
+					<div class="card-body px-0 pb-0">
+						<div class="px-0 pb-4">
+							<div class="row flex-row">
+								<div class="col-lg-3 mb-4">
+									<div class="card max-height-vh-70 h-100 overflow-auto overflow-x-hidden mb-5 mb-lg-0" style="padding:10px;max-height: 500px;">
+										<br><form  method="POST" action="{% url 's_search' %}">
+											{% csrf_token %}
+											<div class="input-group mb-0">
+												<input type="text" name="searched" placeholder="Search group member" class="form-control" aria-label="Amount (to the nearest dollar)">
+												<div class="input-group-append">
+													<span class="input-group-text">
+														<label for="searching" class="fa fa-search"></label>
+														<input type="submit" name="sendsearch" hidden id="searching">
+													</span>
+												</div>
+											</div>
+										</form>
+										<div class="card-body p-2">
+											<h4>All Group Members</h4>
+											<a href="javascript:;" class="d-block p-2 rounded-lg bg-gradient-primary">
+												<div class="d-flex p-2">
+													{% if student.profile_pic %}
+													<img alt="Image" src="{{student.profile_pic.url}}" class="avatar shadow">
+													{% else %}
+													<img alt="Image" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" class="avatar shadow">
+													{% endif %}
+                                                    <div class="ml-2">
+														<div class="justify-content-between align-items-center">
+															<h4 class="text-white mb-0 mt-1">{{student.profile.user.first_name}} {{ student.profile.user.last_name }}<span class="badge badge-success"></span>
+															</h4>
+															<p class="text-white mb-0 text-xs font-weight-normal">{{student.profile.grade}}th grade student</p>
+														</div>
+													</div>
+												</div>
+											</a>
+                                            {% for c in chat %}
+											{% if c.profile.grade == student.profile.grade %}
+											<a href="{% url 's_users' c.profile.user.username %}" class="d-block p-2">
+												<div class="d-flex p-2">
+													{% if c.profile_pic %}
+													<img alt="Image" src="{{c.profile_pic.url}}" class="avatar shadow">
+													{% else %}
+													<img alt="Image" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" class="avatar shadow">
+													{% endif %}
+													<div class="ml-2">
+														<div class="justify-content-between align-items-center">
+															<h4 class="mb-0 mt-1">{{c.profile.user.first_name}} {{c.profile.user.last_name}}
+																<span class="badge badge-success"></span>
+															</h4>
+															<p class="mb-0 text-xs font-weight-normal text-muted">{{c.profile.grade}}th grade student</p>
+														</div>
+													</div>
+												</div>
+											</a>
+											{% endif %}
+											{% endfor %}
+										</div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="card max-height-vh-70" style="max-height: 70vh;">
+										<div class="card-header shadow-xl">
+											<div class="row">
+												<div class="col-md-10">
+													<div class="d-flex align-items-center">
+														<div class="ms-3">
+															<h3 class="mb-0 d-block">Grade {{student.grade}} Group Chat</h3>
+															<span class="text-sm text-muted"><span class="font-weight-bold">Group Created</span> | since the beginning</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="card-body" id="scroll">
+											{% for c in chats %}
+											{% if not c.sender.username == student.username %}
+											<div class="row justify-content-start mb-4">
+												<div class="col-auto">
+													<div class="card ">
+														<div class="card-body p-2">
+															{% if c.sender.profile_pic %}
+															<img alt="Image" src="{{c.sender.profile_pic.url}}" class="avatar shadow"> {{c.sender.first_name}} {{c.sender.last_name}}<br><br>
+															{% else %}
+															<img alt="Image" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" class="avatar shadow"> {{c.sender.first_name}} {{c.sender.last_name}} <br><br>
+															{% endif %}
+															<p class="mb-1">
+																{{c.message}}
+															</p>
+															<div class="d-flex align-items-center text-sm opacity-6">
+																<i class="far fa-clock mr-1" aria-hidden="true"></i>
+																<small>{{c.date|timesince}} ago</small>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											{% else %}
+											<div class="row justify-content-end text-right mb-4">
+												<div class="col-auto">
+													<div class="card bg-gradient-primary text-white">
+														<div class="card-body p-2">
+															<p class="mb-1" >
+																{{c.message}}
+															</p>
+															<div class="d-flex align-items-center justify-content-end text-sm opacity-6">
+																<i class="fa fa-check-double mr-1 text-xs" aria-hidden="true"></i>
+																<small>{{c.date|timesince}} ago</small>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											{% endif %}
+											{% endfor %}
+											<input type="text" autofocus style="opacity: 0;">
+										</div>
+										<div class="card-footer d-block">
+											<form class="align-items-center" method="POST" id="taskform">
+												{% csrf_token %}
+												<div class="input-group mb-3">
+													<input type="text" placeholder="Search" id="chat" name="chat" class="form-control" aria-label="Amount (to the nearest dollar)">
+													<div class="input-group-append">
+														<span class="input-group-text">
+															<label onclick="sendIt()" id="sent" for="submit" class="fa fa-paper-plane"></label>
+															<input type="submit" name="sendchat" id="submit" hidden/>
+														</span>
+													</div>
+												</div>
+											</form>
+										</div>
+
+									</div>
+
+
+
+
+
+								</div>
+
+
+								<div class="col-lg-3">
+									<div class="card max-height-vh-70 h-100 overflow-auto overflow-x-hidden mb-5 mb-lg-0" style="max-height: 500px;">
+										<div class="card-body p-2">
+											<a href="javascript:;" class="d-block p-2">
+											</a>
+											<div class="p-2 text-center">
+												<a href="javascript:;" class="d-block p-2">
+													{% if student.profile_pic %}
+													<img alt="Image" src="{{student.profile_pic.url}}" class="avatar shadow">
+													{% else %}
+													<img alt="Image" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" class="avatar avatar-lg shadow mb-0">
+													{% endif %}
+												</a>
+												<div class="ml-2 mt-0 mb-0 text-center">
+													<div class="justify-content-between align-items-center">
+														<h3 class="mb-0 mt-1">{{student.profile.user.first_name}} {{student.profile.user.last_name}}</h3>
+														<p class="mb-0 text-sm text-dark font-weight-normal">@{{student.profile.user.username}}</p>
+														<a href="" class="text-sm ">View profile</a>
+													</div>
+												</div>
+											</div>
+											<hr class="my-3">
+											<div class="mx-3">
+												<h4 class="mb-0">Applied for grade {{student.profile.grade}} {{student.section}}</h4>
+												<p class="text-sm text-muted font-weight-normal">user type: Student</p>
+											</div>
+											<hr class="my-3">
+											<div class="mx-3">
+												<div class="d-flex align-items-center mb-3">
+													<i class="fa fa-envelope opacity-7"></i>
+													<div class="ml-3">
+														<h5 class="mb-0">Email</h5>
+														<span class="text-sm text-primary">{{student.profile.user.email}}
+														</span>
+													</div>
+												</div>
+												{% if student.view == True %}
+												<div class="d-flex align-items-center">
+													<i class="fa fa-phone opacity-7"></i>
+													<div class="ml-3">
+														<h5 class="mb-0">Phone</h5>
+														<span class="text-sm text-primary">{{student.profile.phone}}
+														</span>
+													</div>
+												</div>
+												<div class="d-flex align-items-center">
+													<i class="fab fa-instagram opacity-7"></i>
+													<div class="ml-3">
+														<h5 class="mb-0">Instagram</h5>
+														<span class="text-sm text-primary">{{student.instagram}}
+														</span>
+													</div>
+												</div>
+												<div class="d-flex align-items-center">
+													<i class="fab fa-telegram opacity-7"></i>
+													<div class="ml-3">
+														<h5 class="mb-0">Telegram</h5>
+														<span class="text-sm text-primary">{{student.telegram}}
+														</span>
+													</div>
+												</div>
+												{% endif %}
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
+{% block script %}
+<script>
+	function sendIt(){
+	document.getElementById("sent").className = "Sending...";
+	}
+</script>
+<script src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/jquery.min.js"></script>
+    <script src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/bootstrap.bundle.min.js"></script>
+    <script src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/js.cookie.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://rawcdn.githack.com/Loopple/loopple-public-assets/5cef8f62939eeb089fa26d4c53a49198de421e3d/argon-dashboard/js/vendor/chart.extension.js"></script>
+    <script src="https://rawcdn.githack.com/Loopple/loopple-public-assets/7bb803d2af2ab6d71d429b0cb459c24a4cd0fbb4/argon-dashboard/js/argon.min.js"></script>
+{% endblock %}

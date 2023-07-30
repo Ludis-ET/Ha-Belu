@@ -1,0 +1,131 @@
+{% extends 'manager/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/style.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/lib/chosen/chosen.min.css">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+{% endblock css %}
+{% block bodymain %}
+<div class="animated fadeIn">
+
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    teacher Adding
+                </div>
+                <div class="card-body card-block">
+                    <form method="POST" enctype="multipart/form-data" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">First Name</label></div>
+                            <div class="col-12 col-md-9"><input name="first_name" type="text" id="disabled-input" placeholder="{{student.profile.user.first_name}} {{student.profile.user.last_name}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Last Name</label></div>
+                            <div class="col-12 col-md-9"><input name="last_name" type="text" id="disabled-input" placeholder="{{student.profile.user.first_name}} {{student.profile.user.last_name}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Username</label></div>
+                            <div class="col-12 col-md-9"><input name="username" type="text" id="disabled-input" placeholder="{{student.profile.user.username}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Email Address</label></div>
+                            <div class="col-12 col-md-9"><input name="email" type="email" id="disabled-input" placeholder="{{student.profile.user.email}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Password</label></div>
+                            <div class="col-12 col-md-9"><input name="password1" type="password" id="disabled-input" placeholder="{{student.profile.user.username}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Confirm Password</label></div>
+                            <div class="col-12 col-md-9"><input name="password2" type="password" id="disabled-input" placeholder="{{student.profile.user.email}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Phone Number</label></div>
+                            <div class="col-12 col-md-9"><input name="phone" type="text" id="disabled-input" placeholder="{{student.profile.phone}}" required class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="select" class=" form-control-label">Gender</label></div>
+                            <div class="col-12 col-md-9">
+                                <select name="sex" id="select" class="form-control">
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="select" class=" form-control-label">Subject</label></div>
+                            <div class="col-12 col-md-9">
+                                <select name="subject" id="select" class="form-control">
+                                    {% for a in grade %}
+                                    <option value="{{a.id}}">
+                                        {% for bb in a.grade.all %}
+                                            Grade {{bb.name}}, 
+                                        {% endfor %}
+                                        <b>{{a.name}}</b>
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="select" class=" form-control-label">Allowed Grades</label></div>
+                            <div class="col-12 col-md-9">
+                                <select name="select" required data-placeholder="Choose a Grade..." multiple class="standardSelect">
+                                    {% for a in g%}
+                                    <option value="{{a.id}}">{{a.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm">
+                        <a href="{% url 'm_teacher_tabel' %}">
+                        <i class="fa fa-arrow-left"></i> back</a>
+                    </button>
+                </div>
+                
+            </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+<script src="https://cdn.jsdelivr.net/npm/jquery@2.2.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.4/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/js/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-match-height@0.7.2/dist/jquery.matchHeight.min.js"></script>
+<script src="/static/manager/assets/js/main.js"></script>
+<script src="/static/manager/assets/js/lib/chosen/chosen.jquery.min.js"></script>
+
+<script>
+    jQuery(document).ready(function() {
+        jQuery(".standardSelect").chosen({
+            disable_search_threshold: 10,
+            no_results_text: "Oops, nothing found!",
+            width: "100%"
+        });
+    });
+</script>
+{% endblock script %}
+

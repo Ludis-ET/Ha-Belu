@@ -1,0 +1,146 @@
+{% extends 'teacher/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+{% endblock css %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Edit /</span> course {{course.name}}</h4>
+
+    <div class="row">
+      <div class="col-md-12">
+        <ul class="nav nav-pills flex-column flex-md-row mb-3">
+          <li class="nav-item">
+            <a class="nav-link active" href="javascript:;"
+              ><i class="bx bx-video me-1"></i> Course</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 't_add_course' %}"
+              ><i class='bx bxs-file-plus' ></i>   Add New</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 't_channel' %}"
+              ><i class='bx bx-left-arrow-alt bx-fade-right' ></i>   Back</a
+            >
+          </li>
+        </ul>
+        <div class="card mb-4">
+          <h5 class="card-header">Cover Page</h5>
+          <!-- Account -->
+          <form id="formAccountSettings" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+          <div class="card-body">
+            <div class="d-flex align-items-start align-items-sm-center gap-4">
+              <img
+                src="{{course.cover.url}}"
+                alt="user-avatar"
+                class="d-block rounded"
+                style="max-width: 80%;max-height: 250px;"
+                id="uploadedAvatar"
+              />
+              <div class="button-wrapper">
+                <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+                  <span class="d-none d-sm-block">Upload new cover</span>
+                  <i class="bx bx-upload d-block d-sm-none"></i>
+                  <input
+                    type="file"
+                    id="upload"
+                    class="account-file-input"
+                    hidden
+                    name="cover"
+                    accept="image/png, image/jpeg"
+                  />
+                </label>
+                <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+                  <i class="bx bx-reset d-block d-sm-none"></i>
+                  <span class="d-none d-sm-block">Reset</span>
+                </button>
+
+                <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+              </div>
+            </div>
+          </div>
+          <hr class="my-0" />
+          <div class="card-body">
+              <div class="row">
+                <div class="mb-3">
+                  <label for="firstName" class="form-label">Course Title</label>
+                  <input
+                    class="form-control"
+                    type="text"
+                    id="firstName"
+                    name="name"
+                    placeholder="title here"
+                    autofocus
+                    value="{{course.name}}"
+                    required
+                  />
+                </div>
+                <div class="mb-3 col-md-6">
+                    <h5>If you want upload video</h5>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <h5>If you want frame from youtube</h5>
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="lastName" class="form-label">Select Video (.mp4 only){% if course.video %}(last video:<strong> {{course.video.url |slice:"22:"}})</strong>{% endif %}</label>
+                  <input class="form-control" type="file" name="video" id="lastName" 
+                  accept="video/mp4" />
+                </div>
+                <div class="mb-3 col-md-6">
+                  <label for="email" class="form-label">Youtube video link</label>
+                  <input
+                    class="form-control"
+                    type="url"
+                    id="email"
+                    name="link"
+                    {% if course.link %}
+                    value="{{course.link}}"
+                    {% endif %}
+                    placeholder="copy and paste it here"
+                  />
+                </div>
+                <div>
+                    <label for="exampleFormControlTextarea1" class="form-label">Discription</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="you have to describe it please" required name="disc" rows="3">{{course.about}}</textarea>
+                  </div>
+              </div>
+              <div class="mt-2">
+                <button type="submit" class="btn btn-primary me-2" onclick="saveIt()" id="save">Save changes</button>
+                <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+              </div>
+          </div>
+          </form>
+          <!-- /Account -->
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+{% block script %}
+<script>
+    function saveIt(){
+        document.getElementById("save").innerHTML = "<i class='fa fa-spinner fa-spin' style='font-size:24px'></i>";
+    }
+</script>
+<script src="/static/student/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/static/student/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/static/student/assets/vendor/js/bootstrap.js"></script>
+    <script src="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="/static/student/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="/static/student/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script src="/static/student/assets/js/pages-account-settings-account.js"></script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+{% endblock script %}
+

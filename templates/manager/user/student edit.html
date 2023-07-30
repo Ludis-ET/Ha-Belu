@@ -1,0 +1,66 @@
+{% extends 'manager/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+{% endblock css %}
+{% block bodymain %}
+<div class="animated fadeIn">
+
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Student <strong>{{student.profile.user.first_name}} {{student.profile.user.last_name}}</strong>
+                </div>
+                <div class="card-body card-block">
+                    <form method="POST" enctype="multipart/form-data" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Full Name</label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="disabled-input" placeholder="{{student.profile.user.first_name}} {{student.profile.user.last_name}}" disabled="" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Username</label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="disabled-input" placeholder="{{student.profile.user.username}}" disabled="" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Email Address</label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="disabled-input" placeholder="{{student.profile.user.email}}" disabled="" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Phone Number</label></div>
+                            <div class="col-12 col-md-9"><input type="text" id="disabled-input" placeholder="{{student.profile.phone}}" disabled="" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="select" class=" form-control-label">Grade</label></div>
+                            <div class="col-12 col-md-9">
+                                <select name="select" id="select" class="form-control">
+                                    <option value="{{student.profile.grade.id}}">Grade {{student.grade}}</option>
+                                    {% for a in grade %}
+                                    <option value="{{a.id}}">Grade {{a.name}}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Submit
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm">
+                        <a href="{% url 'm_student_tabel' %}">
+                        <i class="fa fa-arrow-left"></i> back</a>
+                    </button>
+                </div>
+                
+            </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock script %}
+

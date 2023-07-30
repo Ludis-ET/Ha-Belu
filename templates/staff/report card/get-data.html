@@ -1,0 +1,57 @@
+{% extends 'staff/base.html' %}
+{% block css %}
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="/static/css/a.css">
+{% endblock %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Student /</span>{{student.profile.user.first_name}} {{student.profile.user.last_name}} / Card Design Select</h4>
+
+  {% for card in cards %}
+  <a href="{% url 't_card' id=student.id id2=card.id %}" target="_blank" class="btn btn-dark">{{card.name}}</a>
+  {% endfor %}
+  <div class="col-lg-4 col-md-6">
+    <div class="mt-3">
+      <!-- Button trigger modal -->
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+        Create New Design
+      </button>
+
+      <!-- Modal -->
+      <form method = "POST">
+        {% csrf_token %}
+        <input type="text" name="id" hidden value="{{student.id}}">
+      <div class="modal fade" id="modalCenter" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="modalCenterTitle">Design title</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="row">
+                <div class="col mb-3">
+                  <label for="nameWithTitle" class="form-label">Name</label>
+                  <input type="text" id="nameWithTitle" class="form-control" placeholder="Enter Name" name="name">
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                Close
+              </button>
+              <button type="submit" class="btn btn-primary">Save changes</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+{% endblock %}

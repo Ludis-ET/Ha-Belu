@@ -1,0 +1,20 @@
+.alert{
+    position:relative;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    border:none;
+    border-radius:0;
+    color:#fff
+}
+.error{
+    background:#d75151;
+}
+.alert p{
+    margin:10px;
+    font-size:20px;
+    font-weight:700;
+}
+.success{
+    background:#78d751;
+}

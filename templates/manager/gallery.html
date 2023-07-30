@@ -1,0 +1,58 @@
+{% extends 'manager/base.html' %}
+{% block bodymain %}
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Galleries in event {{event.name}}</strong>
+                </div>
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="avatar">Image</th>
+                                <th>Name (optional)</th>
+                                <th colspan="3" align="center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in g %}
+                            <tr>
+                                <td >
+                                <a href="{{a.image.url}}"><img style="width: 300px;height: 50px; border-radius: 10px; zoom: 2;" src="{{a.image.url}}" alt=""></a>
+                                </td>
+                                <form method="POST">
+                                    {% csrf_token %}
+                                <td><input type="text" value="{{a.name}}" name="name" id=""></td>
+                                <td>
+                                    
+                                        <input type="text" name="id" value="{{a.id}}" hidden>
+                                    <button type="submit" name="update" class="btn btn-warning">Update</button>
+                                    <button type="submit" name="delete" class="btn btn-danger">Delete</button>
+                                
+                                </td>
+                            </form>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <form method="POST" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                <td >
+                                    <input type="file" name="file" accept="image/png, image/gif, image/jpeg" id="">
+                                </td>
+                                <td> <input type="text" name="name"></td>
+                                <td><input type="submit" value="add" name="add" class="btn btn-primary"></td>
+                                <td>
+                                </td>
+                            </form>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

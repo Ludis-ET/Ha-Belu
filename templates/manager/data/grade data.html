@@ -1,0 +1,267 @@
+{% extends "manager/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    
+{% endblock %}
+{% block bodymain %}
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <h1>Academic Data In year {{this.year}}</h1>
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Academic Results for year {{this.year}}</strong>
+                </div>
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        
+                        <thead>
+                            <tr>
+                                <th class="avatar">Student Name</th>
+                                <th class="avatar" colspan="{{subb}}" >First Half Term</th>
+                                <th class="avatar" colspan="{{subb}}" >Second Half Term</th>
+                                <th class="avatar" colspan="2">-</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="avatar"></td>
+                            {% for a in sub %}
+                                <td class="avatar">{{a.name}}</td>
+                            {% endfor %}
+                            <td class="avatar">Total</td>
+                            <td class="avatar">Average</td>
+                            <td class="avatar">Rank</td>
+                            {% for a in sub %}
+                                <td class="avatar">{{a.name}}</td>
+                            
+                            {% endfor %}
+                            <td class="avatar">Total</td>
+                            <td class="avatar">Average</td>
+                            <td class="avatar">Rank</td>
+                            <td>Year Average</td>
+                            <td>Year Rank</td>
+                        </tr>
+                        {% for b in students %}
+
+                        <div class="modal fade" id="staticModal{{b.id}}" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticModalLabel">Student {{b.profile.user.first_name}} {{b.profile.user.last_name}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                           Current Grade is GRADE {{b.profile.grade.name}}
+                                       </p>
+                                       <p>
+                                        Pass To grade :
+                                       </p>
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+                        
+
+
+                        <form method="POST" action="{% url 'm_data_result_student' id=b.id year=b.year.year %}">
+                            {% csrf_token %}
+                        <tr>
+                            <td>{{b.profile.user.first_name}} {{b.profile.user.last_name}}</td>
+                            {% if subr %}
+                            {% for a in subr %}
+                            {% if a.student.profile.user.username == b.profile.user.username  %}
+                            {% for dd in a.subject.grade.all %}
+                            {% if dd == b.profile.grade %}
+                            <td>{{a.first}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                            
+                            
+
+                            {% for bb in fstu %}
+                            {% if bb.student.profile.user.username == b.profile.user.username %}
+                            <td style="background-color: gray;color: #fff;">{{bb.first_total}}/{{bb.first_from}}</td>
+                            <td style="background-color: gray;color: #fff;">{{bb.first_average}}%</td>
+                            <td style="background-color: gray;color: #fff;">{{ forloop.counter }}/{{fff}}</td>
+                            <input type="text" hidden name="f_rank" value="{{ forloop.counter }}" id="">
+                            {% endif %}
+                        {% endfor %}
+
+
+                            {% for a in subr %}
+                            {% if a.student.profile.user.username == b.profile.user.username  %}
+                            {% for dd in a.subject.grade.all %}
+                            {% if dd == b.profile.grade %}
+                            <td>{{a.second}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% endif %}
+                            {% endfor %}
+                            {% for bb in sstu %}
+                            {% if bb.student == b %}
+                            <td style="background-color: gray;color: #fff;">{{bb.second_total}}/{{bb.second_from}}</td>
+                            <td style="background-color: gray;color: #fff;">{{bb.second_average}}%</td>
+                            <td style="background-color: gray;color: #fff;">{{ forloop.counter }}/{{fff}}</td>
+                            <input type="text" hidden name="s_rank" value="{{ forloop.counter }}" id="">
+                            
+                            {% endif %}
+                            {% endfor %}
+
+                            {% for bb in stu %}
+                            {% if bb.student == b %}
+                            <td style="background-color: rgb(53, 53, 53);color: #fff;">{{bb.average}}%</td>
+                            <td style="background-color: rgb(53, 53, 53);color: #fff;">{{ forloop.counter }}/{{fff}}</td>
+                            <input type="text" hidden name="rank" value="{{ forloop.counter }}" id="">
+                            {% endif %}
+                            {% endfor %}
+                            {% else %}
+                            <td>Nothing to show</td>
+                            {% endif %}
+                        </tr>
+                        </form>
+                        <div class="modal fade" id="static{{b.id}}" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-sm" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="staticModalLabel">Student {{b.profile.user.first_name}} {{b.profile.user.last_name}}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p>
+                                           Current Grade is GRADE {{b.profile.grade.name}}
+                                       </p>
+                                       <form method="POST">
+                                        {% csrf_token %}
+                                        <input type="text" name="id" value="{{b.id}}" hidden id="">
+                                        <button type="submit" name="fail_single_default" class="btn btn-danger">
+                                            Fail
+                                        </button>
+                                        <br><br>
+                                        <button type="submit"  name="fail_single" class="btn btn-danger">Fail with out saving data</button>
+                                    </form>
+                                   </div>
+                                   <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div>
+        
+        <div>
+        <div class="modal fade" id="staticModal" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticModalLabel">Grade {{grade.name}} Students</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                        Pass To grade :
+                       </p>
+                       <form method="POST">
+                        {% csrf_token %}
+                        <select name="grade" id="">
+                            {% for g in grades %}
+                            <option value="{{g.id}}">Grade {{g.name}}</option>
+                            {% endfor %}
+                        </select><br><br>
+                        <button type="submit" name="pass_all_default" class="btn btn-success">
+                            Pass
+                        </button>
+                        <br><br>
+                        <button type="submit"  name="pass_all_single" class="btn btn-success" data-toggle="modal" data-target="#staticModal">Pass with out saving data</button>
+                    </form>
+                   </div>
+                   <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>                    
+        <div class="modal fade" id="static" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="staticModalLabel">Student {{b.profile.user.first_name}} {{b.profile.user.last_name}}</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                           Current Grade is GRADE {{b.profile.grade.name}}
+                       </p>
+                       <form method="POST">
+                        {% csrf_token %}
+                        <input type="text" name="id" value="{{b.id}}" hidden id="">
+                        <button type="submit" name="fail_all_default" class="btn btn-danger">
+                            Fail
+                        </button>
+                        <br><br>
+                        <button type="submit"  name="fail_all_single" class="btn btn-danger">Fail with out saving data</button>
+                    </form>
+                   </div>
+                   <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="/static/manager/assets/js/lib/data-table/datatables.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/jszip.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="/static/manager/assets/js/init/datatables-init.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#bootstrap-data-table-export').DataTable();
+  } );
+</script>
+{% endblock %}

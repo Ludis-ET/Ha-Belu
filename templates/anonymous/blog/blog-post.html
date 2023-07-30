@@ -1,0 +1,144 @@
+{% extends 'anonymous/base.html' %}
+{% block main %}
+
+ <!-- Header Start -->
+ <div class="container-fluid page-header" style="margin-bottom: 90px;">
+    <div class="container">
+        <div class="d-flex flex-column justify-content-center" style="min-height: 300px">
+            <h3 class="display-4 text-white text-uppercase">{{blog.name}}</h3>
+            <div class="d-inline-flex text-white">
+                <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'a_index' %}">Home</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'a_blog' %}">Blog Post</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase"><a class="text-white" href="{% url 'category' blog.category.id %}">Category</a></p>
+                <i class="fa fa-angle-double-right pt-1 px-3"></i>
+                <p class="m-0 text-uppercase">{{blog.category}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Header End -->
+
+
+<!-- Detail Start -->
+<div class="container-fluid py-5">
+    <div class="container py-5">
+        <div class="row">
+            <div class="col-lg-8" style="overflow: hidden;">
+                <div class="mb-5">
+                    <h6 class="text-primary mb-3">{{blog.date |timesince}} ago</h6>
+                    <h1 class="mb-5">{{blog.name}}</h1>
+                    <img class="img-fluid rounded w-100 mb-4" src="{{blog.cover.url}}" alt="Image">
+                    <p>{% if blog.p1 %}{{blog.p1}}{% endif %}</p>
+                    <p>{% if blog.p2 %}{{blog.p2}}{% endif %}</p>
+                    <p>{% if blog.p3 %}{{blog.p3}}{% endif %}</p>
+                    {% for a in add %}
+                    <h2 class="mb-4">{{a.name}}</h2>
+                    {% if a.Image %}
+                    <img class="img-fluid rounded w-50 float-left mr-4 mb-3" src="{{a.Image.url}}" alt="Image">
+                    {% else %}
+                    <img class="img-fluid rounded w-50 float-left mr-4 mb-3" src="{{web.icon.url}}" alt="Image">
+                    {% endif %}
+                    <p>{% if a.p1 %}{{a.p1}}{% endif %}</p>
+                    <p>{% if a.p2 %}{{a.p2}}{% endif %}</p>
+                    <p>{% if a.p3 %}{{a.p3}}{% endif %}</p>
+                    {% endfor %}
+                </div>
+
+                <!-- Comment List -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">{{comment.count}} Comments</h3>
+                    {% for c in comment %}
+                    <div class="media mb-4">
+                        <img src="{{web.icon.url}}" alt="Image" class="img-fluid rounded-circle mr-3 mt-1"
+                            style="width: 45px;">
+                        <div class="media-body">
+                            <h6>{{c.commenter.first_name}} {{c.commenter.last_name}} <small><i>{{c.date |timesince}} ago</i></small></h6>
+                            <p>{{c.message}}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if request.user.is_authenticated %}
+                <!-- Comment Form -->
+                <div class="bg-secondary rounded p-5">
+                    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Leave a comment</h3>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" cols="30" rows="5" maxlength="2000" name="message" class="form-control border-0"></textarea>
+                        </div>
+                        <div class="form-group mb-0">
+                            <input type="submit" value="Leave Comment" class="btn btn-primary py-md-2 px-md-4 font-weight-semi-bold">
+                        </div>
+                    </form>
+                </div>
+                {% else %}
+                <div class="bg-secondary rounded p-5">
+                    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Login to leave a comment</h3>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="col-lg-4 mt-5 mt-lg-0">
+                <!-- Author Bio -->
+                <div class="d-flex flex-column text-center bg-dark rounded mb-5 py-5 px-4">
+                    <img src="{{web.icon.url}}" style="width: 100px;height: 100px;border-radius: 100%;" class="img-fluid rounded-circle mx-auto mb-3" style="width: 100px;">
+                    <h3 class="text-primary mb-3">{{blog.by.first_name}} {{blog.by.last_name}}</h3>
+                </div>
+
+                <!-- Search Form -->
+                <div class="mb-5">
+                    <form method="POST" action="{% url 'blog_search' %}">
+                        {% csrf_token %}
+                        <div class="input-group">
+                            <input type="text" class="form-control form-control-lg" name="search" placeholder="Keyword .....">
+                            <div class="input-group-append">
+                                <input type="submit" style="background-color: var(--main);color :#fff;" class="input-group-text bg-transparent text-primary" value="search">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Category List -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Categories 
+                        <span class="badge badge-primary badge-pill">{{category.count}}</span></h3>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <a href="{% url 'a_blog' %}" class="text-decoration-none h6 m-0">All</a>
+                        </li>
+                        {% for c in category %}
+                        <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                            <a href="{% url 'category' c.id %}" class="text-decoration-none h6 m-0">{{c.name}}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <!-- Recent Post -->
+                <div class="mb-5">
+                    <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Recent Post</h3>
+                    {% for b in blogs|slice:":10" %}
+                    <a class="d-flex align-items-center text-decoration-none mb-3" href="{% url 'blog_post' b.id %}">
+                        {% if b.cover %}
+                        <img class="img-fluid rounded" style="width:150px;" src="{{b.cover.url}}" alt="">
+                        {% else %}
+                        <img class="img-fluid rounded" style="width:150px;" src="{{web.icon.url}}" alt="">
+                        {% endif %}
+                        <div class="pl-3">
+                            <h6 class="m-1">{{b.name}}</h6>
+                            <small>{{b.date |timesince}} ago</small>
+                        </div>
+                    </a>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Detail End -->
+
+{% endblock %}

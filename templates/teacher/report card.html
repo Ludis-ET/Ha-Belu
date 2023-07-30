@@ -1,0 +1,111 @@
+{% extends 'teacher/base.html' %}
+
+{% block css %}
+<link rel="stylesheet" href="" id="print">
+{% endblock %}
+{% block content %}
+<form method="POST">
+  {% csrf_token %}
+<div class="container-xxl flex-grow-1 container-p-y not-printable">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Report Card  /</span> Student {{student.profile.user.first_name}} {{student.profile.user.last_name}}</h4>
+    <button type="button" class="btn btn-primary not-printable" id="click1" onclick="printPage()">
+        <span class="tf-icons bx bx-printer not-printable"></span>&nbsp; Print This Page
+      </button>
+      <button type="submit" name="table" class="btn btn-secondary not-printable" id="click2" onclick="printTable()">
+        <span class="tf-icons bx bx-printer not-printable"></span>&nbsp; Print Table
+      </button>
+      <button type="button" class="btn btn-info not-printable" id="click3">
+        <span class="tf-icons bx bx-printer not-printable"></span>&nbsp; Print Data
+      </button>
+      <button type="button" class="btn btn-dark not-printable" id="click4">
+        <span class="tf-icons bx bx-printer not-printable"></span>&nbsp; Print As report card
+      </button>
+</form>   
+    
+    <br><br>
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">@{{student.username}}</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              <th>First Academic Year</th>
+              <th>Second Academic Year</th>
+              <th>Year Average</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for s in sub %}
+            {% for b in s.subject.grade.all %}
+            {% if b == s.student.profile.grade %}
+                <tr>
+                    <td>{{s.subject.name}}</td>
+                    <td>{{s.first}}/{{s.f_from}}</td>
+                    <td>{{s.second}}/{{s.s_from}}</td>
+                    <td>{{s.year}}%</td>
+                </tr>
+            </form>
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+            <tr>
+                <td>Total</td>
+                <td>{{stat.first_total}}/{{stat.first_from}}</td>
+                <td>{{stat.second_total}}/{{stat.second_from}}</td>
+                <td>{{stat.total}}</td>
+            </tr>
+            <tr>
+                <td>Average</td>
+                <td>{{stat.first_average}}%</td>
+                <td>{{stat.second_average}}%</td>
+                <td>{{stat.average}}%</td>
+            </tr>
+            <tr>
+                <td>Rank</td>
+                <td>{{stat.first_rank}}</td>
+                <td>{{stat.second_rank}}</td>
+                <td>{{stat.rank}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    
+    css = document.getElementById("print")
+    click1 = document.getElementById("click1")
+    click2 = document.getElementById("click2")
+    click3 = document.getElementById("click3")
+    click4 = document.getElementById("click4")
+    function printPage(){
+        click1.innerHTML = 'Organising....';
+        css.href = '/static/css/teacher/page.css';
+        setTimeout(() => {
+  window.print();
+}, "3000")
+setTimeout(() => {
+            click1.innerHTML = 'Done';
+}, "3500")
+    }
+    function printTable(){
+        click2.innerHTML = 'Organising....';
+        css.href = '/static/css/teacher/table.css';
+        setTimeout(() => {
+  window.print();
+}, "3000")
+setTimeout(() => {
+            click2.innerHTML = 'Done';
+}, "3500")
+    }
+</script>
+
+{% endblock %}

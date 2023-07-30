@@ -1,0 +1,55 @@
+{% extends 'manager/base.html' %}
+{% block bodymain %}
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Academic events Available in {{web.full_name}}</strong>
+                </div>
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="serial">#</th>
+                                <th class="avatar">Events name</th>
+                                <th colspan="3" align="center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in events %}
+                            
+                            <tr><form method="POST">
+
+                                {% csrf_token %}
+                                <td class="serial">{{a.id}}</td>
+                                <td> <input type="text" name="name" value="{{a.name}}" id=""></td>
+                                <td>
+                                    
+                                        <input type="text" value="{{a.id}}" hidden name="id"/>
+                                        <button type="submit" name="update" class="btn btn-primary">Update</button>
+                                        <a href="{% url 'm_gallery' a.id %}" class="btn btn-dark">Gallery</a>
+                                        <button type="submit" class="btn btn-danger " name="delete">Delete</button>
+                                </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td class="serial">-</td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <td><input type="text" name="name"></td>
+                                <td>
+                                    <button type="submit" name="add" class="btn btn-dark">Add New</button>
+                                </td>
+                            </form>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

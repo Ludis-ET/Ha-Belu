@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="/static/student/course/css/osahan.css" rel="stylesheet">
+  <!-- Owl Carousel -->
+  <link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+  <link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+  <title>Registration Page</title>
+  <style>
+    .dropdown-container {
+  display: flex;
+  gap: 10px;
+}
+
+select {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+  </style>
+<style>
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin-top: 20px;
+}
+.message{
+  width: 100%;
+  padding: 10px;
+  text-align: center;
+  font-size: 20px;
+  color: #fff;
+  margin: 10px;
+  border-radius: 20px;
+}
+</style>
+</head>
+<body>
+  {% if messages %}
+  {% for m in messages %}
+  <div class="message" style="background-color:{{tag}};">
+    {{m}}
+    
+  </div>
+  {% endfor %}
+  {% endif %}
+  <div class="col-lg-12 mb-8 order-0" style="width:100%;">
+    <div class="card">
+      <form method="POST">
+        {% csrf_token %}
+      <table>
+      <thead>
+        <tr>
+          <th colspan="5" align="center" style="text-align: center; font-size: 20px;">{{students.count}} Grade {{grade.name}} Students Academic Information</th>
+        </tr>
+        <tr>
+          <th>Students's Name</th>
+          <th>
+            Semester
+            <select name="semester" id="subject">
+    <option value="" selected="selected">Select Semester</option>
+  </select>
+          </th>
+          <th>
+            Test
+            <select name="test" id="topic">
+    <option value="" selected="selected">Please select semester first</option>
+  </select>
+          </th>
+          <th>
+            Subject
+            <select name="subject" id="chapter">
+    <option value="" selected="selected">Please select test first</option>
+  </select>
+          </th>
+          <th>
+            <a href="{% url 'r_index' %}" class="btn btn-primary fa fa-home"></a>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for m in students %}
+        <tr>
+          <td>{{m.profile.user.first_name}} {{m.profile.user.last_name}}</td>
+          <td colspan="3"><input type="number" name="{{m.username}}" min="0" max="100"></td>
+        </tr>
+        {%endfor%}
+        <tr>
+          <td colspan="3" align="center"><button class="btn btn-dark" id="my" type="submit" align="center" onclick="myRegister()">Submit</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </form>
+    </div>
+  </div>
+
+<script>
+  function myRegister(){
+    document.getElementById("my").innerHTML = 'Registering Results.....';
+  }
+</script>
+
+
+  <script>
+  var subjectObject = {
+  "First Academic Year": {
+    {% for t in tests %}
+    {% if t.time == 'first academic term' %}
+    "{{t.name}}": [
+
+    {% for s in t.subject.all %}
+      "{{s.name}}",
+      {% endfor %}
+
+    ],
+    {% endif %}
+    {% endfor %}
+  },
+  "Second Academic Year": {
+    {% for t in tests %}
+    {% if t.time == 'second academic term' %}
+    "{{t.name}}": [
+
+    {% for s in t.subject.all %}
+      "{{s.name}}",
+      {% endfor %}
+
+    ],
+    {% endif %}
+    {% endfor %}
+  },
+}
+window.onload = function() {
+  var subjectSel = document.getElementById("subject");
+  var topicSel = document.getElementById("topic");
+  var chapterSel = document.getElementById("chapter");
+  for (var x in subjectObject) {
+    subjectSel.options[subjectSel.options.length] = new Option(x, x);
+  }
+  subjectSel.onchange = function() {
+    //empty Chapters- and Topics- dropdowns
+    chapterSel.length = 1;
+    topicSel.length = 1;
+    //display correct values
+    for (var y in subjectObject[this.value]) {
+      topicSel.options[topicSel.options.length] = new Option(y, y);
+    }
+  }
+  topicSel.onchange = function() {
+    //empty Chapters dropdown
+    chapterSel.length = 1;
+    //display correct values
+    var z = subjectObject[subjectSel.value][this.value];
+    for (var i = 0; i < z.length; i++) {
+      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+    }
+  }
+}
+  </script>
+</body>
+</html>

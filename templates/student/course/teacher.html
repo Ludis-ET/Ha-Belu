@@ -1,0 +1,49 @@
+{% extends 'student/course/base-video.html' %}
+{% block base %}
+<div class="container-fluid">
+   <div class="video-block section-padding">
+      <div class="row">
+         <div class="col-md-12">
+            <div class="main-title" style="margin-top: 20px;">
+               <h6>
+                  {% if not a %}
+                  {{teacher.subject.name}} Teacher Posts
+                  {% else %}
+                  you searched for "{{a}}" and we found "{{course.count}}" videos
+                  {% endif %}
+               </h6>
+            </div>
+         </div>
+         {% if course %}
+               {% for c in course %}
+               <div class="col-xl-3 col-sm-6 mb-3">
+                  <div class="video-card">
+                     <div class="video-card-image">
+                        <a class="play-icon" href="{% url 'page' c.id %}"><i class="fas fa-play-circle"></i></a>
+                        <a href="{% url 'page' c.id %}"><img class="img-fluid" src="{{c.cover.url}}" alt=""></a>
+                        {% for a in c.subject.all|slice:":1" %}
+                        <div class="time">{{a.name}}</div>
+                        {% endfor %}
+                     </div>
+                     <div class="video-card-body">
+                        <div class="video-title">
+                           <a href="{% url 'page' c.id %}">{{c.name|slice:":16"}}...</a>
+                        </div>
+                        <div class="video-page text-success">
+                           {{c.posted_by.first_name}} {{c.posted_by.last_name}}  <i class="fas fa-check-circle text-success"></i></a>
+                        </div>
+                        <div class="video-view">
+                           {{c.views}} views &nbsp;<i class="fas fa-calendar-alt"></i> {{c.date|timesince}} ago
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+               {% else %}
+               <h1>No course Found </h1>
+               {% endif %}
+      </div>
+   </div>
+</div>
+{% endblock %}
+         

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="/static/student/assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>You are subscription is outdated!</title>
+
+    <meta name="description" content="" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/static/student/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/pages/page-misc.css" />
+    <!-- Helpers -->
+    <script src="/static/student/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/static/student/assets/js/config.js"></script>
+  </head>
+
+  <body>
+    <!-- Content -->
+
+    <!-- Error -->
+    <div class="container-xxl container-p-y">
+      <div class="misc-wrapper">
+        <h2 class="mb-2 mx-2"> Year {{history.academicYear.year}} E.C History of Student {{history.user.first_name}} {{history.user.last_name}}:)</h2>
+        <div width="100%" style="display:flex;">
+          <a href="{% url 'a_index' %}" class="btn btn-primary">Back to home</a>
+          {% for h in link %}
+          <a href="{% url 's_year_history' year=h.academicYear.year username=user.username %}" class="btn btn-primary">Get {{h.academicYear.year}} E.C history</a>
+          {% endfor %}
+          <form method="POST" action="{% url 'delete_account' user.id %}">
+            {% csrf_token %}
+          <button href="{% url 'a_index' %}" name="deleteaccount" type="submit" class="btn btn-danger">Delete My account</button>
+          </form>
+        </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">History /</span> User Data</h4>
+
+            <!-- Basic Bootstrap Table -->
+            <div class="card">
+              <h5 class="card-header">Student {{history.first_name}} {{history.last_name}}</h5>
+              <div class="table-responsive text-nowrap">
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Conetnt</th>
+                    </tr>
+                  </thead>
+                  <tbody class="table-border-bottom-0">
+                    <tr>
+                      <td>Full Name</td>
+                      <td>{{history.first_name}} {{history.last_name}}</td>
+                    </tr>
+                    <tr>
+                        <td>Username</td>
+                        <td>{{history.username}}</td>
+                    </tr>
+                    <tr>
+                        <td>Email Address</td>
+                        <td>{{user.email}}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Phone Number</td>
+                        <td>{{history.phone}}</td>
+                      </tr>
+                      <tr>
+                        <td>Sex</td>
+                        <td>{{history.sex}}</td>
+                      </tr>
+                      <tr>
+                        <td>Academic Level</td>
+                        <td>{{history.level}} -Grade{{history.grade}}</td>
+                      </tr>
+                      <tr>
+                        <td>Natonality</td>
+                        <td>{{history.nationality}}</td>
+                      </tr>
+                      <tr>
+                        <td>Academic Level</td>
+                        <td>{{history.level}} -Grade{{history.grade}}</td>
+                      </tr>
+                      <tr>
+                        <td>Address</td>
+                        <td>{{history.city}}</td>
+                      </tr>
+                      {% if history.telegram %}
+                      <tr>
+                        <td>Telegram link</td>
+                        <td><a href="{{history.telegram}}">@clickme</td>
+                      </tr>
+                      {% endif %}
+                      {% if history.instagram %}
+                      <tr>
+                        <td>Instagram link</td>
+                        <td><a href="{{history.instagram}}">@clickme</td>
+                      </tr>
+                      {% endif %}
+                      <tr>
+                        <td>Birth Day</td>
+                        <td>{{history.birth}}</td>
+                      </tr>
+                      <tr>
+                        <td>Last Login To this site is</td>
+                        <td>{{user.last_login}}</td>
+                      </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+        </div>
+        <div class="container-xxl flex-grow-1 container-p-y">
+          <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">History /</span> Result Detail</h4>
+      
+          <!-- Basic Bootstrap Table -->
+          <div class="card">
+            <h5 class="card-header">Hey {{history.first_name}} {{history.last_name}} You have to finish from {{total}} marks in every subject</h5>
+            <div class="table-responsive text-nowrap">
+              <table class="table" id="tblToExcl">
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                    {% for t in test %}
+                    <th>{{t.name}} ({{t.capacity}} marks) </th>
+                    {% endfor %}
+                  </tr>
+                </thead>
+                <tbody class="table-border-bottom-0">
+                  {% for a in subject %}
+                  <tr>
+                    <td><strong>{{a.name}} ({{total}} marks)</strong></td>
+                    {% for c in result %}
+                    {% if a.name == c.subjects.name %}
+                    <td><b>{{c.status}}</b> marks</td>
+                    {% endif %}
+                    {% endfor %}
+                  </tr>
+                  {% endfor %}
+                  <tr>
+                    <td><strong>All Total</strong></td>
+                    <td align="center"><strong>{{alltotal}} / {{allfrom}} (total marks)</strong></td>
+                  </tr>
+                  <tr>
+                    <td><strong>Average</strong></td>
+                    <td align="center"><strong>{{average}}%</strong></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <button type="button" onclick="htmlTableToExcel('xlsx')" class="btn btn-dark">Export Table</button>
+          </div>
+        </div>
+
+
+
+
+
+
+      </div>
+    </div>
+    <!-- /Error -->
+
+    <!-- / Content -->
+
+    <div class="buy-now">
+      <a
+        href="https://instagram.com/itz_leul"
+        target="_blank"
+        class="btn btn-danger btn-buy-now"
+        >contact developer</a
+      >
+    </div>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="/static/student/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/static/student/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/static/student/assets/vendor/js/bootstrap.js"></script>
+    <script src="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="/static/student/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="/static/student/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+    <script type="text/javascript">
+      function htmlTableToExcel(type){
+        var data = document.getElementById('tblToExcl');
+        var excelFile = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+        XLSX.write(excelFile, { bookType: type, bookSST: true, type: 'base64' });
+        XLSX.writeFile(excelFile, '{{history.first_name}} Results Excel.' + type);
+       }
+      </script>
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

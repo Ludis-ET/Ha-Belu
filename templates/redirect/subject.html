@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>info Page</title>
+  <style>
+    #select-items {
+  width: 200px;
+  height: 100px;
+}
+
+#select-items option {
+  transition: transform 0.3s ease-in-out;
+}
+
+#select-items option:hover {
+  transform: scale(1.1);
+}
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    
+    .container {
+      width: 300px;
+      margin: 150px auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 4px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    }
+   
+    h2 {
+      text-align: center;
+    }
+    
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    label {
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    select,
+    input[type="text"],
+    input[type="password"] {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    
+    button {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
+  <link rel="stylesheet" href="path/to/select2.min.css">
+<script src="path/to/select2.min.js"></script>
+
+</head>
+<body>
+  <div class="container">
+    <h2>Addistional Information</h2>
+    <form method='POST'>
+      {% csrf_token %}
+      <label for="role">Which subject are you teaching?</label>
+      <select name="role">
+        {% for a in sss %}
+        <option value="{{a.id}}">{{a.name}}</option>
+        {% endfor %}
+      </select>
+      
+      <label for="select-items">by using ctrl + select Select the grades that You are teaching.</label>
+      <select multiple id="select-items" name="multiple">
+        {% for a in ggg %}
+        <option value="{{a.id}}">Grade {{a.name}}</option>
+{% endfor %}
+      </select>
+      
+      
+      <button type="submit">Finish</button>
+    </form>
+  </div>
+
+  <script>
+// Add class to selected options on click
+document.getElementById("select-items").addEventListener("click", function(event) {
+  if (event.target.tagName === "OPTION") {
+    event.target.classList.toggle("selected");
+  }
+});
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,76 @@
+{% extends 'staff/base.html' %}
+{% block css %}
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="/static/css/a.css">
+{% endblock %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <a href="{% url 'st_report_card_index' %}" class="btn btn-primary">All</a>
+  {% for g in grades %}
+    <a href="{% url 'st_get_studet_data_by_grade' g.id %}" class="btn btn-primary">Grade {{g.name}}</a>
+    {% endfor %}
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Student /</span> </h4>
+
+  <div class="container">
+  <form name="form1" id="form1" method="POST">
+    {% csrf_token %}
+    <div class="input-group input-group-merge">
+        <span class="input-group-text" id="basic-addon-search31"><i class="bx bx-search"></i></span>
+        <input type="text" name="search" class="form-control" placeholder="Students Name..." aria-label="Search..." aria-describedby="basic-addon-search31">
+      <button type="submit" onclick="showResult()" class="btn btn-dark" id="btn">Search Student</button>
+    </div>
+    </form>
+</div>
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tables /</span> Students</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+        {% if a == None %}
+      <h5 class="card-header">Student Table</h5>
+      {% else %}
+      <h5 class="card-header">you searched for "{{a}}"</h5>
+      {% endif %}
+
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Current Grade</th>
+              <th>Verification</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for s in students %}
+            <tr>
+              <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</strong></td>
+              <td>Grade {{s.profile.grade.name}}</td>
+              <td>
+                {% if s.is_verified == True %}
+                <span class="badge bg-label-primary me-1">Verified</span></td>
+                {% else %}
+                <span class="badge bg-label-warning me-1">Not Verified</span></td>
+                {% endif %}
+              <td>
+                <a href="{% url 'st_get_studet_data' s.profile.user.username %}" class="btn btn-primary">Get @{{s.profile.user.username}}'s Data</a>
+                {% if staff.modify_student == True %}
+                <a href="{% url 'st_st_edit' s.profile.user.id %}" class="btn btn-dark">Edit</a>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!--/ Responsive Table -->
+  </div>
+
+{% endblock %}
+{% block script %}
+{% endblock %}

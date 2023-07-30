@@ -1,0 +1,67 @@
+{% extends 'manager/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+{% endblock css %}
+{% block bodymain %}
+<div class="animated fadeIn">
+
+
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    Blogpost Add to blog "{{bb.name}}"
+                </div>
+                <div class="card-body card-block">
+                    <form method="POST" enctype="multipart/form-data" class="form-horizontal">
+                        {% csrf_token %}
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Sub Title</label></div>
+                            <div class="col-12 col-md-9"><input name="name" type="text" id="disabled-input" placeholder="{{student.profile.user.first_name}} {{student.profile.user.last_name}}"  class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Sub Blog Cover (optional)</label></div>
+                            <div class="col-12 col-md-9"><input name="cover" type="file" id="disabled-input" class="form-control"></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="select" class=" form-control-label">Category</label></div>
+                            <div class="col-12 col-md-9">
+                                <select disabled id="select" class="form-control">
+                                    <option value="{{bb.category.id}}" selected>{{bb.category.name}}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Paragraph 1</label></div>
+                            <div class="col-12 col-md-9"><textarea name="p1" id="" cols="30" rows="4"></textarea></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Paragraph 2</label></div>
+                            <div class="col-12 col-md-9"><textarea name="p2" id="" cols="30" rows="4"></textarea></div>
+                        </div>
+                        <div class="row form-group">
+                            <div class="col col-md-3"><label for="disabled-input" class=" form-control-label">Paragraph 3</label></div>
+                            <div class="col-12 col-md-9"><textarea name="p3" id="" cols="30" rows="4"></textarea></div>
+                        </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Add
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm">
+                        <a href="{% url 'm_blog' %}">
+                        <i class="fa fa-arrow-left"></i> back</a>
+                    </button>
+                </div>
+                
+            </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+
+{% endblock script %}
+

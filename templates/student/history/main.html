@@ -1,0 +1,48 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+{% endblock %}
+{% block content %}
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> History</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Hey {{student.first_name}} {{student.last_name}} Select the year you wanna view</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table" id="tblToExcl">
+          <thead>
+            <tr>
+              <th>Year</th>
+              <th>Grade</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for h in his %}
+            <tr>
+                <td>{{h.academicYear.year}}</td>
+                <td>Grade {{h.grade}}</td>
+                <td><a href="{% url 's_result_history' h.academicYear.year  %}"><button class="btn btn-primary">Click Here </button></a></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block script %}
+  <script type="text/javascript">
+    function htmlTableToExcel(type){
+      var data = document.getElementById('tblToExcl');
+      var excelFile = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+      XLSX.write(excelFile, { bookType: type, bookSST: true, type: 'base64' });
+      XLSX.writeFile(excelFile, '{{student.first_name}} Results Excel.' + type);
+     }
+    </script>
+{% endblock %}

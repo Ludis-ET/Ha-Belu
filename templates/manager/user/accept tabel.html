@@ -1,0 +1,164 @@
+{% extends "manager/base.html" %}
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/style.css">
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+    
+{% endblock %}
+{% block bodymain %}
+<div class="animated fadeIn">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="card">
+                <div class="card-header" >
+                    <strong class="card-title">Accept or Reject users to this site</strong>   <br><br>
+                </div>
+                <div class="card-body">
+                    <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Username</th>
+                                <th>Grade</th>
+                                <th>User Type</th>
+                                <th>Status</th>
+                                <th>Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for s in students %}
+                            <tr>
+                                <td>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</td>
+                                <td>{{s.profile.user.username}}</td>
+                                <td>{{s.grade}}</td>
+                                <td>Student</td>
+                                {% if s.is_verified %}
+                                <td><span class="badge badge-success">Accepetd</span></td>
+                                {% else %}
+                                <td><span class="badge badge-warning">Not Accepted</span></td>
+                                {% endif %}
+                                <td>
+                                    <form method='POST' action="{% url 'm_user_accept' %}">
+                                        {% csrf_token %}
+                                        <input type="text" hidden name="username" value="{{s.profile.user.username}}" >
+                                        <input type="text" hidden name="type" value="s" >
+                                        <button type="submit" class="btn btn-success fa fa-check" name="accept"></button>
+                                        <a href="{% url 'm_student_edit' s.profile.user.username %}" class="btn btn-primary fa fa-edit"></a>
+                                    <button type="submit" class="btn btn-danger fa fa-times" name="deny"></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for s in staffs %}
+                            <tr>
+                                <td>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</td>
+                                <td>{{s.profile.user.username}}</td>
+                                <td>{% for t in s.my_room.all %}
+                                {{t.name}},
+                                {% endfor %}</td>
+                                <td>Staff</td>
+                                {% if s.is_verified %}
+                                <td><span class="badge badge-success">Accepetd</span></td>
+                                {% else %}
+                                <td><span class="badge badge-warning">Not Accepted</span></td>
+                                {% endif %}
+                                <td>
+                                    <form method='POST' action="{% url 'm_user_accept' %}">
+                                        {% csrf_token %}
+                                        <input type="text" hidden name="username" value="{{s.profile.user.username}}" >
+                                        <input type="text" hidden name="type" value="ss" >
+                                        <button type="submit" class="btn btn-success fa fa-check" name="accept"></button>
+                                        <a href="{% url 'm_teacher_edit' s.profile.user.username %}" class="btn btn-primary fa fa-edit"></a>
+                                    <button type="submit" class="btn btn-danger fa fa-times" name="deny"></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for s in teachers %}
+                            <tr>
+                                <td>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</td>
+                                <td>{{s.profile.user.username}}</td>
+                                <td>{% for t in s.my_room.all %}
+                                {{t.name}},
+                                {% endfor %}</td>
+                                <td>Teacher</td>
+                                {% if s.is_verified %}
+                                <td><span class="badge badge-success">Accepetd</span></td>
+                                {% else %}
+                                <td><span class="badge badge-warning">Not Accepted</span></td>
+                                {% endif %}
+                                <td>
+                                    <form method='POST' action="{% url 'm_user_accept' %}">
+                                        {% csrf_token %}
+                                        <input type="text" hidden name="username" value="{{s.profile.user.username}}" >
+                                        <input type="text" hidden name="type" value="t" >
+                                        <button type="submit" class="btn btn-success fa fa-check" name="accept"></button>
+                                        <a href="{% url 'm_teacher_edit' s.profile.user.username %}" class="btn btn-primary fa fa-edit"></a>
+                                    <button type="submit" class="btn btn-danger fa fa-times" name="deny"></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            {% for s in managers %}
+                            <tr>
+                                <td>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</td>
+                                <td>{{s.profile.user.username}}</td>
+                                <td>All Grade</td>
+                                <td>Manager</td>
+                                {% if s.is_verified %}
+                                <td><span class="badge badge-success">Accepetd</span></td>
+                                {% else %}
+                                <td><span class="badge badge-warning">Not Accepted</span></td>
+                                {% endif %}
+                                <td style="width: 150px;">
+                                    <form method='POST' action="{% url 'm_user_accept' %}">
+                                        {% csrf_token %}
+                                        <input type="text" hidden name="username" value="{{s.profile.user.username}}" >
+                                        <input type="text" hidden name="type" value="m" >
+                                        <button type="submit" class="btn btn-success fa fa-check" name="accept"></button>
+                                        <button type="button" class="btn btn-primary fa fa-edit" disabled></button>
+                                    <button type="submit" class="btn btn-danger fa fa-times" name="deny"></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+
+
+    </div>
+</div>
+{% endblock %}
+{% block script %}
+<script src="/static/manager/assets/js/lib/data-table/datatables.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.bootstrap.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/jszip.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/vfs_fonts.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.html5.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.print.min.js"></script>
+<script src="/static/manager/assets/js/lib/data-table/buttons.colVis.min.js"></script>
+<script src="/static/manager/assets/js/init/datatables-init.js"></script>
+
+
+<script type="text/javascript">
+    $(document).ready(function() {
+      $('#bootstrap-data-table-export').DataTable();
+  } );
+</script>
+{% endblock %}

@@ -1,0 +1,201 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+{% endblock %}
+{% block content %}
+
+
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h2>Student {{student.first_name}} {{student.last_name}} academic history in year {{y.year}} E.C</h2>
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> 1st Term</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Hey {{student.first_name}} {{student.last_name}} This table represents your 1st half term results</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table" id="tblToExcl">
+          <thead>
+            <tr>
+              <th>Subject</th>
+              {% for t in test %}
+              <th>{{t.name}} ({{t.capacity}} marks) </th>
+              {% endfor %}
+              <th>Total ({{total}} marks)</total>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for a in subject %}
+            <tr>
+              <td><strong>{{a.name}}</strong></td>
+              {% for c in result %}
+              {% if a.name != c.subject.name %}
+              <td id="status{{c.id}}"><b>{{c.status}}</b> marks</td>
+              {% endif %}
+              {% endfor %}
+              <td>
+                {% for bb in substat %}
+                {% if bb.subject.id == a.id %}
+                  {{bb.first}} marks
+                {% endif %}
+                {% endfor %}
+              </td>
+            </tr>
+            {% endfor %}
+            
+            {% for bb in substat %}
+            <tr>
+              <td><strong>All Total</strong></td>
+              <td align="center"><strong>{{stat.first_total}} / {{stat.first_from}} (total marks)</strong></td>
+            </tr>
+            <tr>
+              <td><strong>Average</strong></td>
+              <td align="center"><strong>{{stat.first_average}}%</strong></td>
+            </tr>
+            <tr>
+              <td><strong>last updated Rank </strong></td>
+              <td align="center"><strong>
+                {% if stat.first_rank %}
+                {{stat.first_rank }}
+                {% else %}
+                
+                This Wil appear when managers approve your report card
+                {% endif %}
+              </strong></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> 2nd Term</h4>
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <h5 class="card-header">Hey {{student.first_name}} {{student.last_name}} This table represents your 2nd half term results</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table" id="tblToExcl">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            {% if testtwo %}
+            {% for t in testtwo %}
+            <th>{{t.name}} ({{t.capacity}} marks) </th>
+            <th>Total ({{totaltwo}} marks) </th>
+            {% endfor %}
+            {% else %}
+            <th>Not started yet</th>
+            {% endif %}
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          {% for a in subjecttwo %}
+          <tr>
+            <td><strong>{{a.name}}</strong></td>
+            {% for c in resulttwo %}
+            {% if a.name == c.subject.name %}
+            <td id="status{{c.id}}"><b>{{c.status}}</b> marks</td>
+            {% endif %}
+            {% endfor %}
+            <td>
+              {% for bb in substat %}
+              {% if bb.subject.id == a.id %}
+                {{bb.second}} marks
+              {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+            
+          {% for bb in substat %}
+          <tr>
+            <td><strong>All Total</strong></td>
+            <td align="center"><strong>{{stat.second_total}} / {{stat.second_from}} (total marks)</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Average</strong></td>
+            <td align="center"><strong>{{stat.second_average}}%</strong></td>
+          </tr>
+          <tr>
+            <td><strong>last updated Rank </strong></td>
+            <td align="center"><strong>
+              {% if stat.second_average %}
+              {% if stat.second_rank %}
+              {{stat.second_rank }}
+              {% else %}
+              This Wil appear when managers approve your report card
+              {% endif %}
+              {% else %}
+              Nothing to compare
+              {% endif %}
+            </strong></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> overall year status</h4>
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <h5 class="card-header">Hey {{student.first_name}} {{student.last_name}} This table represents your 1st and 2nd half term results</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table" id="tblToExcl">
+        <thead>
+          <tr>
+            <th> - </th>
+            <th> - </th>
+          </tr>
+        </thead>
+        <tbody class="table-border-bottom-0">
+          {% for bb in substat %}
+          <tr>
+            <td><strong>Average</strong></td>
+            <td align="center"><strong>{{stat.average}}%</strong></td>
+          </tr>
+          <tr>
+            <td><strong>last updated Rank </strong></td>
+            <td align="center"><strong>
+              {% if stat.average %}
+              {% if stat.average %}
+              {{stat.rank }}
+              {% else %}
+              This Wil appear when managers approve your report card
+              {% endif %}
+              {% else %}
+              Nothing to compare
+              {% endif %}
+            </strong></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> My {{student.year.year}} Report Card</h4>
+
+  <!-- Basic Bootstrap Table -->
+  <div class="card">
+    <h5 class="card-header">Hey {{student.first_name}} {{student.last_name}} The link billow is your report card you can share it any where you want</h5>
+    <h5 class="card-header"><a href="{% url 'm_data_result_student' id=st.id year=y.year %}">{{site}}/manager/web/data/results/by-grade-student-of-year/student-id/student report card/student544527{{student.id}}7524233id/year4325684{{student.year.year}}6534422/</a></h5>
+  </div>
+</div>
+{% endblock %}
+{% block script %}
+  <script type="text/javascript">
+    function htmlTableToExcel(type){
+      var data = document.getElementById('tblToExcl');
+      var excelFile = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+      XLSX.write(excelFile, { bookType: type, bookSST: true, type: 'base64' });
+      XLSX.writeFile(excelFile, '{{student.first_name}} Results Excel.' + type);
+     }
+    </script>
+{% endblock %}

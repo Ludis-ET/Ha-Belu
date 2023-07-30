@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student {{student.first_name}} {{student.last_name}} Grade {{student.profile.grade}} report card design {{card.name}}</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        hr{
+            border:1px solid black;
+        }
+        #table{
+            position: absolute;
+            border-collapse: collapse;
+            width:{{tt.width}}{{card.select}};
+            height:{{tt.height}}{{card.select}};
+            top:{{tt.y_axis}}{{card.select}};
+            left:{{tt.x_axis}}{{card.select}};
+        }
+        #sc_icon_i{
+            position: absolute;
+            width:{{icon.width}}{{card.select}};
+            height:{{icon.height}}{{card.select}};
+            top:{{icon.y_axis}}{{card.select}};
+            left:{{icon.x_axis}}{{card.select}};
+            border-radius:{{icon.border}}{{card.select}};
+        }
+        #one{
+            font-size:{{tt.name_size}}{{card.select}};
+            font-family:{{tt.name_font}};
+        }
+        #two{
+            font-size:{{tt.num_size}}{{card.select}};
+            font-family:{{tt.num_font}};
+        }
+        #table , td ,tr ,th{
+            border:{{tt.border}}{{card.select}} solid black;
+        }
+        #st_name_p{
+            position: absolute;
+            font-size:{{name.size}}{{card.select}};
+            font-family:{{name.font}};
+            top:{{name.y_axis}}{{card.select}};
+            left:{{name.x_axis}}{{card.select}};
+        }
+        
+        #st_grade_p{
+            position: absolute;
+            font-size:{{grade.size}}{{card.select}};
+            font-family:{{grade.font}};
+            top:{{grade.y_axis}}{{card.select}};
+            left:{{grade.x_axis}}{{card.select}};
+        }
+        {% if text %}
+      {% for l in text %}
+        
+        #text{{l.name}}{
+            position: absolute;
+            font-size:{{l.size}}{{card.select}};
+            font-family:{{l.font}};
+            top:{{l.y_axis}}{{card.select}};
+            left:{{l.x_axis}}{{card.select}};
+        }
+      {% endfor %}
+      {% endif %}
+        {% if line %}
+      {% for l in line %}
+        
+        #line{{l.id}}{
+            position: absolute;
+            width:{{l.width}}{{card.select}};
+            top:{{l.y_axis}}{{card.select}};
+            left:{{l.x_axis}}{{card.select}};
+        }
+      {% endfor %}
+      {% endif %}
+    </style>
+    <style>
+        hr{
+            position: absolute;
+        }
+        table{
+            border: 2px solid black;
+            position: absolute;
+        }
+        p{
+            position: absolute;
+        }
+        img{
+            position: absolute;
+        }
+        table{
+            border: 2px solid black;
+            
+        }
+    }
+    b{position: absolute;width:100%;}
+    </style>
+    
+    <link rel="stylesheet" href="/static/css/bb.css">
+    <style>
+      .non-printable{
+    position:fixed;
+    top:10px;
+    left: 20%;
+    background:#333;
+    padding:20px;
+    z-index:100;
+    border-radius:20px;
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+}
+.non-printable button ,a{
+    text-decoration:none;
+    color:#333;
+    background:#f9a826;
+    border:none;
+    padding:10px;
+    border-radius:10px;
+    text-align:center;
+    transition:.3s ease-in-out;
+}
+.non-printable button:hover ,a:hover{
+    color:#f9a826;
+    background:#333;
+    border:1px solid #f9a826;
+}
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  bottom: 150%;
+  left: 50%;
+  margin-left: -75px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+html{
+size: landscape;
+}
+@media print{
+  .non-printable{
+    display: none;
+  }
+}
+#extends{
+  color:#fff;
+  display: block;
+  margin-left: 20px;
+  display: none;
+}
+    </style>
+</head>
+<body>
+
+
+
+
+  <div class="non-printable" id="non">
+    {% if yes == 0 %}
+    <form method="POST">
+      {% csrf_token %}
+    <button type="submit" name="delete">Delete</button>
+  </form>
+    <a href="{% url 't_add_card' id=student.id id2=card.id id3=year.id %}" >Edit</a>
+
+    <button onclick="myExtend()">Dual</button>
+    {% endif %}
+
+    {% if not request.user.is_authenticated %}
+    <a href="{% url 'r_index' %}">main website</a>
+    {% endif %}
+    <button onclick="myPrint()">Print</button>
+    
+    <input type="text" value="{{ request.build_absolute_uri }}" disabled hidden id="myInput">
+
+    <!-- The button used to copy the text -->
+    <button onclick="myFunction()" id="copy">Copy Link</button><br>
+
+
+    <div id="extends">
+      <form method="POST">
+        {% csrf_token %}
+        1st:
+        <select name="one" id="">
+          {% if times.count != 0 %}
+            {% for time in times %}
+              <option value="{{time.id}}">Year {{time.academicYear.year}} - Grade {{time.grade}}</option>
+            {% endfor %}
+          {% else %}
+            <option value="" disabled>there is no data in the server</option>
+          {%endif %}
+          <option value="current">This Year</option>
+        </select>
+        2nd:
+        <select name="two" id="">
+          {% if times.count != 0 %}
+            {% for time in times %}
+              <option value="{{time.id}}">Year {{time.academicYear.year}} - Grade {{time.grade}}</option>
+            {% endfor %}
+          {% else %}
+            <option value="" disabled>there is no data in the server</option>
+          {%endif %}
+          <option value="current">This Year</option>
+        </select>
+        <button type="submit" name="generate">Generate</button>
+      </form>
+    </div>
+  </div>
+
+ 
+
+
+
+
+    {% if card.table == True %}
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          <th align="center" id="one">Subject</th>
+          <th align="center" id="one">1st semister</th>
+          <th align="center" id="one">2nd semister</th>
+          <th align="center" id="one">Year Average</th>
+        </tr>
+      </thead>
+      <tbody class="table-border-bottom-0"
+        {% for s in sub %}
+        {% for b in s.subject.grade.all %}
+        {% if b == s.student.profile.grade %}
+            <tr>
+                <th align="center" id="one">{{s.subject.name}}</th>
+                <td align="center" id="two">{% if s.first %}{{s.first}}{%else %} - {% endif %}</td>
+                <td align="center" id="two">{% if s.second %}{{s.second}}{%else %} - {% endif %}</td>
+                <td align="center" id="two">{% if s.year %}{{s.year|floatformat:2}}{%else %} - {% endif %}</td>
+            </tr>
+        </form>
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+        <tr>
+            <th align="center" id="one">Total</th>
+            <td align="center" id="two">{% if stat.first_total %}{{stat.first_total}}{%else %} - {% endif %}</td>
+            <td align="center" id="two">{% if stat.second_total %}{{stat.second_total}}{%else %} - {% endif %}</td>
+            <td align="center" id="two">{% if stat.total %}{{stat.total}}{%else %} - {% endif %}</td>
+        </tr>
+        <tr>
+            <th align="center" id="one">Average</th>
+            <td align="center" id="two">{% if stat.first_average %}{{stat.first_average|floatformat:2}}%{%else %} - {% endif %}</td>
+            <td align="center" id="two">{% if stat.second_average %}{{stat.second_average|floatformat:2}}%{%else %} - {% endif %}</td>
+            <td align="center" id="two">{% if stat.average %}{{stat.average|floatformat:2}}%{%else %} - {% endif %}</td>
+        </tr>
+        <tr>
+            <th align="center" id="one">Rank</th>
+            <td align="center" id="two">{% if stat.first_rank %}{{stat.first_rank}}{%else %} - {% endif %}/{{alls}}</td>
+            <td align="center" id="two">{% if stat.second_rank%}{{stat.second_rank}}{%else %} - {% endif %}/{{alls}}</td>
+            <td align="center" id="two">{% if stat.rank %}{{stat.rank}}{%else %} - {% endif %}/{{alls}}</td>
+        </tr>
+      </tbody>
+    </table>
+      {% endif %}
+
+      {% if text %}
+      {% for t in text %}
+        <b id="text{{t.name}}">{{t.text | linebreaksbr}}</b>
+      {% endfor %}
+      {% endif %}
+
+
+      
+      
+
+      {% if line %}
+      {% for l in line %}
+        <hr id="line{{l.id}}">
+      {% endfor %}
+      {% endif %}
+
+
+      {% if card.st_name == True %}
+      <p id="st_name_p">
+      Name: <b>{{stat.student.profile.user.first_name}} {{stat.student.profile.user.last_name}}</b>
+      </p>
+      {% endif %}
+
+
+
+      {% if card.st_grade == True %}
+      <p id="st_grade_p">
+      Grade: <b>{{stat.student.profile.grade.name}}</b>
+      </p>
+      {% endif %}
+
+
+      {% if card.sc_icon == True %}
+      <img src="{{web.icon.url}}" id="sc_icon_i">
+      {% endif %}
+
+
+
+
+      <script>
+        function myPrint(){
+          window.print();
+        }
+      </script>
+
+<script>
+  function myExtend(){
+    document.getElementById("extends").style.display = "block";
+  }
+</script>
+<script>
+  function myFunction() {
+  // Get the text field
+  var copyText = document.getElementById("myInput");
+
+  // Select the text field
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); // For mobile devices
+
+   // Copy the text inside the text field
+  navigator.clipboard.writeText(copyText.value);
+
+  // Alert the copied text
+  document.getElementById("copy").innerHTML = "Copied!";
+
+
+  setTimeout(() => {
+    document.getElementById("copy").innerHTML = "Copy Link";
+}, "2000")
+}
+</script>
+
+<script>
+  var
+        table = document.getElementById("non"),
+        num = document.getElementById("num"),
+         e = document.getElementById("select");
+        var mousePosition;
+var offset = [0,0];
+var div;
+var isDown = false;
+
+div = document.getElementById('non');
+div.style.position = "absolute";
+
+document.body.appendChild(div);
+
+div.addEventListener('mousedown', function(e) {
+    isDown = true;
+    offset = [
+        div.offsetLeft - e.clientX,
+        div.offsetTop - e.clientY
+    ];
+}, true);
+
+document.addEventListener('mouseup', function() {
+    isDown = false;
+}, true);
+
+document.addEventListener('mousemove', function(event) {
+    event.preventDefault();
+    if (isDown) {
+        mousePosition = {
+
+            x : event.clientX,
+            y : event.clientY
+
+        };
+        div.style.left = (mousePosition.x + offset[0]) + 'px';
+        div.style.top  = (mousePosition.y + offset[1]) + 'px';
+    }
+}, true);
+      
+
+
+</script>
+
+</body>
+</html>

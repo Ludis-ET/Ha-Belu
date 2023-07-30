@@ -1,0 +1,90 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+{% endblock %}
+{% block content %}
+
+<div id="wrapperr" style="padding:20px;">
+   
+   <div id="content-wrapper">
+      <div class="container-fluid pb-0">
+        <div class="top-search" style="margin-bottom: 20px;" >
+            <div class="row">
+               <div class="col-md-12"  >   
+                  <form class="mobile-search" method="POST" action="{% url 'course_search' %}">
+                     {% csrf_token %}
+                     <div class="input-group">
+                       <input type="text" placeholder="Search course..." name="searched" class="form-control">
+                         <div class="input-group-append">
+                           <button type="submit" class="btn btn-dark"><i class="fas fa-search"></i></button>
+                         </div>
+                     </div>
+                  </form>   
+               </div>
+            </div>
+         </div>
+         <div class="top-category section-padding mb-4">
+            <h3>You searched for "{{a}}" we found "{{course.count}}" results</h3>
+         </div>
+         <hr>
+         <div class="video-block section-padding">
+            <div class="row">
+                {% if course %}
+               {% for c in course %}
+               <div class="col-xl-3 col-sm-6 mb-3">
+                  <div class="video-card">
+                     <div class="video-card-image">
+                        <a class="play-icon" href="{% url 'page' c.id %}"><i class="fas fa-play-circle"></i></a>
+                        <a href="{% url 'page' c.id %}"><img class="img-fluid" src="{{c.cover.url}}" alt=""></a>
+                        {% for a in c.subject.all|slice:":1" %}
+                        <div class="time">{{a.name}}</div>
+                        {% endfor %}
+                     </div>
+                     <div class="video-card-body">
+                        <div class="video-title">
+                           <a href="{% url 'page' c.id %}">{{c.name|slice:":16"}}...</a>
+                        </div>
+                        <div class="video-page text-success">
+                           {{c.posted_by.first_name}} {{c.posted_by.last_name}}  <i class="fas fa-check-circle text-success"></i></a>
+                        </div>
+                        <div class="video-view">
+                           {{c.views}} views &nbsp;<i class="fas fa-calendar-alt"></i> {{c.date|timesince}} ago
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+               {% else %}
+               <h1>No course Found </h1>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- /.content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+
+      {% endblock %}
+      {% block script %}
+      <script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+      <script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Owl Carousel -->
+      <script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/static/student/course/js/custom.js"></script>
+
+      {% endblock %}

@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+    {% block title %}{{web.full_name}} | {{web.slogan}}{% endblock %}
+   
+{% block head %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- Favicon -->
+    <link href="{{web.icon.url}}" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"> 
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="/static/anonymous/main/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <style>
+        .containert{
+            text-align: center;
+            margin-top: 7%;
+            font-size: 2rem;
+            color: #fff;
+        }
+        .countdown-containert{
+            display: flex;
+            margin-top: 10px;
+            font-weight: 900;
+            color: #fff;
+            text-align: center;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+        }
+        .elements{
+            padding: 20px;
+            text-transform: capitalize;
+            font-family:cursive;
+        }
+        .elements span{
+            font-family: jokerman;
+            color: #333;
+        }
+    </style>
+    {% block css %}
+    
+    {% endblock css %}
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="/static/anonymous/main/css/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="/static/anonymous/main/css/alert.css">
+{% endblock %}
+
+{% block body %}
+    
+
+    
+        {% for message in messages %}
+        <div class="alert {{message.tags}}">
+            <p>{{message}}</p>
+        </div>
+        {% endfor %}
+        <div class="container-fluid d-none d-lg-block">
+            <div class="row align-items-center py-4 px-xl-5">
+                <div class="col-lg-3">
+                    <a href="{% url 'r_index' %}" class="text-decoration-none">
+                        <h1 class="m-0"><span class="text-primary"><img src="{{web.icon.url}}" style="width: 60px;height:60px;" /></span> {{web.full_name}}</h1>
+                    </a>
+                </div>
+                <div class="col-lg-3 text-right">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-2x fa-map-marker-alt text-primary mr-3"></i>
+                        <div class="text-left">
+                            <h6 class="font-weight-semi-bold mb-1">Our Address</h6>
+                            <small>{{web.address}}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-right">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-2x fa-envelope text-primary mr-3"></i>
+                        <div class="text-left">
+                            <h6 class="font-weight-semi-bold mb-1">Email Us</h6>
+                            <small>{{web.email}}</small>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 text-right">
+                    <div class="d-inline-flex align-items-center">
+                        <i class="fa fa-2x fa-phone text-primary mr-3"></i>
+                        <div class="text-left">
+                            <h6 class="font-weight-semi-bold mb-1">Call Us</h6>
+                            <small>{{web.phone1}}</small><br>
+                            {% if web.phone2 %}
+                            <small>{{web.phone2}}</small>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row border-top px-xl-5">
+                <div class="col-lg-3 d-none d-lg-block">
+                    <a class="d-flex align-items-center justify-content-between bg-secondary w-100 text-decoration-none" data-toggle="collapse" href="#navbar-vertical" style="height: 67px; padding: 0 30px;">
+                        <h5 class="text-primary m-0"><i class="fa fa-image mr-2"></i> Events  </h5>
+                        <i class="fa fa-angle-down text-primary"></i>
+                    </a>
+                    <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 border border-top-0 border-bottom-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 9;">
+                        <div class="navbar-nav w-100">
+                            {% for e in event %}
+                            <a href="{% url 'event' e.id %}" class="nav-item nav-link">{{e.name}}</a>
+                            {% endfor %}
+                        </div>
+                    </nav>
+                </div>
+                <div class="col-lg-9">
+                    <nav class="navbar navbar-expand-lg bg-light navbar-light py-3 py-lg-0 px-0">
+                        <a href="{% url 'r_index' %}" class="text-decoration-none d-block d-lg-none">
+                            <h1 class="m-0">{{web.full_name}}</h1>
+                        </a>
+                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                            <div class="navbar-nav py-0">
+                                <a href="{% url 'a_index' %}" class="nav-item nav-link">Home</a>
+                                <a href="{% url 'a_about' %}" class="nav-item nav-link">About</a>
+                                <a href="{% url 'a_blog' %}" class="nav-item nav-link">Blog</a>
+                                <a href="{% url 'a_teacher' %}" class="nav-item nav-link">Teachers</a>
+                                <a href="{% url 'a_contact' %}" class="nav-item nav-link">Contact</a>
+                                {% if not request.user.is_authenticated %}
+                                    <a href="{% url 'login' %}" class="nav-item nav-link">Login</a>
+                                {% else %}
+                                    <a href="{% url 'r_index' %}" class="nav-item nav-link">Dashboard</a>
+                                    <a href="{% url 'logout' %}" class="nav-item nav-link">Logout</a>
+                                {% endif %}
+                            {% if web.app %}
+                            <a  href="{{web.app.url}}" download><button class="btn btn-primary" style="margin-top: 15px;">Download App</button></a>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </nav>
+                </div>
+                
+            </div>
+        </div>
+        {% block main %}
+
+
+        {% endblock %}
+        <div class="container-fluid bg-dark text-white py-5 px-sm-3 px-lg-5" style="margin-top: 90px;">
+            <div class="row pt-5">
+                <div class="col-lg-7 col-md-12">
+                    <div class="row">
+                        <div class="col-md-6 mb-5">
+                            <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Get In Touch</h5>
+                            <p><i class="fa fa-map-marker-alt mr-2"></i>{{web.address}}</p>
+                            <p><i class="fa fa-phone-alt mr-2"></i>{{web.phone1}}</p>
+                            <p><i class="fa fa-phone-alt mr-2"></i>{{web.phone2}}</p>
+                            <p><i class="fa fa-envelope mr-2"></i>{{web.email}}</p>
+                            <div class="d-flex justify-content-start mt-4">
+                                <a class="btn btn-outline-light btn-square mr-2" href="{{web.telegram}}"><i class="fab fa-telegram"></i></a>
+                                <a class="btn btn-outline-light btn-square mr-2" href="{{web.facebook}}"><i class="fab fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-5">
+                            <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">Quick Links</h5>
+                            <div class="d-flex flex-column justify-content-start">
+                                <a class="text-white mb-2" href="{% url 'a_blog' %}"><i class="fa fa-angle-right mr-2"></i>Bolg Post</a>
+                                <a class="text-white mb-2" href="{% url 'a_about' %}"><i class="fa fa-angle-right mr-2"></i>About</a>
+                                <a class="text-white mb-2" href="{% url 'a_contact' %}"><i class="fa fa-angle-right mr-2"></i>Contact</a>
+                                {% if not request.user.is_authenticated %}
+                                <a class="text-white mb-2" href="{% url 'login' %}"><i class="fa fa-angle-right mr-2"></i>Login</a>
+                                {% endif %}
+                                <a class="text-white" href="{% url 'a_teacher' %}"><i class="fa fa-angle-right mr-2"></i>Teachers</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-5 col-md-12 mb-5">
+                    <h5 class="text-primary text-uppercase mb-4" style="letter-spacing: 5px;">{{web.full_name}}</h5>
+                    <p>{{web.slogan}}</p>
+                    <div class="w-100">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid bg-dark text-white border-top py-4 px-sm-3 px-md-5" style="border-color: rgba(256, 256, 256, .1) !important;">
+            <div class="row">
+                <div class="col-lg-6 text-center text-md-left mb-3 mb-md-0">
+                    <p class="m-0 text-white">&copy; <a href="#">{{web.full_name}}</a>. All Rights Reserved. Developed by <a href="mailto:leulsegedmelaku1020@gmail.com">Ludis</a>
+                    </p>
+                </div>
+                <div class="col-lg-6 text-center text-md-right">
+                    <!--ul class="nav d-inline-flex">
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Privacy</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Terms</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">FAQs</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white py-0" href="#">Help</a>
+                        </li>
+                    </ul-->
+                </div>
+            </div>
+        </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    
+{% endblock %}
+{% block foot %}
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/anonymous/main/lib/easing/easing.min.js"></script>
+    <script src="/static/anonymous/main/lib/owlcarousel/owl.carousel.min.js"></script>
+
+    <!-- Contact Javascript File -->
+    <script src="/static/anonymous/main/mail/jqBootstrapValidation.min.js"></script>
+    <script src="/static/anonymous/main/mail/contact.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="/static/anonymous/main/js/main.js"></script>
+
+    <script>
+        const newYears = "{{web.registration_deadline}}";
+
+        function countdown(){
+            const newYearDate = new Date(newYears);
+            const currentDate = new Date();
+        
+            const totalSeconds = (newYearDate - currentDate)/1000;
+            const mins = Math.floor(totalSeconds/60)%60;
+            const hour = Math.floor(totalSeconds/60)%24;
+            const days = Math.floor(totalSeconds/3600/24);
+            const seconds = Math.floor(totalSeconds)%60;
+        
+            document.getElementById("seconds").innerHTML = formattime(seconds);
+            document.getElementById("mins").innerHTML = formattime(mins);
+            document.getElementById("hours").innerHTML = formattime(hour);
+            document.getElementById("days").innerHTML = formattime(days);
+        
+        }
+        function formattime(time){
+            return time < 10 ? "0" + time : time
+        }
+        setInterval(countdown, 1000);
+    </script>
+            {% block script %}
+
+            {% endblock %}
+
+{% endblock %}

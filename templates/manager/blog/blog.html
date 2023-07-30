@@ -1,0 +1,105 @@
+{% extends 'manager/base.html' %}
+{% block bodymain %}
+
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">Blog Posts by me</strong>
+                    <a target="_blank" style="color: #fff;" href="{% url 'm_blog_add' %}" class="btn btn-primary">Add New Blogpost</a>
+                </div>
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="serial">#</th>
+                                <th class="avatar">Cover image</th>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th colspan="3" align="center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in b %}
+                            <tr>
+                                <td class="serial">{{a.id}}</td>
+                                <td >
+                                <img style="width: 200px;height: 50px; border-radius: 10px;" src="{{a.cover.url}}" alt="">
+                                </td>
+                                <td> {{a.name}}</td>
+                                <td>  <span class="name">{{a.category.name}}</span> </td>
+                                <td> <a target="_blank" href="{% url 'm_blog_edit_main' a.id %}" class="badge badge-dark" style="color: #fff;">Edit</a> </td>
+                                <td><a target="_blank" href="{% url 'm_blog_add_sub' a.id %}" class="badge badge-primary" style="color: #fff;">Add to this</a></td>
+                                <td>
+                                    <a target="_blank" href="{% url 'blog_post' a.id %}" class="badge badge-warning" style="color: #333;">View</a>
+                                    <a href="{% url 'm_blog_delete' a.id %}" class="badge badge-danger"style="color: #fff;">Delete</a>
+                                </td>
+                            </tr>
+                            {% for b in ab %}
+                            {% if b.blog == a %}
+                            <tr>
+                                <td class="serial" colspan="2">-</td>
+                                <td class="serial">{{a.id}}.{{b.id}}</td>
+                                <td >
+                                    {% if b.Image %}
+                                <img style="width: 200px;height: 50px; border-radius: 10px;" src="{{b.Image.url}}" alt="">
+                            {% else%}
+                            No Image Found
+                            {% endif %}    
+                            </td>
+                                <td> {{b.name}}</td>
+                                <td>  <span class="name">sub blog of {{a.name}}</span> </td>
+                                <td style="display: flex;flex-wrap: wrap;justify-content: space-between;">
+                                    <a target="_blank" href="{% url 'm_blog_edit_sub' b.id %}" class="badge badge-dark" style="color: #fff;">Edit</a>
+                                    <a href="{% url 'm_blog_delete_sub' b.id %}" class="badge badge-danger"style="color: #fff;">Delete</a>
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <strong class="card-title">BloPost Categories</strong>
+                </div>
+                <div class="table-stats order-table ov-h">
+                    <table class="table ">
+                        <thead>
+                            <tr>
+                                <th class="serial">#</th>
+                                <th class="avatar">Category Name</th>
+                                <th colspan="3" align="center">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for a in ca %}
+                            <tr>
+                                <td class="serial">{{a.id}}</td>
+                                <td> {{a.name}}</td>
+                                <td>
+                                    <a href="{% url 'm_blog_delete_category' a.id %}" class="badge badge-danger"style="color: #fff;">Delete</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            <tr>
+                                <td class="serial">-</td>
+                            <form method="POST">
+                                {% csrf_token %}
+                                <td><input type="text" name="name"></td>
+                                <td>
+                                    <button type="submit" class="btn btn-dark">Add New</button>
+                                </td>
+                            </form>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> <!-- /.table-stats -->
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

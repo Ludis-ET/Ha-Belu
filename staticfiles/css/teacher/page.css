@@ -1,0 +1,12 @@
+@media print{
+    button.not-printable{
+        display:none;
+    }
+    
+    a.non-printable{
+        display:none;
+    }
+    nav.layout-navbar{
+        display:none;
+    }
+}

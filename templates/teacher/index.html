@@ -1,0 +1,251 @@
+{% extends 'teacher/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+{% endblock %}
+{% block content %}
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="row">
+        <div class="col-lg-16 mb-4 order-0">
+          <div class="card">
+            <div class="d-flex align-items-end row">
+              <div class="col-sm-7">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">Generate School Classes</h5>
+                  <p class="mb-4">
+                    Press the button bellow to generate and save the data of the students. Becarefull Click the button below if the registration of students is closed.
+                  </p>
+
+                  <form method="POST">
+                    {% csrf_token %}
+                    
+                    
+                      {% if year.start == True %}
+                      <button class="btn btn-dark" id="generate" onclick="myGenerate()" type="submit" name="generate">
+                      End Session for all Subjects
+                      
+                    </button>
+                      {% else %}
+                      <button class="btn btn-primary" id="generate" onclick="myGenerate()" type="submit" name="generate">
+                        Start Session
+                    </button>
+                      {% endif %}
+                  </form>
+                </div>
+              </div>
+              <div class="col-sm-5 text-center text-sm-left">
+                <div class="card-body pb-0 px-0 px-md-4">
+                  <img
+                    src="/static/student/assets/img/illustrations/man-with-laptop-light.png"
+                    height="140"
+                    alt="View Badge User"
+                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                    data-app-light-img="illustrations/man-with-laptop-light.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-8 mb-4 order-0">
+          <div class="card">
+            <div class="d-flex align-items-end row">
+              <div class="col-sm-7">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">Hey {{teacher.subject}} teacher {{user.first_name}} {{user.last_name}}</h5>
+                  <p class="mb-4">
+                    Welcome to {{web.full_name}} official website you are now logged in as a teacher.
+                  </p>
+
+                  <a href="{% url 'a_blog' %}" class="btn btn-sm btn-outline-primary">View Blog posts</a>
+                  <a href="{% url 't_channel' %}" class="btn btn-sm btn-outline-primary">My Channel</a>
+                  <a href="{% url 't_profile' %}" class="btn btn-sm btn-outline-primary">Edit My Profile</a>
+                </div>
+              </div>
+              <div class="col-sm-5 text-center text-sm-left">
+                <div class="card-body pb-0 px-0 px-md-4">
+                  <img
+                    src="/static/student/assets/img/illustrations/man-with-laptop-light.png"
+                    height="140"
+                    alt="View Badge User"
+                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                    data-app-light-img="illustrations/man-with-laptop-light.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 order-1">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                      <img
+                        src="/static/student/assets/img/icons/unicons/chart-success.png"
+                        alt="chart success"
+                        class="rounded"
+                      />
+                    </div>
+                  </div>
+                  <span class="fw-semibold d-block mb-1">Total Student in my room</span>
+                  <h3 class="card-title mb-2">{{student.count}}</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                      <img
+                        src="/static/student/assets/img/icons/unicons/chart-success.png"
+                        alt="chart success"
+                        class="rounded"
+                      />
+                    </div>
+                  </div>
+                  <span class="fw-semibold d-block mb-1">Subscribers</span>
+                  <h3 class="card-title mb-2">{{teacher.subscribers.count}}</h3>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      
+    <!-- Footer -->
+    </div>
+    {% if accept %}
+    <div class="top-category section-padding mb-4">
+      <div class="row">
+        <h4>These students are trying to enter in your room accept or deny them</h4>
+         <div class="col-md-12">
+            <div class="owl-carousel owl-carousel-category">
+              {% for s in accept %}
+               <div class="item">
+                  <div class="category-item">
+                     <a href="javascript:;">
+                      {% if s.profile_pic %}
+                        <img class="img-fluid" src="{{s.profile_pic.url}}" alt="">
+                        {% else %}
+                        <img class="img-fluid" src="https://imgs.search.brave.com/zd0sl2IWmqo_tQ6zSN3H40KCRSYCW4fRsEiQ4M7Pe5U/rs:fit:860:900:1/g:ce/aHR0cHM6Ly93d3cu/cG5nYWxsLmNvbS93/cC1jb250ZW50L3Vw/bG9hZHMvNS9Qcm9m/aWxlLUF2YXRhci1Q/TkcucG5n" alt="">
+                        {% endif %}
+                        <h6>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</h6>
+                        <p>@{{s.profile.user.username}}</p>
+                        <p>Grade {{s.grade}}</p>
+                        <h6>{{s.date | timesince}} ago</h6>
+                        <div style="display:flex;align-items: center;justify-content: center;">
+                        <label for="acceptit" class="btn btn-primary menu-icon tf-icons bx bx-like"></label>
+                        <label
+                    class="btn btn-danger deactivate-account menu-icon tf-icons bx bx-dislike"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#offcanvasBottom"
+                    aria-controls="offcanvasBottom"
+                  >
+                        </label>
+                  
+                        <form method="POST">
+                          {% csrf_token %}
+                          <input type="text" hidden name="id" value="{{s.id}}">
+                          <input type="submit" id="acceptit" hidden name="accept">
+                          <input type="submit" id="deleteit" hidden name="delete">
+                        </form>
+                        </div>
+                      </a>
+                  </div>
+               </div>
+               
+               {% endfor %}
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="offcanvas offcanvas-bottom"  
+                    tabindex="-1"
+                    id="offcanvasBottom"
+                    aria-labelledby="offcanvasBottomLabel">
+                    <div class="offcanvas-header">
+                      <h5 id="offcanvasBottomLabel" class="offcanvas-title">Carefull {{user.first_name}} {{user.last_name}}</h5>
+                      <button
+                        type="button"
+                        class="btn-close text-reset"
+                        data-bs-dismiss="offcanvas"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="offcanvas-body">
+                      <p>
+                        The user you selected is going to deleted from this site
+                      </p>
+                      <label type="submit" for="deleteit" class="btn btn-danger deactivate-account">Delete Student</label>
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="offcanvas">
+                        Cancel
+                      </button>
+                    </div>
+                          </div>
+   {% endif %}
+   
+        <!-- Examples -->
+        <div class="card">
+          <h5 class="card-header">Students </h5>
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              <thead>
+                <tr class="text-nowrap">
+                  <th>number</th>
+                  <th>Full Name</th>
+                  <th>Username</th>
+                  <th>Sex</th>
+                  <th>Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in student %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</td>
+                  <td>{{s.profile.user.username}}</td>
+                  <td>{{s.profile.sex}}</td>
+                  <td>{{s.profile.grade}}th grade</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        
+               
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  
+
+{% endblock %}
+{% block script %}
+<script>
+  function myGenerate(){
+    document.getElementById("generate").innerHTML = "Generating ... ";
+  }
+</script>
+<script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+<script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Owl Carousel -->
+<script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="/static/student/course/js/custom.js"></script>
+
+{% endblock %}

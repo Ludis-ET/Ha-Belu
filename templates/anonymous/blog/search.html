@@ -1,0 +1,87 @@
+{% extends 'anonymous/base.html' %}
+{% block main %}
+
+
+    <!-- Blog Start -->
+    <div class="container-fluid py-5">
+        <div class="container py-5">
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="row pb-3">
+                        {% if searched %}
+                        <h1>You searched for "{{search}}"</h1>
+                        {% for b in searched %}
+                        <div class="col-lg-6 mb-4">
+                            <div class="blog-item position-relative overflow-hidden rounded mb-2">
+                                {% if b.cover %}
+                                <img class="img-fluid" src="{{b.cover.url}}" alt="">
+                                {% else %}
+                                <img class="img-fluid" src="{{web.icon.url}}" alt="">
+                                {% endif %}
+                                <a class="blog-overlay text-decoration-none" href="{% url 'blog_post' b.id %}">
+                                    <h5 class="text-white mb-3">{{b.name}}</h5>
+                                    <p class="text-primary m-0">{{b.date |timesince}} ago</p>
+                                </a>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        {% else %}
+                        <h1>No Blog post with your keyword</h1>
+                        {% endif%}
+                    </div>
+                </div>
+    
+                <div class="col-lg-4 mt-5 mt-lg-0">
+                    <!-- Search Form -->
+                    <div class="mb-5">
+                        <form method="POST" action="{% url 'blog_search' %}">
+                            {% csrf_token %}
+                            <div class="input-group">
+                                <input type="text" class="form-control form-control-lg" name="search" placeholder="Keyword .....">
+                                <div class="input-group-append">
+                                    <input type="submit" style="background-color: var(--main);color :#fff;" class="input-group-text bg-transparent text-primary" value="search">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+    
+                    <!-- Category List -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Categories 
+                            <span class="badge badge-primary badge-pill">{{category.count}}</span></h3>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="{% url 'a_blog' %}" class="text-decoration-none h6 m-0">All</a>
+                            </li>
+                            {% for c in category %}
+                            <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                                <a href="{% url 'category' c.id %}" class="text-decoration-none h6 m-0">{{c.name}}</a>
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+    
+                    <!-- Recent Post -->
+                    <div class="mb-5">
+                        <h3 class="text-uppercase mb-4" style="letter-spacing: 5px;">Recent Post</h3>
+                        {% for b in blog|slice:":10" %}
+                        <a class="d-flex align-items-center text-decoration-none mb-3" href="{% url 'blog_post' b.id %}">
+                            {% if b.cover %}
+                            <img class="img-fluid rounded" style="width:150px;" src="{{b.cover.url}}" alt="">
+                            {% else %}
+                            <img class="img-fluid rounded" style="width:150px;" src="{{web.icon.url}}" alt="">
+                            {% endif %}
+                            <div class="pl-3">
+                                <h6 class="m-1">{{b.name}}</h6>
+                                <small>{{b.date |timesince}} ago</small>
+                            </div>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Blog End -->
+
+{% endblock %}

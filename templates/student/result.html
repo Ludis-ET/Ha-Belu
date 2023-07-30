@@ -1,0 +1,240 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="/static/css/a.css">
+<style>
+  .container{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:space-between;
+    align-items:center;
+}
+.container #right{
+    padding:10px;
+    background-color:#b4b46c;
+    border-radius:10px;
+    color:#333;
+    max-width:350px;
+    opacity: 0;
+    transition: 2s ease-in-out;
+}
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> choose individually</h4>
+
+  <div class="container">
+  <form name="form1" id="form1" action="/action_page.php">
+    Subjects: <select name="subject" id="subject"  class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+      <option value="" selected="selected">Select subject</option>
+    </select>
+    
+    <br><br>
+    Academic term: <select name="topic" id="topic"  class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+      <option value="" selected="selected">Please select subject first</option>
+    </select>
+    <br><br>
+    Subject Tests: <select name="chapter" id="chapter"  class="form-select" id="exampleFormControlSelect1" aria-label="Default select example">
+      <option value="" selected="selected">Please select term first</option>
+    </select>
+    <br><br>
+    <button type="button" onclick="showResult()" class="btn btn-dark" id="btn">View result</button>
+  </form>
+    <div id="right">
+      Hey Student {{student.first_name}} {{student.last_name}} (@{{student.username}}) your <span id="sub"></span> Subject <span id="tes"></span> test result is <span id="f_results"></span> out of <span id="f_from"></span> marks. 
+      <br>as a conclusion: <br>
+      -> <span id="f_results2"></span>/<span id="f_from2"></span> marks <br>
+      -> you got <span id="f_av"></span> of the test <br>
+      -> <span id="final"></span>
+    </div>
+</div>
+</div>
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> Subject status</h4>
+
+  <div class="card">
+    <h5 class="card-header">other academic status</h5>
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>First Academic term marks</th>
+            <th>Second Academic term marks</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for a in stat %}
+          {% for b in a.subject.grade.all %}
+          {% if a.student.profile.grade == b %}
+          <tr>
+            <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>{{a.subject.name}}</strong></td>
+            <td align="center">{% if a.first %}{{a.first}}/{{a.f_from}} {% if a.first >= 50 %}<span class="badge bg-label-success me-1">Passed</span>{%else%}<span class="badge bg-label-danger me-1">Failed</span>{% endif %}{% else %} - {% endif %} </td>
+            <td align="center">{% if a.second %}{{a.second}}/{{a.s_from}} {% if a.second >= 50 %}<span class="badge bg-label-success me-1">Passed</span>{%else%}<span class="badge bg-label-danger me-1">Failed</span>{% endif %}{% else %} - {% endif %}</td>
+          </tr>
+          {% endif %}
+          {% endfor %}
+          {% endfor %}
+          <tr>
+            <th><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Total</strong></th>
+            <td align="center">{{i.first_total}}/{{i.first_from}}</td>
+            <td align="center">{{i.second_total}}/{{i.second_from}}</td>
+          </tr>
+          <tr>
+            <th><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Average</strong></th>
+            <td align="center">{{i.first_average}}%</td>
+            <td align="center">{{i.second_average}}%</td>
+          </tr>
+          <tr>
+            <th><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Rank</strong></th>
+            <td align="center">{% if i.first_rank %}{{i.first_rank}}{% else %}can't see it now{% endif %}</td>
+            <td align="center">{% if i.second_rank %}{{i.second_rank}}{% else %}can't see it now{% endif %}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+  
+</div>
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Status /</span> overall status</h4>
+
+  <div class="card">
+    <div class="table-responsive text-nowrap">
+      <table class="table">
+        <tbody>
+          
+          <tr>
+            <th>Average</th>
+            <td>{{i.average}}%</td>
+          </tr>
+          <tr>
+            <th>Rank</th>
+            <td>{% if i.rank %}{{i.rank}}{% else %}can't see it now{% endif %}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  
+</div>
+
+
+{% endblock %}
+{% block script %}
+
+
+
+
+
+  <script type="text/javascript">
+    function htmlTableToExcel(type){
+      var data = document.getElementById('tblToExcl');
+      var excelFile = XLSX.utils.table_to_book(data, {sheet: "sheet1"});
+      XLSX.write(excelFile, { bookType: type, bookSST: true, type: 'base64' });
+      XLSX.writeFile(excelFile, '{{student.first_name}} Results Excel.' + type);
+     }
+    </script>
+
+
+
+
+
+
+
+<script>
+  var subjectObject = {
+    {% for a in subjects %}
+  "{{a.name}}": {
+    "first academic term": [
+    {% for b in tests %}
+    {% for c in b.subject.all %}
+    {% if c == a and b.time == 'first academic term' %}
+    "{{b.name}}", 
+    {%endif %}
+    {% endfor %}
+    {% endfor %}
+    ],
+    "second academic term": [
+    {% for b in tests %}
+    {% for c in b.subject.all %}
+    {% if c == a and b.time == 'second academic term' %}
+    "{{b.name}}", 
+    {%endif %}
+    {% endfor %}
+    {% endfor %}
+    ],
+  },
+  {% endfor %}
+}
+window.onload = function() {
+  var subjectSel = document.getElementById("subject");
+  var topicSel = document.getElementById("topic");
+  var chapterSel = document.getElementById("chapter");
+  for (var x in subjectObject) {
+    subjectSel.options[subjectSel.options.length] = new Option(x, x);
+  }
+  subjectSel.onchange = function() {
+    document.getElementById('btn').innerHTML = "view result";
+    //empty Chapters- and Topics- dropdowns
+    chapterSel.length = 1;
+    topicSel.length = 1;
+    //display correct values
+    for (var y in subjectObject[this.value]) {
+      topicSel.options[topicSel.options.length] = new Option(y, y);
+    }
+  }
+  topicSel.onchange = function() {
+    //empty Chapters dropdown
+    chapterSel.length = 1;
+    //display correct values
+    var z = subjectObject[subjectSel.value][this.value];
+    for (var i = 0; i < z.length; i++) {
+      chapterSel.options[chapterSel.options.length] = new Option(z[i], z[i]);
+    }
+  }
+}
+</script>
+<script>
+  var right = document.getElementById('right');
+  var
+    btn = document.getElementById('btn'),
+    f_av = document.getElementById('f_av'),
+    sub = document.getElementById('sub'),
+    final = document.getElementById('final'),
+    tes = document.getElementById('tes'),
+    result = document.getElementById('f_results'),
+    f_from = document.getElementById('f_from'),
+    result2 = document.getElementById('f_results2'),
+    f_from2 = document.getElementById('f_from2');
+function showResult(){
+  let
+    in_subject = document.getElementById('subject').value,
+    in_test = document.getElementById('chapter').value,
+    in_term = document.getElementById('topic').value;
+    right.style.opacity = "1";
+    
+    btn.innerHTML = "here is what i found >";
+  {% for a in results %}
+  if ((in_subject == "{{a.subject.name}}") && (in_test == "{{a.name.name}}") && (in_term == "{{a.time}}")){
+    result.innerHTML = "{{a.status}}";
+    f_from.innerHTML = "{{a.name.capacity}}";
+    result2.innerHTML = "{{a.status}}";
+    f_from2.innerHTML = "{{a.name.capacity}}";
+    sub.innerHTML = '{{a.subject}}';
+    tes.innerHTML = '{{a.name.name}}';
+    aaa=({{a.status}}/{{a.name.capacity}})*100
+    f_av.innerHTML = aaa + "%";
+    if (aaa>=50){
+    final.innerHTML = "You passed the test";
+    }else{
+    final.innerHTML = "You are failed this test";
+    }
+  }
+  {% endfor %}
+}
+</script>
+{% endblock %}

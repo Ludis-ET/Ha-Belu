@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Select Grade</title>
+  <style>
+    /* CSS styles for the login form */
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      margin-top: 100px;
+      background-color: #fff;
+      border-radius: 3px;
+      padding: 20px;
+      box-shadow: 0px 0px 5px rgba(0,0,0,0.3);
+    }
+    
+    .btn {
+      display: block;
+      width: 100%;
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 10px;
+      background-color: #4caf50;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    
+    .btn:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    {% for g in grades %}
+    <a href="{% url 'st_grade_result' g.id %}" style="text-decoration:none;"><button class="btn">Grade {{g.name}}</button></a>
+    {% endfor %}
+    <a href="{% url 'r_index' %}" style="text-decoration:none;"><button class="btn">Back</button></a>
+  </div>
+
+  <script>
+    // JavaScript for button animations
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+      button.addEventListener('mouseover', () => {
+        button.style.backgroundColor = '#45a049';
+      });
+      
+      button.addEventListener('mouseout', () => {
+        button.style.backgroundColor = '#4caf50';
+      });
+    });
+  </script>
+</body>
+</html>

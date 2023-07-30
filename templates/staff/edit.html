@@ -1,0 +1,137 @@
+{% extends 'staff/base.html' %}
+{% block css %}
+<script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+<link rel="stylesheet" href="/static/css/a.css">
+<style>
+   .form-group {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    label {
+      position: absolute;
+      top: 0;
+      left: 0;
+      transition: transform 0.3s ease-out, font-size 0.3s ease-out;
+      color: #999;
+    }
+
+    input {
+      border: none;
+      border-bottom: 2px solid #ccc;
+      padding: 5px;
+      width: 100%;
+      transition: border-bottom-color 0.3s ease-out;
+    }
+
+    input:focus {
+      outline: none;
+      border-bottom-color: #00bcd4;
+    }
+
+    input:focus + label,
+    input:not(:placeholder-shown) + label {
+      transform: translateY(-25px) scale(0.8);
+      font-size: 14px;
+      color: #00bcd4;
+    } 
+    .custom-button {
+  background-color: #33cc33;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+.custom-button:hover {
+  background-color: #66cc66;
+  transform: scale(1.1);
+}
+select {
+  width: 100%;
+  padding: 5px 10px;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  transition: border-bottom 0.3s ease;
+}
+.form-groupp {
+  position: relative;
+  margin-bottom: 20px;
+}
+.label {
+  position: absolute;
+  pointer-events: none;
+  right: 10;
+  top: 0;
+  transition: all 0.3s ease;
+  transform-origin: left bottom;
+}
+select:focus {
+  outline: none;
+  border-bottom: 2px solid #007bff;
+}
+
+select:focus + label,
+select:valid + label {
+  color: #007bff;
+  transform: translateY(-20px) scale(0.8);
+}
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+  <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Student /</span>{{st.profile.user.first_name}} {{st.profile.user.last_name}} / Edit</h4>
+
+  {% for card in cards %}
+  <a href="{% url 't_card' id=student.id id2=card.id %}" target="_blank" class="btn btn-dark">{{card.name}}</a>
+  {% endfor %}
+  <div class="col-lg-4 col-md-6">
+    <form method="POST">
+        {% csrf_token %}
+    <div class="form-group">
+        <input type="text" name="first_name" id="name" placeholder=" " value="{{st.profile.user.first_name}}"  />
+        <label for="name">First Name</label>
+      </div><br>
+      <div class="form-group">
+          <input type="text" name="last_name" id="name" value="{{st.profile.user.last_name}}"  />
+          <label for="name">Last Name</label>
+        </div><br>
+    
+      <div class="form-group">
+        <input type="email" name="email" id="email" value="{{st.profile.user.email}}"  />
+        <label for="email">Email</label>
+      </div><br>
+
+      <div class="form-groupp">
+        <select name="grade" id="selectInput">
+            <option value="{{st.profile.grade.id}}" selected>Grade {{st.profile.grade.name}}</option>
+            {% for g in grades %}
+          <option value="{{g.id}}">Grade {{g.name}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <button type="submit" name="edit" class="custom-button">update</button>
+      {% if st.is_verified %}
+      <button type="submit" name="verify" class="btn btn-secondary">unverify</button>
+      {% else %}
+      <button type="submit" name="verify" class="btn btn-primary">verify</button>
+      {% endif %}
+      <button type="submit" name="delete" class="btn btn-danger">delete</button>
+
+    </form>
+  </div>
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+{% endblock %}

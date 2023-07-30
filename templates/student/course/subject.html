@@ -1,0 +1,154 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+{% endblock %}
+{% block content %}
+
+<div id="wrapperr" style="padding:20px;">
+   
+   <div id="content-wrapper">
+      <div class="container-fluid pb-0">
+         <div class="top-search" style="margin-bottom: 20px;" >
+            <div class="row">
+               <div class="col-md-12"  >   
+                  <form class="mobile-search" method="POST" action="{% url 'course_search' %}">
+                     {% csrf_token %}
+                     <div class="input-group">
+                       <input type="text" placeholder="Search course..." name="searched" class="form-control">
+                         <div class="input-group-append">
+                           <button type="submit" class="btn btn-dark"><i class="fas fa-search"></i></button>
+                         </div>
+                     </div>
+                  </form>   
+               </div>
+            </div>
+         </div>
+         <div class="top-category section-padding mb-4">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="main-title">
+                     <h6>Our Teachers</h6>
+                  </div>
+               </div>
+               <div class="col-md-12">
+                  <div class="owl-carousel owl-carousel-category">
+                     {% for t in teacher %}
+                     <div class="item">
+                        <div class="category-item">
+                           <a href="{% url 's_teacher' t.id %}">
+                              {% if t.profile_pic %}
+                              <img alt="Image" src="{{t.profile_pic.url}}" class="avatar shadow"> {{c.sender.first_name}} {{c.sender.last_name}}<br><br>
+                              {% else %}
+                              <img alt="Image" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=" class="avatar shadow"> {{c.first_name}} {{c.last_name}} <br><br>
+                              {% endif %}
+                              <h6>MR. {{t.first_name}} {{t.last_name}}</h6>
+                              <h6>
+                                 {% for a in t.subject.all %}
+                                 {{a.name|slice:":3"}}..,
+                                 {% endfor %}<br>Teacher
+                              </h6>
+                              <p>{{t.subscribers.count}} Subscribers</p>
+                           </a>
+                        </div>
+                     </div>
+                     {% endfor %}
+                  </div>
+               </div>
+            </div>
+         </div>
+         <hr>
+         <div class="video-block section-padding">
+            <div class="row">
+               <div class="col-md-12">
+                  <div class="main-title">
+                     <div class="btn-group float-right right-action">
+                        <a href="#" class="right-action-link text-gray" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter Subject <i class="fa fa-caret-down" aria-hidden="true"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                           <a class="dropdown-item" href="{% url 'course' %}"><i class="fas fa-fw fa-star"></i> &nbsp; All</a>
+                           {% for s in sub %}
+                           <a class="dropdown-item" href="{% url 'c_subject' s.id %}"><i class="fas fa-fw fa-star"></i> &nbsp; {{s.name}}</a>
+                           {% endfor %}
+                        </div>
+                     </div>
+                     <h6>Course Videos</h6>
+                  </div>
+               </div>
+               {% if course %}
+               {% for c in course %}
+               <div class="col-xl-3 col-sm-6 mb-3">
+                  <div class="video-card">
+                     <div class="video-card-image">
+                        <a class="play-icon" href="{% url 'page' c.id %}"><i class="fas fa-play-circle"></i></a>
+                        <a href="{% url 'page' c.id %}"><img class="img-fluid" src="{{c.cover.url}}" alt=""></a>
+                        {% for a in c.subject.all|slice:":1" %}
+                        <div class="time">{{a.name}}</div>
+                        {% endfor %}
+                     </div>
+                     <div class="video-card-body">
+                        <div class="video-title">
+                           <a href="{% url 'page' c.id %}">{{c.name|slice:":16"}}...</a>
+                        </div>
+                        <div class="video-page text-success">
+                           {{c.posted_by.first_name}} {{c.posted_by.last_name}}  <i class="fas fa-check-circle text-success"></i></a>
+                        </div>
+                        <div class="video-view">
+                           {{c.views}} views &nbsp;<i class="fas fa-calendar-alt"></i> {{c.date|timesince}} ago
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               {% endfor %}
+               {% else %}
+               <h1>No course Found </h1>
+               {% endif %}
+            </div>
+         </div>
+      </div>
+   </div>
+   <!-- /.content-wrapper -->
+</div>
+<!-- /#wrapper -->
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+<i class="fas fa-angle-up"></i>
+</a>
+<!-- Logout Modal-->
+<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+   <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+      <div class="modal-content">
+         <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+            </button>
+         </div>
+         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+         <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+         </div>
+      </div>
+   </div>
+</div>
+
+      {% endblock %}
+      {% block script %}
+      <script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+      <script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Owl Carousel -->
+      <script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/static/student/course/js/custom.js"></script>
+
+      {% endblock %}

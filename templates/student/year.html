@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+
+<html
+  lang="en"
+  class="light-style"
+  dir="ltr"
+  data-theme="theme-default"
+  data-assets-path="/static/student/assets/"
+  data-template="vertical-menu-template-free"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+    />
+
+    <title>You are subscription is outdated!</title>
+
+    <meta name="description" content="" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/static/student/assets/img/favicon/favicon.ico" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Icons. Uncomment required icon fonts -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/fonts/boxicons.css" />
+
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/static/student/assets/css/demo.css" />
+
+    <!-- Vendors CSS -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+
+    <!-- Page CSS -->
+    <!-- Page -->
+    <link rel="stylesheet" href="/static/student/assets/vendor/css/pages/page-misc.css" />
+    <!-- Helpers -->
+    <script src="/static/student/assets/vendor/js/helpers.js"></script>
+
+    <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
+    <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
+    <script src="/static/student/assets/js/config.js"></script>
+  </head>
+
+  <body>
+    <!-- Content -->
+
+    <!-- Error -->
+    <div class="container-xxl container-p-y">
+      <div class="misc-wrapper">
+        <h2 class="mb-2 mx-2"> Student Page subscription Outdated:(</h2>
+        <p class="mb-4 mx-2">Oops! 😖 {{student.first_name}} {{student.last_name}} your subscription is deadline lasted.  Now the service is availabel only if your subscription is on {{year.year}} E.C If you are willing to work with us contact the managers and get back.</p>
+        <div width="100%" style="display:flex;">
+        <a href="{% url 'a_index' %}" class="btn btn-primary">Back to home</a>
+        {% for h in history %}
+        <a href="{% url 's_year_history' year=h.academicYear.year username=user.username %}" class="btn btn-primary">Get {{h.academicYear.year}} E.C history</a>
+        {% endfor %}
+        <form method="POST" action="{% url 'delete_account' user.id %}">
+          {% csrf_token %}
+        <button href="{% url 'a_index' %}" name="deleteaccount" type="submit" class="btn btn-danger">Delete My account</button>
+        </form>
+        </div>
+        <div class="mt-3">
+          <img
+            src="/static/student/assets/img/illustrations/page-misc-error-light.png"
+            alt="page-misc-error-light"
+            width="500"
+            class="img-fluid"
+            data-app-dark-img="illustrations/page-misc-error-dark.png"
+            data-app-light-img="illustrations/page-misc-error-light.png"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- /Error -->
+
+    <!-- / Content -->
+
+    <div class="buy-now">
+      <a
+        href="https://instagram.com/itz_leul"
+        target="_blank"
+        class="btn btn-danger btn-buy-now"
+        >contact developer</a
+      >
+    </div>
+
+    <!-- Core JS -->
+    <!-- build:js assets/vendor/js/core.js -->
+    <script src="/static/student/assets/vendor/libs/jquery/jquery.js"></script>
+    <script src="/static/student/assets/vendor/libs/popper/popper.js"></script>
+    <script src="/static/student/assets/vendor/js/bootstrap.js"></script>
+    <script src="/static/student/assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+
+    <script src="/static/student/assets/vendor/js/menu.js"></script>
+    <!-- endbuild -->
+
+    <!-- Vendors JS -->
+
+    <!-- Main JS -->
+    <script src="/static/student/assets/js/main.js"></script>
+
+    <!-- Page JS -->
+
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %} </title>
+    <style>
+        :root{
+            --main:{{web.theme_color}};
+        }
+    </style>
+    <link rel="stylesheet" href="/static/css/loader.css">
+    {% block head %}
+
+    {% endblock %}
+    <script>
+        document.onreadystatechange = function() {
+             if (document.readyState !== "complete") {
+                 document.querySelector(
+                   "#unload").style.display = "none";
+                 document.querySelector(
+                   "#load").style.display = "";
+             } else {
+                 document.querySelector(
+                   "#load").style.display = "none";
+                 document.querySelector(
+                   "#unload").style.display = "";
+             }
+         };
+ 
+     </script>
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6510615875274346"
+     crossorigin="anonymous"></script>
+    </head>
+<body>
+    <div class="loader" id="load">
+        <div class="book" id="loading">
+            <div class="inner">
+              <div class="left"></div>
+              <div class="middle"></div>
+              <div class="right"></div>
+            </div>
+            <ul>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+        </div>
+    </div>
+    <div class="main" id="unload">
+    {% block body %}
+
+
+    {% endblock %}
+    </div>
+
+
+    {% block foot %}
+
+    {% endblock %}
+</body>
+</html>

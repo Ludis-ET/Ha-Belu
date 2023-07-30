@@ -1,0 +1,252 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">My Room /</span> Grade {{my_room.room.name}} </h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">@{{user.username}}</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for s in students %}
+            <form method="POST">
+                {% csrf_token %}
+                <input type="text" name="id" value="{{s.id}}" hidden>
+                <tr>
+                    <td>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</td>
+                    <td>
+                        <div class="mt-3">
+                            <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalToggle{{s.id}}">
+                              info
+                            </button>
+    
+                            <!-- Modal 1-->
+                            <div class="modal fade" id="modalToggle{{s.id}}" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="modalToggleLabel">Student {{s.profile.user.first_name}} {{s.profile.user.last_name}}</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+
+                                    {% for a in stats %}
+                                    {% if a.student == s %}
+                                    First academic term Total: {{a.first_total}}/{{a.first_from}} <br>
+                                    First academic term Average: {{a.first_average}}% <br>
+                                    First academic term Rank: {{a.first_rank}} <br>
+                                    Second academic term Total: {{a.second_total}}/{{a.second_from}} <br>
+                                    Second academic term Average: {{a.second_average}}% <br>
+                                    Second academic term Rank: {{a.second_rank}} <br>
+                                    Year Average: {{a.average}}% <br>
+                                    Year Rank: {{a.rank}} <br>
+
+                                    {% endif %}
+                                    {% endfor %}
+
+                                  </div>
+                                  <div class="modal-footer">
+                                    <a href="{% url 't_all' %}" target="_blank" class="btn btn-dark">Alter Result</a>
+                                    <button class="btn btn-success" type="button" data-bs-target="#smallModal{{s.id}}" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                      Pass
+                                    </button>
+                                    <button class="btn btn-danger" type="submit" name="fail">
+                                      Fail
+                                    </button>
+                                    <button class="btn btn-primary" type="button" data-bs-target="#modalToggle2{{s.id}}" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                      View Details
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- Modal 2-->
+                            <div class="modal fade" id="modalToggle2{{s.id}}" aria-labelledby="modalToggleLabel2" tabindex="-1" style="display: none;" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="modalToggleLabel2">Student {{s.profile.user.first_name}} {{s.profile.user.last_name}} Details</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    
+                                    <table style="padding: 10px;">
+                                        <tr>
+                                            <th style="padding: 10px;" align="center">Subject</th>
+                                            <th style="padding: 10px;" align="center">First Term</th>
+                                            <th style="padding: 10px;" align="center">Second Term</th>
+                                        </tr>
+                                        {% for a in subs %}
+                                    {% if a.student == s %}
+                                    {% for c in a.subject.grade.all %}
+                                    {% if c == s.profile.grade %}
+                                    <tr>
+                                        <td align="center">{{a.subject}}</td>
+                                        <td align="center">{{a.first}}/{{a.f_from}} {% if a.first >= 50 %} <i style="color: green;" class='bx bx-check-circle bx-tada' ></i> {% else %}<i style="color: red;" class='bx bx-error-circle bx-tada' ></i> {% endif %} </td>
+                                        <td align="center">{{a.second}}/{{a.s_from}} {% if a.second >= 50 %} <i style="color: green;" class='bx bx-check-circle bx-tada' ></i> {% else %}<i style="color: red;" class='bx bx-error-circle bx-tada' ></i> {% endif %} </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </table>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button class="btn btn-primary" type="button" data-bs-target="#modalToggle{{s.id}}" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                      Back to first
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </td>
+                    <td>
+                      <div class="mt-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalToggle{{s.id}}{{s.id}}{{s.id}}">
+                          Report Card
+                        </button>
+
+                        <!-- Modal 1-->
+                        <div class="modal fade" id="modalToggle{{s.id}}{{s.id}}{{s.id}}" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalToggleLabel">Student {{s.profile.user.first_name}} {{s.profile.user.last_name}}'s Report card</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                choose design: <br>
+                                {% if design %}
+                                {% for a in design %}
+                                <a target="_blank" href="{% url 't_card' id=s.id id2=a.id id3=year.id %}" class="btn btn-dark">{{a.name}}</a><br><br>
+                                {% endfor %}
+                                {% else %}
+                                There is no design uploaded yet please add new design.
+                                {% endif %}
+
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn btn-info" type="button" data-bs-target="#modalToggle2{{s.id}}{{s.id}}{{s.id}}{{s.id}}{{s.id}}" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                  Add New Design
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- Modal 2-->
+                        <div class="modal fade" id="modalToggle2{{s.id}}{{s.id}}{{s.id}}{{s.id}}{{s.id}}" aria-labelledby="modalToggleLabel2" tabindex="-1" style="display: none;" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="modalToggleLabel2">Student {{s.profile.user.first_name}} {{s.profile.user.last_name}}'s Report Card Design</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                <div>
+                                  <label for="defaultFormControlInput" class="form-label">Name of design</label>
+                                  <input type="text" class="form-control" id="defaultFormControlInput" name="d_name" placeholder="Transcript" aria-describedby="defaultFormControlHelp">
+                                  <div id="defaultFormControlHelp" class="form-text">
+                                    This name represents the design that you are going to add.
+                                  </div>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="d_table" checked>
+                                  <label class="form-check-label" for="flexSwitchCheckChecked">Student Result Table</label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="d_st_name" checked>
+                                  <label class="form-check-label" for="flexSwitchCheckChecked">Student Name</label>
+                                </div>
+                                <div class="form-check form-switch mb-2">
+                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="d_st_grade" checked>
+                                  <label class="form-check-label" for="flexSwitchCheckChecked">Student Grade</label>
+                                </div>
+                                
+                                <div class="form-check form-switch mb-2">
+                                  <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" name="d_sc_icon" checked>
+                                  <label class="form-check-label" for="flexSwitchCheckChecked">School Icon</label>
+                                </div>
+                                
+                              </div>
+                              <div class="modal-footer">
+                                <button class="btn btn-info" type="submit" name="add">Add</button>
+                                <button class="btn btn-primary" type="button" data-bs-target="#modalToggle{{s.id}}{{s.id}}{{s.id}}" data-bs-toggle="modal" data-bs-dismiss="modal">
+                                  Back to first
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="modal fade" id="smallModal{{s.id}}" tabindex="-1" style="display: none;" aria-hidden="true">
+                        <div class="modal-dialog modal-sm" role="document">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel2">Transfer Student {{s.profile.user.first_name}} {{s.profile.user.last_name}} to</h5>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              <div class="row">
+                                <div class="col mb-3">
+                                  <label for="nameSmall" class="form-label">Grade</label>
+                                  <select class="form-select" name="grade" id="exampleFormControlSelect1" aria-label="Default select example">
+                                    {% for g in grades %}
+                                    {% if not g == s.profile.grade %}
+                                    <option value="{{g.id}}">{{g.name}}</option>
+                                    {% endif %}
+                                    {% endfor %}
+                                  </select>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+                                Close
+                              </button>
+                              <button type="submit" name="transfer" class="btn btn-primary">Transfer</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#smallModal{{s.id}}">
+                        Pass
+                      </button>
+                    </td>
+                    <td>
+                      <button type="submit" name="remove" class="btn btn-danger">Remove</button>
+                    </td>
+                    <td>
+                      <input type="text" name="userid" value="{{s.profile.user.id}}" hidden>
+                      {% if s.profile.user.is_active == True %}
+                      <input type="text" name="userid" value="{{s.profile.user.id}}" hidden>
+                      <button class="btn btn-warning" type="submit" name="disable">Disable</button>
+                      {% else %}
+                      <button class="btn btn-secondary" type="submit" name="enable">Enable</button>
+                      {% endif %}
+                    </td>
+                </tr>
+            </form>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+{% block script %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+{% endblock %}

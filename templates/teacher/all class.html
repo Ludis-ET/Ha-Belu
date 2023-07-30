@@ -1,0 +1,32 @@
+{% extends 'teacher/base.html' %}
+{% block content %}
+<div class="container-xxl flex-grow-1 container-p-y">
+    <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add /</span>All class list here you can add there result</h4>
+
+    <!-- Basic Bootstrap Table -->
+    <div class="card">
+      <h5 class="card-header">Results</h5>
+      <div class="table-responsive text-nowrap">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Full Name</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody class="table-border-bottom-0">
+            {% for t in teacher.my_room.all %}
+            <tr>
+                <td>Grade {{t.name}}</td>
+                <td>
+                    <a href="{% url 't_one_result' t.id %}" target="_blank" class="btn btn-outline-dark">First Term</a>
+                    <a href="{% url 't_two_result' t.id %}" target="_blank" class="btn btn-outline-dark">Second Term</a>
+                </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+</div>
+{% endblock %}

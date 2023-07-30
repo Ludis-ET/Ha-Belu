@@ -1,0 +1,126 @@
+{% extends 'staff/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+
+<style>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+button {
+  width: 100px;
+  padding: 10px;
+  background-color: #4286f4;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.3s, background-color 0.3s;
+}
+
+button:hover {
+  transform: scale(1.1);
+  background-color: #3267b9;
+}
+.custom-select {
+  position: relative;
+  width: 200px;
+}
+
+.custom-select select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: #f1f1f1;
+  color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.custom-select .arrow {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 10px;
+  height: 10px;
+  border-left: 2px solid #999;
+  border-bottom: 2px solid #999;
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.custom-select select:focus + .arrow {
+  transform: translateY(-50%) rotate(-135deg);
+}
+
+
+</style>
+{% endblock %}
+{% block content %}
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+    {% if staff.transfer == True %}
+<br><br>
+    <div class="col-lg-12 mb-8 order-0" style="width:100%;">
+        <form method="POST">
+            {% csrf_token %}
+            <div class="custom-select">
+                <select name="grade">
+                    {% for g in grades %}
+                  <option value="{{g.id}}">Grade {{g.name}}</option>
+                  {% endfor %}
+                </select>
+                <span class="arrow"></span>
+              </div>
+              <br><br><b></b>
+            <button id="submitButton" type="submit">Get Students</button>
+          </form>
+          
+    </div>
+    {% endif %}
+        
+               
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  
+
+{% endblock %}
+{% block script %}
+<script>
+    const selectElement = document.querySelector('.custom-select select');
+selectElement.addEventListener('change', (event) => {
+  selectElement.blur();
+});
+
+// Optional: Close the select when clicking outside of it
+window.addEventListener('click', (event) => {
+  if (!event.target.matches('.custom-select select')) {
+    selectElement.blur();
+  }
+});
+
+</script>
+<script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+<script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Owl Carousel -->
+<script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="/static/student/course/js/custom.js"></script>
+
+{% endblock %}

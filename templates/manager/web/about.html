@@ -1,0 +1,66 @@
+{% extends 'manager/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/style.css">
+    <link rel="stylesheet" href="/static/manager/assets/css/lib/chosen/chosen.min.css">
+    <link rel="apple-touch-icon" href="https://i.imgur.com/QRAUqs9.png">
+    <link rel="shortcut icon" href="https://i.imgur.com/QRAUqs9.png">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/normalize.css@8.0.0/normalize.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pixeden-stroke-7-icon@1.2.3/pe-icon-7-stroke/dist/pe-icon-7-stroke.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.2.0/css/flag-icon.min.css">
+    
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800' rel='stylesheet' type='text/css'>
+
+{% endblock css %}
+{% block bodymain %}
+<div class="animated fadeIn">
+
+
+    <div class="row">
+        <div class="col-lg-4">
+            <div class="card">
+                <div class="card-header"><strong>{{web.full_name}}</strong><small> Add New About</small></div>
+                <div class="card-body card-block">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="form-group"><label for="company" class=" form-control-label">Image(optional)</label><input type="file" accept="image/png, image/gif, image/jpeg" name="image" id="company" value="{{web.full_name}}" class="form-control"></div>
+                    <div class="form-group"><label for="vat" class=" form-control-label">Topic</label><input type="text" name="title"  id="vat" placeholder="Title Here" class="form-control"></div>
+                    <div class="form-group"><label for="street" class=" form-control-label">Details</label><textarea name="detail" id="" ></textarea></div>
+                    
+                    <button type="submit" name="one" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+            {% for r in abbs %}
+            <div class="card">
+                <div class="card-header"><strong>{{web.full_name}}</strong><small>Edit About {{r.id}}</small></div>
+                <div class="card-body card-block">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                    <div class="form-group"><label for="company" class=" form-control-label">Image(optional)</label><input type="file" accept="image/png, image/gif, image/jpeg" name="image" id="company" value="{{web.full_name}}" class="form-control"></div>
+                    <div class="form-group"><label for="vat" class=" form-control-label">Topic</label><input type="text" name="title"  id="vat" value="T{{r.topic}}" class="form-control"></div>
+                    <div class="form-group"><label for="street" class=" form-control-label">Details</label><textarea name="detail" id="" >{{r.paragraph}} </textarea></div>
+                    <input type="text" name="id" hidden value="{{r.id}}">
+                    <button type="submit" name="update" class="btn btn-dark fa fa-edit"></button>
+                    <button type="submit" name="delete" class="btn btn-danger fa fa-trash"></button>
+                    </form>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="col-lg-8">
+            <iframe class="col-lg-8" height="100%" src="{% url 'a_about' %}" style="padding: 0;"></iframe>
+                               
+        </div>
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+{% endblock script %}
+

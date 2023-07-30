@@ -1,0 +1,198 @@
+{% extends 'student/base.html' %}
+{% block content %}
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="row">
+        <div class="col-lg-8 mb-4 order-0">
+          <div class="card">
+            <div class="d-flex align-items-end row">
+              <div class="col-sm-7">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">Hey student {{user.first_name}} {{user.last_name}}</h5>
+                  <p class="mb-4">
+                    Welcome to {{web.full_name}} official website you are now logged in as a student.
+                  </p>
+                  <p>
+                    Grade {{student.profile.grade}} batch in {{student.year.year}} E.C   <br> <strong>last login {{user.last_login|timesince}} ago</strong>
+                  </p>
+
+                  <a href="{% url 'a_blog' %}" class="btn btn-sm btn-outline-primary">View Blog posts</a>
+                  <a href="{% url 'library' %}" class="btn btn-sm btn-outline-primary">Get Library</a>
+                  <a href="{% url 's_profile' %}" class="btn btn-sm btn-outline-primary">Edit My Profile</a>
+                </div>
+              </div>
+              <div class="col-sm-5 text-center text-sm-left">
+                <div class="card-body pb-0 px-0 px-md-4">
+                  <img
+                    src="/static/student/assets/img/illustrations/man-with-laptop-light.png"
+                    height="140"
+                    alt="View Badge User"
+                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                    data-app-light-img="illustrations/man-with-laptop-light.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4 col-md-4 order-1">
+          <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                      <img
+                        src="/static/student/assets/img/icons/unicons/chart-success.png"
+                        alt="chart success"
+                        class="rounded"
+                      />
+                    </div>
+                  </div>
+                  <span class="fw-semibold d-block mb-1">first academic year average</span>
+                  <h3 class="card-title mb-2">{{st.first_average}}%</h3>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                      <img
+                        src="/static/student/assets/img/icons/unicons/chart-success.png"
+                        alt="chart success"
+                        class="rounded"
+                      />
+                    </div>
+                  </div>
+                  <span class="fw-semibold d-block mb-1">second academic year average</span>
+                  <h3 class="card-title mb-2">{{st.second_average}}%</h3>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+      
+    <!-- Footer -->
+    </div>
+    
+    {% if manager_message %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">School /</span> messages</h4>
+
+        <!-- Examples -->
+        <div class="row mb-5">
+          {% for message in manager_message %}
+            <div class="col-md">
+              <div class="card mb-3">
+                <div class="row g-0">
+                  <div class="col-md-4">
+                    {% if not message.image %}
+                    <img class="card-img card-img-left" src="{{web.icon.url}}" alt="Card image" />
+                    {% else %}
+                    <img class="card-img card-img-left" src="{{message.image.url}}" alt="Card image" />
+                    {% endif %}
+                  </div>
+                  <div class="col-md-8">
+                    <div class="card-body">
+                      <h5 class="card-title">{{message.title}}</h5>
+                      <p class="card-text">
+                        {{message.message}}
+                      </p>
+                      {% if message.link %}
+                      {% if message.link_name %}
+                      <a href="{{message_link}}" class="btn btn-outline-primary">{{message.link_name}}</a>
+                      {% else %}
+                      <a href="{{message_link}}" class="btn btn-outline-primary">Link Here</a>
+                      {% endif %}
+                      {% endif %}
+                      <p class="card-text"><small class="text-muted">{{ message.date|timesince }} ago</small></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        <!-- Examples -->
+
+        <!-- Content types -->
+    </div>
+    {% endif %}
+    {% if grade_post %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Teachers /</span> Posts</h4>
+
+        <!-- Examples -->
+        <div class="row mb-5">
+          {% for g in grade_post %}
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card">
+              <div class="card-header">{{g.title}}</div>
+              <div class="card-body">
+                <h5 class="card-title">{{g.teacher.subject}} teacher {{g.teacher.profile.user.first_name}} {{g.teacher.profile.user.last_name}}</h5>
+                <p class="card-text">
+                  {{g.disc}}
+                </p>
+                {% if g.link1 %}
+                <a href="{{g.link1}}" target="_blank" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAkJJREFUSEuNltt1GjEQhr/pICU4FYQS4goMFZhUAK6ApYJABbYrgHSQVBA6CCXgCsZnpNFKWmkd7wNnkZjLfxkJYXwEQdG8AAL1wqc3i6z26ok+zOch5W/y+3yk7XiBOrRE0yTt5JsrLGUX/aTd7u6Ab8ACuIL8EfQa6a2pjgg68Jv1XGeLsEP5ktGHty1wrIWzYp/VIBSQAXTnxY/Ab+A7sPG1J+BQNRfjxo9aj5Yd69qSWpKXItFS4OQUfc10xXT/pehDlLkJK7oBWYGeS9rLGr1iJugDOOfwC+Fi8zEBuAROIHtBhzRPlYvyVI2hA5A4Lx1i3Rrfoz0EfVF4NASCnrOjpv27HjkgdPqqwY4YmkcP2QPWgD1rgWeFt2zd6J7WRbF5EzAl+jER1Lx/AFmC3hDWKM+u0xM6cdHEy8nPP7FuQrCcQc09J6flEpsOnazBkofhMpT2vXqmGtwh/LUhErjXaElLZaIlLQydTe9C0GW0OK8C68ruSZ3GCcIJ5SiwHZ0QD1W3YWO6PYQB7LgxaZC3Bj8GVoB7uTxbZAFqdjRct+B34Tq1bDW35Rdzg3N6BLUzJ4x5PgRrvJPY0bIBzRhbAzMN/vn+SgMKTxoF34DeA7cOH90LqhB5DCmHy3g3oZduR/tR6f/5OmNf/UEbBN25QxKGNxNT0EMl/txtlCgqL5zMXahqdC3QIKx5/wJyLflt3rs+Gmem3O38ASgl7NyPc4JHDTq3Ymep+XfQR+/NJQ2aRE3FjjUbKvrtmK3eAdGS+SKoKp2IAAAAAElFTkSuQmCC"/> 1</a>
+                {% endif %}
+                {% if g.link2 %}
+                <a href="{{g.link2}}" target="_blank" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAkJJREFUSEuNltt1GjEQhr/pICU4FYQS4goMFZhUAK6ApYJABbYrgHSQVBA6CCXgCsZnpNFKWmkd7wNnkZjLfxkJYXwEQdG8AAL1wqc3i6z26ok+zOch5W/y+3yk7XiBOrRE0yTt5JsrLGUX/aTd7u6Ab8ACuIL8EfQa6a2pjgg68Jv1XGeLsEP5ktGHty1wrIWzYp/VIBSQAXTnxY/Ab+A7sPG1J+BQNRfjxo9aj5Yd69qSWpKXItFS4OQUfc10xXT/pehDlLkJK7oBWYGeS9rLGr1iJugDOOfwC+Fi8zEBuAROIHtBhzRPlYvyVI2hA5A4Lx1i3Rrfoz0EfVF4NASCnrOjpv27HjkgdPqqwY4YmkcP2QPWgD1rgWeFt2zd6J7WRbF5EzAl+jER1Lx/AFmC3hDWKM+u0xM6cdHEy8nPP7FuQrCcQc09J6flEpsOnazBkofhMpT2vXqmGtwh/LUhErjXaElLZaIlLQydTe9C0GW0OK8C68ruSZ3GCcIJ5SiwHZ0QD1W3YWO6PYQB7LgxaZC3Bj8GVoB7uTxbZAFqdjRct+B34Tq1bDW35Rdzg3N6BLUzJ4x5PgRrvJPY0bIBzRhbAzMN/vn+SgMKTxoF34DeA7cOH90LqhB5DCmHy3g3oZduR/tR6f/5OmNf/UEbBN25QxKGNxNT0EMl/txtlCgqL5zMXahqdC3QIKx5/wJyLflt3rs+Gmem3O38ASgl7NyPc4JHDTq3Ymep+XfQR+/NJQ2aRE3FjjUbKvrtmK3eAdGS+SKoKp2IAAAAAElFTkSuQmCC"/> 2</a>
+                {% endif %}
+                {% if g.link3 %}
+                <a href="{{g.link3}}" target="_blank" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAkJJREFUSEuNltt1GjEQhr/pICU4FYQS4goMFZhUAK6ApYJABbYrgHSQVBA6CCXgCsZnpNFKWmkd7wNnkZjLfxkJYXwEQdG8AAL1wqc3i6z26ok+zOch5W/y+3yk7XiBOrRE0yTt5JsrLGUX/aTd7u6Ab8ACuIL8EfQa6a2pjgg68Jv1XGeLsEP5ktGHty1wrIWzYp/VIBSQAXTnxY/Ab+A7sPG1J+BQNRfjxo9aj5Yd69qSWpKXItFS4OQUfc10xXT/pehDlLkJK7oBWYGeS9rLGr1iJugDOOfwC+Fi8zEBuAROIHtBhzRPlYvyVI2hA5A4Lx1i3Rrfoz0EfVF4NASCnrOjpv27HjkgdPqqwY4YmkcP2QPWgD1rgWeFt2zd6J7WRbF5EzAl+jER1Lx/AFmC3hDWKM+u0xM6cdHEy8nPP7FuQrCcQc09J6flEpsOnazBkofhMpT2vXqmGtwh/LUhErjXaElLZaIlLQydTe9C0GW0OK8C68ruSZ3GCcIJ5SiwHZ0QD1W3YWO6PYQB7LgxaZC3Bj8GVoB7uTxbZAFqdjRct+B34Tq1bDW35Rdzg3N6BLUzJ4x5PgRrvJPY0bIBzRhbAzMN/vn+SgMKTxoF34DeA7cOH90LqhB5DCmHy3g3oZduR/tR6f/5OmNf/UEbBN25QxKGNxNT0EMl/txtlCgqL5zMXahqdC3QIKx5/wJyLflt3rs+Gmem3O38ASgl7NyPc4JHDTq3Ymep+XfQR+/NJQ2aRE3FjjUbKvrtmK3eAdGS+SKoKp2IAAAAAElFTkSuQmCC"/> 3</a>
+                {% endif %}<br><br>
+                {% if g.file1 %}
+                <a href="{{g.file1.url}}" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZRJREFUSEuNVdFVxDAMkyeADWADjg3YhI4Gm7DBHRtwGxwThJfaaeXY7pGvNE2s2JIcQR8CoK0zG2HBr1e/kxB96wZQ4eTxBILm78UAFlgBArIPyV/73GbhpweOAAHxTtWq/XTsTgbuis3IWi9WlY4JlZBycmEKNKQwAdSsE8lWu0OFCGWQMxMo/bdC9aRmoHc5HqQBr/4gDlaFZbAuVTKNCqx9EE3iOEh8xSe2eZ0qZ6PzEqBUNyuEy0brHwDeRwBWnaB9NsHSy0XS1C/jiVvF2JaZ7wLgxZOFbwAnXXMKDFIeyncmmor5CMEPGh5s8y+AZwFuQ1Z7BixlQI0W6pv2ohMgZwv0CuCS9yVp1gRlzSy4NGjcgS321XmpRsKBmWgmJ3opmCRrSI5LIpRTK0Wnb8Ch/TMONN4N2EgkhOTWCf7O5Tq7dhGovvbxBqDX9mn8GMWc3tOhuvmdtXLJFWgLgK+Z5OPmFfpC0k3DklfR8Ex+4aosaffZ5UFODsxNxiXHBrCaJ24VLoMabkR3bZz48Cf/AMIrvB0PFcmoAAAAAElFTkSuQmCC"/> 1</a>
+                {% endif %}
+                {% if g.file2 %}
+                <a href="{{g.file2.url}}" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZRJREFUSEuNVdFVxDAMkyeADWADjg3YhI4Gm7DBHRtwGxwThJfaaeXY7pGvNE2s2JIcQR8CoK0zG2HBr1e/kxB96wZQ4eTxBILm78UAFlgBArIPyV/73GbhpweOAAHxTtWq/XTsTgbuis3IWi9WlY4JlZBycmEKNKQwAdSsE8lWu0OFCGWQMxMo/bdC9aRmoHc5HqQBr/4gDlaFZbAuVTKNCqx9EE3iOEh8xSe2eZ0qZ6PzEqBUNyuEy0brHwDeRwBWnaB9NsHSy0XS1C/jiVvF2JaZ7wLgxZOFbwAnXXMKDFIeyncmmor5CMEPGh5s8y+AZwFuQ1Z7BixlQI0W6pv2ohMgZwv0CuCS9yVp1gRlzSy4NGjcgS321XmpRsKBmWgmJ3opmCRrSI5LIpRTK0Wnb8Ch/TMONN4N2EgkhOTWCf7O5Tq7dhGovvbxBqDX9mn8GMWc3tOhuvmdtXLJFWgLgK+Z5OPmFfpC0k3DklfR8Ex+4aosaffZ5UFODsxNxiXHBrCaJ24VLoMabkR3bZz48Cf/AMIrvB0PFcmoAAAAAElFTkSuQmCC"/> 2</a>
+                {% endif %}
+                {% if g.file3 %}
+                <a href="{{g.file3.url}}" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZRJREFUSEuNVdFVxDAMkyeADWADjg3YhI4Gm7DBHRtwGxwThJfaaeXY7pGvNE2s2JIcQR8CoK0zG2HBr1e/kxB96wZQ4eTxBILm78UAFlgBArIPyV/73GbhpweOAAHxTtWq/XTsTgbuis3IWi9WlY4JlZBycmEKNKQwAdSsE8lWu0OFCGWQMxMo/bdC9aRmoHc5HqQBr/4gDlaFZbAuVTKNCqx9EE3iOEh8xSe2eZ0qZ6PzEqBUNyuEy0brHwDeRwBWnaB9NsHSy0XS1C/jiVvF2JaZ7wLgxZOFbwAnXXMKDFIeyncmmor5CMEPGh5s8y+AZwFuQ1Z7BixlQI0W6pv2ohMgZwv0CuCS9yVp1gRlzSy4NGjcgS321XmpRsKBmWgmJ3opmCRrSI5LIpRTK0Wnb8Ch/TMONN4N2EgkhOTWCf7O5Tq7dhGovvbxBqDX9mn8GMWc3tOhuvmdtXLJFWgLgK+Z5OPmFfpC0k3DklfR8Ex+4aosaffZ5UFODsxNxiXHBrCaJ24VLoMabkR3bZz48Cf/AMIrvB0PFcmoAAAAAElFTkSuQmCC"/> 3</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+    </div>
+        {% endif %}
+        <!-- Examples -->
+        <div class="card">
+          <h5 class="card-header">Students in Grade {{student.grade}}</h5>
+          <div class="table-responsive text-nowrap">
+            <table class="table">
+              <thead>
+                <tr class="text-nowrap">
+                  <th>number</th>
+                  <th>Full Name</th>
+                  <th>Username</th>
+                  <th>Sex</th>
+                  <th>Grade</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for s in students %}
+                <tr>
+                  <th scope="row">{{forloop.counter}}</th>
+                  <td>{{s.user.first_name}} {{s.user.last_name}}</td>
+                  <td>{{s.user.username}}</td>
+                  <td>{{s.sex}}</td>
+                  <td>{{s.grade}}th grade</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Content types -->
+    </div>
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  
+
+{% endblock %}

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+ <title>Student {{student.profile.user.first_name}} {{student.profile.user.last_name}} |@{{student.profile.user.username}} Report Card in year {{stat.time.year}} E.C</title>
+
+ <style>
+  *{
+ margin:0;
+ padding: 0;
+ outline: 0;
+}
+@page{
+  size: A4;
+}
+body{
+ background: {{web.theme_color}};
+}
+.filter{
+position: absolute;
+display: flex;
+flex-wrap: wrap;
+align-items: center;
+justify-content: center;
+width: 100%;
+overflow: hidden;
+}
+table{
+  margin-top:30% ;
+  margin-left: 50%;
+ transform: translate(-50%,-50%);
+ width: 60%; 
+ border-collapse: collapse;
+ border-spacing: 0;
+ box-shadow: 0 12px 25px rgba(64,64,64,.7);
+ border-radius: 12px 12px 0 0;
+ overflow: hidden;
+
+}
+td , th{
+ padding: 15px 20px;
+ text-align: center;
+ 
+
+}
+th{
+opacity: 0.6;
+ background-color: {{web.theme_color}};
+ color: #fafafa;
+ font-family: 'Open Sans',Sans-serif;
+ font-weight: 200;
+ 
+ text-transform: uppercase;
+
+}
+tr{
+ width: 100%;
+ background-color: #fafafa;
+ font-family: 'Montserrat', sans-serif;
+}
+tr:nth-child(even){
+ background-color: #eeeeee;
+}
+
+@media print {
+  table{
+  margin-top:30% ;
+  margin-left: 50%;
+ transform: translate(-50%,-50%);
+ width: 60%; 
+ border-collapse: collapse;
+ border-spacing: 0;
+ box-shadow: 0 12px 25px rgba(64,64,64,.7);
+ border-radius: 12px 12px 0 0;
+ overflow: hidden;
+
+}
+td , th{
+ padding: 15px 20px;
+ text-align: center;
+ 
+
+}
+th{
+opacity: 0.6;
+ background-color: {{web.theme_color}};
+ color: #fafafa;
+ font-family: 'Open Sans',Sans-serif;
+ font-weight: 200;
+ 
+ text-transform: uppercase;
+
+}
+tr{
+ width: 100%;
+ background-color: #fafafa;
+ font-family: 'Montserrat', sans-serif;
+}
+tr:nth-child(even){
+ background-color: #eeeeee;
+}
+}
+@print{
+  #printTable{
+
+    -webkit-print-color-adjust: exact; 
+    }
+}
+ </style>
+</head>
+
+<body>
+
+
+  <div class="filter">
+
+
+<table>
+  <tr>
+    <th colspan="2">Student Information</th>
+  </tr>
+  <tr>
+    <th>Name</th>
+    <td> {{student.profile.user.first_name}} {{student.profile.user.last_name}}</td>
+  </tr>
+  
+  <tr>
+    <th>Username</th>
+    <td> @{{student.profile.user.username}}</td>
+  </tr>
+  <tr>
+    <th>Email Address</th>
+    <td> {{student.profile.user.email}}</td>
+  </tr>
+  <tr>
+    <th>Grade</th>
+    <td> {{student.profile.grade.name}}</td>
+  </tr>
+  <tr>
+    <th>Academic Year</th>
+    <td> {{year}} E.C</td>
+  </tr>
+  <tr>
+    <th>This Year Result Link</th>
+    <td><a href="{% url 'm_data_result_student' id=id year=year %}">{{site}}/manager/web/data/results/by-grade-student-of-year/student-id/student report card/student544527{{id}}7524233id/year4325684{{year}}6534422/</a></td>
+  </tr>
+  <tr>
+    <th>Export</th>
+    <td><button id="btnExport" onclick="printData()"> Print Result</button></td>
+  </tr>
+
+</table>
+
+
+<table id="printTable">
+  <tr>
+    <th>Subjects</th>
+    <th colspan="2">Time</th>
+  </tr>
+  <tr>
+    <th></th>
+    <th>First Half Year</th>
+    <th>Second Half Year</th>
+  </tr>
+    {% for a in subr %}
+    <tr>
+    <td>{{a.subject.name}}</td>
+    <td>{{a.first}} / {{a.f_from}}</td>
+    <td>{{a.second}} / {{a.s_from}}</td>
+  </tr>
+    {% endfor %}
+    <tr>
+      <td>Total</td>
+      <td>{{stat.first_total}} / {{stat.first_from}}</td>
+      <td>{{stat.second_total}} / {{stat.second_from}}</td>
+    </tr>
+    <tr>
+      <td>Average</td>
+      <td>{{stat.first_average}}%</td>
+      <td>{{stat.second_average}}%</td>
+    </tr>
+    <tr>
+      <td>Rank</td>
+      <td>{{stat.first_rank}}/{{fff}}</td>
+      <td>{{stat.second_rank}}/{{fff}}</td>
+    </tr>
+    <tr>
+      <td>Year Average</td>
+      <td colspan="2">{{stat.average}}%</td>
+    </tr>
+    <tr>
+      <td>Year Rank</td>
+      <td colspan="2">{{stat.rank}}/{{fff}}</td>
+    </tr>
+</table>
+
+</div>
+<script>
+function printData()
+{
+  var divToPrint=document.getElementById("printTable");
+   newWin= window.open("");
+   newWin.document.write(divToPrint.outerHTML);
+   newWin.print();
+   newWin.close();
+}
+
+</script>
+ </body>
+
+</html>

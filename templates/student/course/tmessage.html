@@ -1,0 +1,47 @@
+{% extends 'student/course/base-video.html' %}
+{% block base %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Teachers /</span> Posts</h4>
+
+        {% if grade %}
+        <!-- Examples -->
+        <div class="row mb-5">
+          {% for g in grade %}
+          <div class="col-md-6 col-lg-4 mb-3">
+            <div class="card">
+              <div class="card-header">{{g.title}}</div>
+              <div class="card-body">
+                <h5 class="card-title">{{g.teacher.subject}} teacher {{g.teacher.profile.user.first_name}} {{g.teacher.profile.user.last_name}}</h5>
+                <p class="card-text">
+                  {{g.disc}}
+                </p>
+                {% if g.link1 %}
+                <a href="{{g.link1}}" target="_blank" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAkJJREFUSEuNltt1GjEQhr/pICU4FYQS4goMFZhUAK6ApYJABbYrgHSQVBA6CCXgCsZnpNFKWmkd7wNnkZjLfxkJYXwEQdG8AAL1wqc3i6z26ok+zOch5W/y+3yk7XiBOrRE0yTt5JsrLGUX/aTd7u6Ab8ACuIL8EfQa6a2pjgg68Jv1XGeLsEP5ktGHty1wrIWzYp/VIBSQAXTnxY/Ab+A7sPG1J+BQNRfjxo9aj5Yd69qSWpKXItFS4OQUfc10xXT/pehDlLkJK7oBWYGeS9rLGr1iJugDOOfwC+Fi8zEBuAROIHtBhzRPlYvyVI2hA5A4Lx1i3Rrfoz0EfVF4NASCnrOjpv27HjkgdPqqwY4YmkcP2QPWgD1rgWeFt2zd6J7WRbF5EzAl+jER1Lx/AFmC3hDWKM+u0xM6cdHEy8nPP7FuQrCcQc09J6flEpsOnazBkofhMpT2vXqmGtwh/LUhErjXaElLZaIlLQydTe9C0GW0OK8C68ruSZ3GCcIJ5SiwHZ0QD1W3YWO6PYQB7LgxaZC3Bj8GVoB7uTxbZAFqdjRct+B34Tq1bDW35Rdzg3N6BLUzJ4x5PgRrvJPY0bIBzRhbAzMN/vn+SgMKTxoF34DeA7cOH90LqhB5DCmHy3g3oZduR/tR6f/5OmNf/UEbBN25QxKGNxNT0EMl/txtlCgqL5zMXahqdC3QIKx5/wJyLflt3rs+Gmem3O38ASgl7NyPc4JHDTq3Ymep+XfQR+/NJQ2aRE3FjjUbKvrtmK3eAdGS+SKoKp2IAAAAAElFTkSuQmCC"/> 1</a>
+                {% endif %}
+                {% if g.link2 %}
+                <a href="{{g.link2}}" target="_blank" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAkJJREFUSEuNltt1GjEQhr/pICU4FYQS4goMFZhUAK6ApYJABbYrgHSQVBA6CCXgCsZnpNFKWmkd7wNnkZjLfxkJYXwEQdG8AAL1wqc3i6z26ok+zOch5W/y+3yk7XiBOrRE0yTt5JsrLGUX/aTd7u6Ab8ACuIL8EfQa6a2pjgg68Jv1XGeLsEP5ktGHty1wrIWzYp/VIBSQAXTnxY/Ab+A7sPG1J+BQNRfjxo9aj5Yd69qSWpKXItFS4OQUfc10xXT/pehDlLkJK7oBWYGeS9rLGr1iJugDOOfwC+Fi8zEBuAROIHtBhzRPlYvyVI2hA5A4Lx1i3Rrfoz0EfVF4NASCnrOjpv27HjkgdPqqwY4YmkcP2QPWgD1rgWeFt2zd6J7WRbF5EzAl+jER1Lx/AFmC3hDWKM+u0xM6cdHEy8nPP7FuQrCcQc09J6flEpsOnazBkofhMpT2vXqmGtwh/LUhErjXaElLZaIlLQydTe9C0GW0OK8C68ruSZ3GCcIJ5SiwHZ0QD1W3YWO6PYQB7LgxaZC3Bj8GVoB7uTxbZAFqdjRct+B34Tq1bDW35Rdzg3N6BLUzJ4x5PgRrvJPY0bIBzRhbAzMN/vn+SgMKTxoF34DeA7cOH90LqhB5DCmHy3g3oZduR/tR6f/5OmNf/UEbBN25QxKGNxNT0EMl/txtlCgqL5zMXahqdC3QIKx5/wJyLflt3rs+Gmem3O38ASgl7NyPc4JHDTq3Ymep+XfQR+/NJQ2aRE3FjjUbKvrtmK3eAdGS+SKoKp2IAAAAAElFTkSuQmCC"/> 2</a>
+                {% endif %}
+                {% if g.link3 %}
+                <a href="{{g.link3}}" target="_blank" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAkJJREFUSEuNltt1GjEQhr/pICU4FYQS4goMFZhUAK6ApYJABbYrgHSQVBA6CCXgCsZnpNFKWmkd7wNnkZjLfxkJYXwEQdG8AAL1wqc3i6z26ok+zOch5W/y+3yk7XiBOrRE0yTt5JsrLGUX/aTd7u6Ab8ACuIL8EfQa6a2pjgg68Jv1XGeLsEP5ktGHty1wrIWzYp/VIBSQAXTnxY/Ab+A7sPG1J+BQNRfjxo9aj5Yd69qSWpKXItFS4OQUfc10xXT/pehDlLkJK7oBWYGeS9rLGr1iJugDOOfwC+Fi8zEBuAROIHtBhzRPlYvyVI2hA5A4Lx1i3Rrfoz0EfVF4NASCnrOjpv27HjkgdPqqwY4YmkcP2QPWgD1rgWeFt2zd6J7WRbF5EzAl+jER1Lx/AFmC3hDWKM+u0xM6cdHEy8nPP7FuQrCcQc09J6flEpsOnazBkofhMpT2vXqmGtwh/LUhErjXaElLZaIlLQydTe9C0GW0OK8C68ruSZ3GCcIJ5SiwHZ0QD1W3YWO6PYQB7LgxaZC3Bj8GVoB7uTxbZAFqdjRct+B34Tq1bDW35Rdzg3N6BLUzJ4x5PgRrvJPY0bIBzRhbAzMN/vn+SgMKTxoF34DeA7cOH90LqhB5DCmHy3g3oZduR/tR6f/5OmNf/UEbBN25QxKGNxNT0EMl/txtlCgqL5zMXahqdC3QIKx5/wJyLflt3rs+Gmem3O38ASgl7NyPc4JHDTq3Ymep+XfQR+/NJQ2aRE3FjjUbKvrtmK3eAdGS+SKoKp2IAAAAAElFTkSuQmCC"/> 3</a>
+                {% endif %}<br><br>
+                {% if g.file1 %}
+                <a href="{{g.file1.url}}" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZRJREFUSEuNVdFVxDAMkyeADWADjg3YhI4Gm7DBHRtwGxwThJfaaeXY7pGvNE2s2JIcQR8CoK0zG2HBr1e/kxB96wZQ4eTxBILm78UAFlgBArIPyV/73GbhpweOAAHxTtWq/XTsTgbuis3IWi9WlY4JlZBycmEKNKQwAdSsE8lWu0OFCGWQMxMo/bdC9aRmoHc5HqQBr/4gDlaFZbAuVTKNCqx9EE3iOEh8xSe2eZ0qZ6PzEqBUNyuEy0brHwDeRwBWnaB9NsHSy0XS1C/jiVvF2JaZ7wLgxZOFbwAnXXMKDFIeyncmmor5CMEPGh5s8y+AZwFuQ1Z7BixlQI0W6pv2ohMgZwv0CuCS9yVp1gRlzSy4NGjcgS321XmpRsKBmWgmJ3opmCRrSI5LIpRTK0Wnb8Ch/TMONN4N2EgkhOTWCf7O5Tq7dhGovvbxBqDX9mn8GMWc3tOhuvmdtXLJFWgLgK+Z5OPmFfpC0k3DklfR8Ex+4aosaffZ5UFODsxNxiXHBrCaJ24VLoMabkR3bZz48Cf/AMIrvB0PFcmoAAAAAElFTkSuQmCC"/> 1</a>
+                {% endif %}
+                {% if g.file2 %}
+                <a href="{{g.file2.url}}" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZRJREFUSEuNVdFVxDAMkyeADWADjg3YhI4Gm7DBHRtwGxwThJfaaeXY7pGvNE2s2JIcQR8CoK0zG2HBr1e/kxB96wZQ4eTxBILm78UAFlgBArIPyV/73GbhpweOAAHxTtWq/XTsTgbuis3IWi9WlY4JlZBycmEKNKQwAdSsE8lWu0OFCGWQMxMo/bdC9aRmoHc5HqQBr/4gDlaFZbAuVTKNCqx9EE3iOEh8xSe2eZ0qZ6PzEqBUNyuEy0brHwDeRwBWnaB9NsHSy0XS1C/jiVvF2JaZ7wLgxZOFbwAnXXMKDFIeyncmmor5CMEPGh5s8y+AZwFuQ1Z7BixlQI0W6pv2ohMgZwv0CuCS9yVp1gRlzSy4NGjcgS321XmpRsKBmWgmJ3opmCRrSI5LIpRTK0Wnb8Ch/TMONN4N2EgkhOTWCf7O5Tq7dhGovvbxBqDX9mn8GMWc3tOhuvmdtXLJFWgLgK+Z5OPmFfpC0k3DklfR8Ex+4aosaffZ5UFODsxNxiXHBrCaJ24VLoMabkR3bZz48Cf/AMIrvB0PFcmoAAAAAElFTkSuQmCC"/> 2</a>
+                {% endif %}
+                {% if g.file3 %}
+                <a href="{{g.file3.url}}" class="btn btn-primary"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAZRJREFUSEuNVdFVxDAMkyeADWADjg3YhI4Gm7DBHRtwGxwThJfaaeXY7pGvNE2s2JIcQR8CoK0zG2HBr1e/kxB96wZQ4eTxBILm78UAFlgBArIPyV/73GbhpweOAAHxTtWq/XTsTgbuis3IWi9WlY4JlZBycmEKNKQwAdSsE8lWu0OFCGWQMxMo/bdC9aRmoHc5HqQBr/4gDlaFZbAuVTKNCqx9EE3iOEh8xSe2eZ0qZ6PzEqBUNyuEy0brHwDeRwBWnaB9NsHSy0XS1C/jiVvF2JaZ7wLgxZOFbwAnXXMKDFIeyncmmor5CMEPGh5s8y+AZwFuQ1Z7BixlQI0W6pv2ohMgZwv0CuCS9yVp1gRlzSy4NGjcgS321XmpRsKBmWgmJ3opmCRrSI5LIpRTK0Wnb8Ch/TMONN4N2EgkhOTWCf7O5Tq7dhGovvbxBqDX9mn8GMWc3tOhuvmdtXLJFWgLgK+Z5OPmFfpC0k3DklfR8Ex+4aosaffZ5UFODsxNxiXHBrCaJ24VLoMabkR3bZz48Cf/AMIrvB0PFcmoAAAAAElFTkSuQmCC"/> 3</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+    
+          {% else %}
+          <h1>No Messages found </h1>   
+{% endif %}
+        </div>
+  
+{% endblock %}
+         

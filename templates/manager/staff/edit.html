@@ -1,0 +1,185 @@
+{% extends 'manager/base.html' %}
+{% block css %}
+<link rel="stylesheet" href="/static/manager/assets/css/cs-skin-elastic.css">
+<style>
+.toggle {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+.toggle input {
+  display: none;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+.card {
+      width: 300px;
+      background-color: #f9f9f9;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px;
+    }
+    
+    .card h2 {
+      color: #333;
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    
+    .card p {
+      color: #666;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    
+    .card button {
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    .card button:hover {
+      background-color: #45a049;
+    }
+</style>
+{% endblock css %}
+{% block bodymain %}
+<div class="animated fadeIn">
+
+
+    <div class="row">
+{% for s in staffes %}
+        <div class="card">
+            <h2>Staff <b>{{s.profile.user.first_name}} {{s.profile.user.last_name}}</b></h2>
+            <p>You Can change the permission of this user</p>
+            <div style="text-align: center;">
+                <form method="POST">
+                    {% csrf_token %}
+        <input type="text" name="user" value="{{s.id}}" hidden>
+        <b>Students School data</b>: <br>
+        <label class="toggle">
+            <input type="checkbox"name="f"
+            {% if s.data == True %}
+            checked
+            {% endif %}>
+            <span class="slider"></span>
+          </label> <br>
+
+
+
+                <b>Students Report Card</b>: <br>
+            <label class="toggle">
+                <input type="checkbox" name="a"
+                {% if s.report_card == True %}
+                checked
+                {% endif %}>
+                <span class="slider"></span>
+              </label> <br>
+
+
+              <b>Give Verification to Users</b>: <br>
+            <label class="toggle">
+                <input type="checkbox"name="b"
+                {% if s.verify_user == True %}
+                checked
+                {% endif %}>
+                <span class="slider"></span>
+              </label> <br>
+
+              <b>Alter Students Profile</b>: <br>
+              <label class="toggle">
+                  <input type="checkbox"  name="c"
+                  {% if s.modify_student == True %}
+                  checked
+                  {% endif %}>
+                  <span class="slider"></span>
+                </label> <br>
+
+
+                <b>Transfering students</b>: <br>
+            <label class="toggle">
+                <input type="checkbox" name="d"
+                {% if s.transfer == True %}
+                checked
+                {% endif %}>
+                <span class="slider"></span>
+              </label> <br>
+
+
+              <b>Time Management</b>: <br>
+            <label class="toggle">
+                <input type="checkbox"name="e"
+                {% if s.time == True %}
+                checked
+                {% endif %}>
+                <span class="slider"></span>
+              </label> <br>
+
+
+              
+            </div>
+            <button type="submit">Update</button>
+        </form>
+          </div>
+          {% endfor %}
+    </div>
+
+</div>
+{% endblock %}
+{% block script %}
+<script>
+ const toggle = document.querySelector('.toggle input');
+
+toggle.addEventListener('change', function() {
+  if (this.checked) {
+    // Checkbox is checked
+  } else {
+    // Checkbox is not checked
+  }
+});
+
+
+</script>
+{% endblock script %}
+

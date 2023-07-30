@@ -1,0 +1,103 @@
+{% extends 'student/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+{% endblock %}
+{% block content %}
+      <div  id="wrapperr" style="padding:20px;">
+         <div class="single-channel-pagee" id="content-wrapperr">
+            <div class="single-channel-image">
+               <img class="img-fluid" alt="" src="/static/student/course/img/channel-banner.png">
+               <div class="channel-profile">
+                {% if teacher.profile_pic %}
+                <img class="channel-profile-img" alt="" src="{{teacher.profile_pic.url}}">
+                {% else %}
+                <img class="channel-profile-img" alt="" src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=">
+                {% endif %}
+                  {% if teacher.view == True %}
+                  <div class="social hidden-xs">
+                     Social &nbsp;
+                     <a class="fb" href="{{teacher.facebook}}">Facebook</a>
+                     <a class="fb" href="{{teacher.instagram}}">Instagram</a>
+                     <a class="fb" href="{{teacher.telegram}}">Telegram</a>
+                  </div>
+                  {% endif %}
+               </div>
+            </div>
+            <div class="single-channel-nav">
+               <nav class="navbar navbar-expand-lg navbar-light">
+                  <a class="channel-brand" href="#">{{teacher.first_name}} {{teacher.last_name}} <span title="" data-placement="top" data-toggle="tooltip" data-original-title="Verified"><i class="fas fa-check-circle text-success"></i></span></a>
+                  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                  </button>
+                  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                     <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 's_teacher' teacher.id %}">Videos <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 's_teacher_message' teacher.id %}">Messages</a>
+                        </li>
+                        <li class="nav-item">
+                           <a class="nav-link" href="{% url 's_teacher_books' teacher.id %}">Books</a>
+                        </li>
+                     </ul>
+                     <form class="form-inline my-2 my-lg-0" method="POST">
+                        {% csrf_token %}
+                        <input class="form-control form-control-sm mr-sm-1" type="search" name="tsearch" placeholder="Search" aria-label="Search"><button class="btn btn-outline-success btn-sm my-2 my-sm-0" name="searchsubmit" type="submit"><i class="fas fa-search"></i></button> &nbsp;&nbsp;&nbsp; 
+                        {% if not yes %}
+                        <button class="btn btn-outline-danger btn-sm" type="submit" name="subscribe">Subscribe <strong>{{teacher.subscribers.count}}</strong></button>
+                        {%  else %}
+                        <button type="submit" class="btn btn-outline-secondary btn-sm" name="unsubscribe">Subscribed <strong>{{teacher.subscribers.count}}</strong></button>
+                        {% endif %}
+                    </form>
+                  </div>
+               </nav>
+            </div>
+            {% block base %}
+
+            {% endblock %}
+         </div>
+         <!-- /.content-wrapper -->
+      </div>
+      <!-- /#wrapper -->
+      <!-- Scroll to Top Button-->
+      <a class="scroll-to-top rounded" href="#page-top">
+      <i class="fas fa-angle-up"></i>
+      </a>
+      <!-- Logout Modal-->
+      <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span>
+                  </button>
+               </div>
+               <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+               <div class="modal-footer">
+                  <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                  <a class="btn btn-primary" href="/static/student/course/login.html">Logout</a>
+               </div>
+            </div>
+         </div>
+      </div>
+      {% endblock %}
+      {% block script %}
+      <script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+      <script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+      <!-- Core plugin JavaScript-->
+      <script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+      <!-- Owl Carousel -->
+      <script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+      <!-- Custom scripts for all pages-->
+      <script src="/static/student/course/js/custom.js"></script>
+
+      {% endblock %}

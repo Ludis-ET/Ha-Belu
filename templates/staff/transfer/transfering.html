@@ -1,0 +1,144 @@
+{% extends 'staff/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+
+<style>
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin-top: 20px;
+}
+.custom-select {
+    appearance: none;
+    background-color: #f2f2f2;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #333;
+    width: 200px;
+  }
+  
+  .custom-select:hover {
+    cursor: pointer;
+  }
+  
+  .custom-select:focus {
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+  }
+  
+</style>
+{% endblock %}
+{% block content %}
+
+    {% if staff.transfer == True %}
+<br><br>
+    <div class="col-lg-12 mb-8 order-0" style="width:100%;">
+      <div class="card">
+        <form method="POST">
+          {% csrf_token %}
+        <table>
+        <thead>
+          <tr>
+            <th colspan="5" align="center" style="text-align: center; font-size: 20px;">Transfer Grade {{grade.name}} Students</th>
+          </tr>
+          <tr>
+            <th>
+              <input type="checkbox" id="select-all">
+            </th>
+            <th>Student's Name</th>
+            <th>Student's current grade</th>
+            <th colspan="2">
+                <select class="custom-select" name="grade">
+                    {% for g in grades %}
+                    <option value="{{g.id}}">Transfer to grade {{g.name}}</option>
+                    {% endfor %}
+                  </select>
+                  
+                <button type="submit" name="pass" class="btn btn-primary">Pass</button>
+            <button type="submit" name="fail" class="btn btn-danger">Fail</button>
+        </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in students %}
+          <tr>
+            <td><input type="checkbox" name="student" value="{{m.profile.user.id}}" class="material"></td>
+            <td>{{m.profile.user.first_name}} {{m.profile.user.last_name}}</td>
+            <td colspan="3">Grade {{m.profile.grade.name}} Student</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </form>
+      </div>
+    </div>
+    {% endif %}
+        
+               
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  
+
+{% endblock %}
+{% block script %}
+<script>
+  function getSelectedMaterials() {
+  const checkboxes = document.getElementsByClassName('material');
+  const selectedMaterials = [];
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      selectedMaterials.push(checkboxes[i].parentNode.nextElementSibling.innerHTML);
+    }
+  }
+
+  console.log('Selected Materials:', selectedMaterials);
+}
+
+document.getElementById('select-all').addEventListener('change', function() {
+  const checkboxes = document.getElementsByClassName('material');
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = this.checked;
+  }
+});
+
+</script>
+<script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+<script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Owl Carousel -->
+<script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="/static/student/course/js/custom.js"></script>
+
+{% endblock %}

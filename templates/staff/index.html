@@ -1,0 +1,276 @@
+{% extends 'staff/base.html' %}
+{% block css %}
+<link href="/static/student/course/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom fonts for this template-->
+<link href="/static/student/course/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+<!-- Custom styles for this template-->
+<link href="/static/student/course/css/osahan.css" rel="stylesheet">
+<!-- Owl Carousel -->
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.carousel.css">
+<link rel="stylesheet" href="/static/student/course/vendor/owl-carousel/owl.theme.css">
+
+<style>
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+}
+
+thead {
+  background-color: #333;
+  color: #fff;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+button {
+  margin-top: 20px;
+}
+
+</style>
+{% endblock %}
+{% block content %}
+
+
+    <div class="container-xxl flex-grow-1 container-p-y">
+      <div class="row">
+        <div class="col-lg-12 mb-8 order-0" style="width:100%;">
+          <div class="card">
+            <div class="d-flex align-items-end row">
+              <div class="col-sm-7">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">Hey  {{user.first_name}} {{user.last_name}}</h5>
+                  <p class="mb-4">
+                    Welcome to {{web.full_name}} official website you are now logged in as a staff.
+                  </p>
+
+                </div>
+              </div>
+              <div class="col-sm-5 text-center text-sm-left">
+                <div class="card-body pb-0 px-0 px-md-4">
+                  <img
+                    src="/static/student/assets/img/illustrations/man-with-laptop-light.png"
+                    height="140"
+                    alt="View Badge User"
+                    data-app-dark-img="illustrations/man-with-laptop-dark.png"
+                    data-app-light-img="illustrations/man-with-laptop-light.png"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <br><br><br>
+        <div style="margin-top:20px;" class="col-lg-8 col-md-6 order-1">
+          <div class="row">
+            <br><br><br>
+            <div  class="col-lg-12 col-md-12 col-6 mb-6">
+              <div class="card">
+                <div class="card-body">
+                  <div class="card-title d-flex align-items-start justify-content-between">
+                    <div class="avatar flex-shrink-0">
+                      <img
+                        src="/static/student/assets/img/icons/unicons/chart-success.png"
+                        alt="chart success"
+                        class="rounded"
+                      />
+                    </div>
+                  </div>
+                  <h5 class="fw-semibold d-block mb-1">Permissions that are allowed to you</h5>
+                  <ul>
+                    {% if staff.data == True %}
+                    <li style="color: green;">Students Result Control</li>
+                    {% elif staff.data == False %}
+                    <li style="color: red;"> <del>Students Result Control</del></li>
+                    {% endif %}
+                    {% if staff.report_card == True %}
+                    <li style="color: green;">get students report card</li>
+                    {% elif staff.report_card == False %}
+                    <li style="color: red;"> <del>get students report card</del></li>
+                    {% endif %}
+                    {% if staff.verify_user == True %}
+                    <li style="color: green;">give verification to users in this site</li>
+                    {% elif staff.verify_user == False %}
+                    <li style="color: red;"> <del>give verification to users in this site</del></li>
+                    {% endif %}
+                    {% if staff.modify_student == True %}
+                    <li style="color: green;">Alter Students profile</li>
+                    {% elif staff.modify_student == False %}
+                    <li style="color: red;"> <del>Alter Students profile</del></li>
+                    {% endif %}
+                    {% if staff.transfer == True %}
+                    <li style="color: green;">Transfering Students</li>
+                    {% elif staff.transfer == False %}
+                    <li style="color: red;"> <del>Transfering Students</del></li>
+                    {% endif %}
+                    {% if staff.time == True %}
+                    <li style="color: green;">Time Management</li>
+                    {% elif staff.time == False %}
+                    <li style="color: red;"> <del>Time Management</del></li>
+                    {% endif %}
+                  </ul>
+                </div>
+              </div>
+            </div>
+            
+            
+        </div>
+        </div>
+        {% if staff.time == True %}
+        {% if today.new == False %}
+        <div class="modal fade" id="modalToggle" aria-labelledby="modalToggleLabel" tabindex="-1" style="display: none;" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="modalToggleLabel">Making the Academic Year {{next}}</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Please be certain that you really want to change the academic year to {{next}} because this little change can affect many many things in this site
+
+              </div>
+              <div class="modal-footer">
+                <form method="POST">
+                  {% csrf_token %}
+                <button class="btn btn-info" name="yes" type="submit">
+                  It's ok Do It
+                </button>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+        <div style="margin-top:20px;" class="col-lg-4 col-md-6 col-4 mb-2">
+          <div class="card">
+            <div class="card-body">
+              <div class="card-title d-flex align-items-start justify-content-between">
+                <div class="avatar flex-shrink-0">
+                  <img
+                    src="/static/student/assets/img/icons/unicons/chart-success.png"
+                    alt="chart success"
+                    class="rounded"
+                  />
+                </div>
+              </div>
+              <span class="fw-semibold d-block mb-1">This is {{today.year}} Academic Calendar</span>
+              <h3 class="card-title mb-2">
+                {% if today.new == False %}
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalToggle">
+                  Make The Academic Year {{next}}
+                </button>
+                {% else %}
+                <form method="POST">
+                  {% csrf_token %}
+                <button type="submit" name="transfer" class="btn btn-dark">
+                  Transfer All students to {{today.year}}
+                </button>
+              </form>
+                {% endif %}
+              </h3>
+            </div>
+          </div>
+        </div>
+        {% endif %}
+      
+      <br><br><br>
+    <!-- Footer -->
+    </div>
+    {% if staff.verify_user == True %}
+<br><br>
+    <div class="col-lg-12 mb-8 order-0" style="width:100%;">
+      <div class="card">
+        <form method="POST">
+          {% csrf_token %}
+        <table>
+        <thead>
+          <tr>
+            <th colspan="5" align="center" style="text-align: center; font-size: 20px;">Accept Users To this Site</th>
+          </tr>
+          <tr>
+            <th>
+              <input type="checkbox" id="select-all">
+            </th>
+            <th>User's Name</th>
+            <th>User's info</th>
+            <th><button type="submit" name="accept" class="btn btn-primary">Accept</button></th>
+            <th><button type="submit" name="reject" class="btn btn-danger">Delete User Permanently</button></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for m in managers %}
+          <tr>
+            <td><input type="checkbox" name="check" value="{{m.profile.user.id}}" class="material"></td>
+            <td>{{m.profile.user.first_name}} {{m.profile.user.last_name}}</td>
+            <td colspan="3">Is He/She really the <b>manager</b> of this Website?</td>
+          </tr>
+          {%endfor%}
+          {% for m in teachers %}
+          <tr>
+            <td><input type="checkbox" name="check" value="{{m.profile.user.id}}" class="material"></td>
+            <td>{{m.profile.user.first_name}} {{m.profile.user.last_name}}</td>
+            <td colspan="3">Is He/She really <b>{{m.subject}} teacher</b>?</td>
+          </tr>
+          {%endfor%}
+          {% for m in students %}
+          <tr>
+            <td><input type="checkbox" name="check" value="{{m.profile.user.id}}" class="material"></td>
+            <td>{{m.profile.user.first_name}} {{m.profile.user.last_name}}</td>
+            <td colspan="3">Is He/She really a <b>{{m.profile.grade}} student</b> of this Website?</td>
+          </tr>
+          {%endfor%}
+        </tbody>
+      </table>
+    </form>
+      </div>
+    </div>
+    {% endif %}
+        
+               
+    <!-- / Footer -->
+
+    <div class="content-backdrop fade"></div>
+  
+
+{% endblock %}
+{% block script %}
+<script>
+  function getSelectedMaterials() {
+  const checkboxes = document.getElementsByClassName('material');
+  const selectedMaterials = [];
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    if (checkboxes[i].checked) {
+      selectedMaterials.push(checkboxes[i].parentNode.nextElementSibling.innerHTML);
+    }
+  }
+
+  console.log('Selected Materials:', selectedMaterials);
+}
+
+document.getElementById('select-all').addEventListener('change', function() {
+  const checkboxes = document.getElementsByClassName('material');
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    checkboxes[i].checked = this.checked;
+  }
+});
+
+</script>
+<script src="/static/student/course/vendor/jquery/jquery.min.js"></script>
+<script src="/static/student/course/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- Core plugin JavaScript-->
+<script src="/static/student/course/vendor/jquery-easing/jquery.easing.min.js"></script>
+<!-- Owl Carousel -->
+<script src="/static/student/course/vendor/owl-carousel/owl.carousel.js"></script>
+<!-- Custom scripts for all pages-->
+<script src="/static/student/course/js/custom.js"></script>
+
+{% endblock %}
