@@ -83,42 +83,57 @@ Students on our platform enjoy a rich learning experience with a variety of feat
 In addition to the academic offerings, students can delve into a vibrant community where they can engage in discussions, share insights, and foster collaborative learning. The platform's interactive features enable students to comment on course materials, creating a dynamic environment for knowledge exchange. The subscription feature ensures that students stay informed about updates, announcements, and new course offerings, enhancing their educational experience. With a user-friendly interface and diverse resources, our platform strives to make the learning journey seamless, enjoyable, and intellectually rewarding for every student.
 
 
-## Student User Type
+[product-screenshottt]: media/readme/teacher-dashboard.png
+[![Product Name Screen Shot][product-screenshottt]](media/readme/teacher-dashboard.png)
 
-Students on our platform enjoy a rich learning experience with a variety of features tailored to their academic journey. They have the privilege to explore and enroll in courses relevant to their interests, interact with peers through course comments, and stay updated by subscribing to their preferred subjects. Our extensive digital library provides students with convenient access to a plethora of softcopy books, fostering a culture of continuous learning. This holistic approach aims to empower students, not just academically but also by nurturing a sense of community and intellectual curiosity within our educational ecosystem.
+## Teacher User Type
 
-In addition to the academic offerings, students can delve into a vibrant community where they can engage in discussions, share insights, and foster collaborative learning. The platform's interactive features enable students to comment on course materials, creating a dynamic environment for knowledge exchange. The subscription feature ensures that students stay informed about updates, announcements, and new course offerings, enhancing their educational experience. With a user-friendly interface and diverse resources, our platform strives to make the learning journey seamless, enjoyable, and intellectually rewarding for every student.
+Teachers play a pivotal role in shaping the educational landscape on our platform. Empowered with dedicated rooms, they can seamlessly manage and enrich the learning experience for their students. Teachers have the capability to create and share insightful blog posts, contribute to a repository of educational resources, and effortlessly input and access student results. The platform provides a collaborative space where teachers can foster meaningful interactions, ensuring effective communication and support within the academic community. With tools designed for streamlined content creation and result management, our platform empowers teachers to inspire and guide their students toward academic excellence.
 
-### Key Features
+Additionally, teachers have the privilege of offering a diverse range of courses, catering to the unique needs and interests of their students. These courses serve as a gateway to comprehensive and engaging learning experiences, allowing teachers to impart knowledge and skills in an interactive manner. The platform's library feature further augments the teaching process, providing teachers with the ability to curate a digital collection of resources, including softcopy books, enhancing the richness of educational content available to students. This comprehensive approach ensures that teachers have the tools and resources necessary to create a dynamic and supportive learning environment that goes beyond traditional boundaries.
 
-- **Order Repair Services:**
-  - Users can easily place orders for electronic repair services.
-  - Specify device details, the type of repair needed, and preferred service time.
 
-- **Flexible Service Models:**
-  - Choose between in-store repair or on-site service at your doorstep.
-  - Enjoy the convenience of having technicians come to your home for repairs.
+[product-screenshotttt]: media/readme/manager-dashboard.png
+[![Product Name Screen Shot][product-screenshotttt]](media/readme/manager-dashboard.png)
 
-- **Interactive Blog Section:**
-  - Stay informed and entertained with our blog section.
-  - Discover new articles, tips, and insights related to electronic devices and repairs.
+## Manager and Staff User Types
 
-### How It Works
+Managers play a pivotal role in overseeing the seamless functioning of the entire educational platform. They wield administrative powers to manage users, control website settings, and ensure the efficient operation of various functionalities. From user management to overseeing reports and statistics, managers contribute to the strategic direction of the platform, making data-driven decisions to enhance overall performance.
 
-1. **Order Placement:**
-   - Navigate to the [Order Page] to initiate the repair process.
-   - Provide necessary details about your device and the issue.
+Staff members, on the other hand, hold key responsibilities in generating report cards, adding and managing academic results, and performing essential administrative tasks. Their role extends to maintaining student records, facilitating smooth communication among users, and handling day-to-day operations that contribute to the overall efficiency of the educational ecosystem. Together, managers and staff form an integral part of the platform's backbone, ensuring that all aspects run smoothly for the benefit of students, teachers, and the entire learning community.
 
-2. **Service Selection:**
-   - Choose between in-store repair or on-site service.
-   - Pick a convenient time for the repair to take place.
+## Key Features
 
-3. **Blog Exploration:**
-   - Visit our [Blog Section] to stay updated on the latest trends, tips, and news.
-   - Engage with our community through comments and discussions.
+### 🌐 User-Centric Roles
+- **Students:** Explore courses, view academic results, and engage with peers through chat. Access a digital library for softcopy books.
+- **Teachers:** Manage blogs, courses, and student results in dedicated rooms, fostering an interactive learning environment.
+- **Managers:** Oversee the entire website, manage user settings, and ensure optimal functionality.
+- **Staff:** Generate report cards, manage academic results, and contribute to day-to-day operations.
 
-### Built With
+### 🔓 Open Access
+- **Non-logged-in Users:** Access blog posts, send messages to the manager, create accounts, and recover forgotten accounts without logging in.
 
+### 🚀 Interactive Learning Environment
+- **Collaborative Features:** Students can comment on courses, subscribe to updates, and engage in discussions for an enhanced learning experience.
+
+### 📚 Digital Library
+- **Extensive Resources:** Comprehensive library offering a variety of softcopy books for further learning.
+
+### ⚙️ Efficient Administration
+- **Managerial Control:** Managers have administrative powers to manage users, control settings, and make data-driven decisions.
+- **Staff Operations:** Critical tasks such as generating report cards and managing academic results are handled by staff.
+
+### 🎨 User-Friendly Interface
+- **Intuitive Design:** User-friendly interface for easy navigation and a seamless user experience.
+
+### 📧 Communication Channels
+- **Seamless Messaging:** Effective communication through built-in messaging features, fostering a connected learning community.
+
+### 🔐 Secure and Accessible
+- **User Authentication:** Secure login system for data protection, along with a hassle-free account recovery process.
+
+
+### 🛠️ Technologies Used
 * [![Django](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)](https://www.djangoproject.com/)
 * [![HTML](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/HTML)
 * [![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
@@ -126,6 +141,8 @@ In addition to the academic offerings, students can delve into a vibrant communi
 * [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 * [![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 * [![jQuery](https://img.shields.io/badge/jQuery-0769AD?style=for-the-badge&logo=jquery&logoColor=white)](https://jquery.com/)
+* [![AJAX](https://img.shields.io/badge/AJAX-007ACC?style=for-the-badge&logo=ajax&logoColor=white)](https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX)
+* [![Gmail](https://img.shields.io/badge/Gmail-EA4335?style=for-the-badge&logo=gmail&logoColor=white)](https://mail.google.com/)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
