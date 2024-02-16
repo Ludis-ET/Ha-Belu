@@ -12,23 +12,23 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/Ludis-et/Bilihcare">
+  <a href="https://github.com/Ludis-et/ha-belu">
     <img src="https://github.com/Ludis-ET/Best-README-Template/blob/master/images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Bilihcare</h3>
+  <h3 align="center">Ha Belu School Management System</h3>
 
   <p align="center">
-    For an electronics repairement organization to get orders from customers and manage them efficiently.
+    A comprehensive educational platform that empowers students to check results, chat, and access courses, while providing teachers, managers, and staff with tools to manage content, results, and overall website settings.
     <br />
-    <a href="https://github.com/Ludis-et/Bilihcare"><strong>Explore the docs »</strong></a>
+    <a href="https://github.com/Ludis-et/ha-belu"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://bilihcare.vercel.app">View Demo</a>
+    <a href="https://ha-belu.vercel.app">View Demo</a>
     ·
-    <a href="https://github.com/Ludis-et/Bilihcare/issues">Report Bug</a>
+    <a href="https://github.com/Ludis-et/ha-belu/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Ludis-et/Bilihcare/issues">Request Feature</a>
+    <a href="https://github.com/Ludis-et/ha-belu/issues">Request Feature</a>
   </p>
 </div>
 
@@ -65,7 +65,7 @@
 <!-- ABOUT THE PROJECT -->
 
 
-[![Product Name Screen Shot][product-screenshot]](static/readme/screencapture-bilihcare-vercel-app-2024-02-15-18_50_59.png)
+[![Product Name Screen Shot][product-screenshot]](static/readme/screencapture-ha-belu-vercel-app-2024-02-15-18_50_59.png)
 
 ## About The Project
 
@@ -134,12 +134,12 @@ _Below is an example of how you can instruct your audience on installing and set
 
 1. **Clone the repo**
    ```sh
-   git clone https://github.com/Ludis-ET/Bilihcare.git
+   git clone https://github.com/Ludis-ET/ha-belu.git
    ```
 
 2. **Navigate to the project directory**
    ```sh
-   cd Bilihcare
+   cd ha-belu
    ```
 
 3. **Create a virtual environment**
@@ -194,7 +194,7 @@ Remember to replace `3.9.18` with your preferred Python version if it's differen
     - [ ] Chinese
     - [ ] Spanish -->
 
-See the [open issues](https://github.com/Ludis-et/Bilihcare/issues) for a full list of proposed features (and known issues).
+See the [open issues](https://github.com/Ludis-et/ha-belu/issues) for a full list of proposed features (and known issues).
 
 <!-- <p align="right">(<a href="#readme-top">back to top</a>)</p> -->
 
@@ -232,7 +232,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 
 Your Name - [instagram](https://instagram.com/lulsgd) - leulsegedmelaku1020@gmail.com
 
-Project Link: [https://github.com/ludis-et/bilihcare](https://github.com/ludis-et/bilihcare)
+Project Link: [https://github.com/ludis-et/ha-belu](https://github.com/ludis-et/ha-belu)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -257,19 +257,19 @@ Use this space to list resources you find helpful and would like to give credit 
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/Ludis-et/Bilihcare.svg?style=for-the-badge
-[contributors-url]: https://github.com/Ludis-et/Bilihcare/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/Ludis-et/Bilihcare.svg?style=for-the-badge
-[forks-url]: https://github.com/Ludis-et/Bilihcare/network/members
-[stars-shield]: https://img.shields.io/github/stars/Ludis-et/Bilihcare.svg?style=for-the-badge
-[stars-url]: https://github.com/Ludis-et/Bilihcare/stargazers
-[issues-shield]: https://img.shields.io/github/issues/Ludis-et/Bilihcare.svg?style=for-the-badge
-[issues-url]: https://github.com/Ludis-et/Bilihcare/issues
-[license-shield]: https://img.shields.io/github/license/Ludis-et/Bilihcare.svg?style=for-the-badge
-[license-url]: https://github.com/Ludis-et/Bilihcare/blob/master/LICENSE.txt
+[contributors-shield]: https://img.shields.io/github/contributors/Ludis-et/ha-belu.svg?style=for-the-badge
+[contributors-url]: https://github.com/Ludis-et/ha-belu/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/Ludis-et/ha-belu.svg?style=for-the-badge
+[forks-url]: https://github.com/Ludis-et/ha-belu/network/members
+[stars-shield]: https://img.shields.io/github/stars/Ludis-et/ha-belu.svg?style=for-the-badge
+[stars-url]: https://github.com/Ludis-et/ha-belu/stargazers
+[issues-shield]: https://img.shields.io/github/issues/Ludis-et/ha-belu.svg?style=for-the-badge
+[issues-url]: https://github.com/Ludis-et/ha-belu/issues
+[license-shield]: https://img.shields.io/github/license/Ludis-et/ha-belu.svg?style=for-the-badge
+[license-url]: https://github.com/Ludis-et/ha-belu/blob/master/LICENSE.txt
 [linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
 [linkedin-url]: https://linkedin.com/in/othneildrew
-[product-screenshot]: static/readme/screencapture-bilihcare-vercel-app-2024-02-15-18_50_59.png
+[product-screenshot]: static/readme/screencapture-ha-belu-vercel-app-2024-02-15-18_50_59.png
 [product-screenshott]: static/readme/screencapture-localhost-8000-admin-page-2024-02-15-19_46_08.png
 
 [Next.js]:  https://img.shields.io/badge/Django?style=for-the-badge&logo=django
