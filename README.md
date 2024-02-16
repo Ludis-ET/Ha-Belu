@@ -64,8 +64,8 @@
 
 <!-- ABOUT THE PROJECT -->
 
-
-[![Product Name Screen Shot][media/readme/home-page.png]](media/readme/home-page.png)
+[product-screenshot]: static/readme/screencapture-ha-belu-vercel-app-2024-02-15-18_50_59.png
+[![Product Name Screen Shot][media/readme/home-page.png](media/readme/home-page.png)
 
 ## About The Project
 
