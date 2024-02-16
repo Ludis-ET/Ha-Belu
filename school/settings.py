@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -82,22 +83,23 @@ WSGI_APPLICATION = 'school.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'school-system',
-#         'USER': 'root',
-#         'PASSWORD': 'oneBitcoin=7000$',
-#         'PORT': 3306,
-#         'HOST': 'localhost'
-#     }
-# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME', default='ha-belu'),
+        'USER': config('DB_USER', default='Ludis-ET'),
+        'PASSWORD': config('DB_PASSWORD', default='XSn74iQcolKq'),
+        'HOST': config('DB_HOST', default='ep-purple-boat-a5o3pb0m.us-east-2.aws.neon.tech'),
+        'PORT': config('DB_PORT', default='5432'),
+        'OPTIONS': {'sslmode': 'require'},
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 
 # Password validation
