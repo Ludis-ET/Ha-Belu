@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,7 +13,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-=b+-4^qk2$1u1om&%(@1i#9$$m^2y_f5g!w73lut$xl8@al($p'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -86,9 +89,9 @@ WSGI_APPLICATION = 'school.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DB_NAME', default='ha-belu'),
-        'USER': config('DB_USER', default='Ludis-ET'),
-        'PASSWORD': config('DB_PASSWORD', default='XSn74iQcolKq'),
+        'NAME': config('DB_NAME', default=os.environ.get('DATABASE_NAME')),
+        'USER': config('DB_USER', default=os.environ.get('DATABASE_USER')),
+        'PASSWORD': config('DB_PASSWORD', default=os.environ.get('DATABASE_PASS')),
         'HOST': config('DB_HOST', default='ep-purple-boat-a5o3pb0m.us-east-2.aws.neon.tech'),
         'PORT': config('DB_PORT', default='5432'),
         'OPTIONS': {'sslmode': 'require'},
