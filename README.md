@@ -72,8 +72,8 @@
 For visitors who haven't logged in yet, our website offers a welcoming environment filled with valuable content. They have unrestricted access to browse through a variety of informative blog posts, gaining insights into educational topics and the latest updates. Additionally, unregistered users can directly communicate with the manager, providing a channel for inquiries, feedback, or any assistance they may require. Creating an account is a seamless process, allowing individuals to become part of our educational community, unlocking personalized features and accessing a plethora of resources. Should they ever encounter difficulties with account access, our user-friendly system facilitates a straightforward account recovery process, ensuring a hassle-free experience for every user interacting with our platform.
 
 
-[product-screenshot]: media/readme/student-dashboard.png
-[![Product Name Screen Shot][product-screenshot]](media/readme/student-dashboard.png)
+[product-screenshott]: media/readme/student-dashboard.png
+[![Product Name Screen Shot][product-screenshott]](media/readme/student-dashboard.png)
 
 
 ## Student User Type
