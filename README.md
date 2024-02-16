@@ -71,6 +71,24 @@
 
 For visitors who haven't logged in yet, our website offers a welcoming environment filled with valuable content. They have unrestricted access to browse through a variety of informative blog posts, gaining insights into educational topics and the latest updates. Additionally, unregistered users can directly communicate with the manager, providing a channel for inquiries, feedback, or any assistance they may require. Creating an account is a seamless process, allowing individuals to become part of our educational community, unlocking personalized features and accessing a plethora of resources. Should they ever encounter difficulties with account access, our user-friendly system facilitates a straightforward account recovery process, ensuring a hassle-free experience for every user interacting with our platform.
 
+
+[product-screenshot]: media/readme/student-dashboard.png
+[![Product Name Screen Shot][product-screenshot]](media/readme/student-dashboard.png)
+
+
+## Student User Type
+
+Students on our platform enjoy a rich learning experience with a variety of features tailored to their academic journey. They have the privilege to explore and enroll in courses relevant to their interests, interact with peers through course comments, and stay updated by subscribing to their preferred subjects. Our extensive digital library provides students with convenient access to a plethora of softcopy books, fostering a culture of continuous learning. This holistic approach aims to empower students, not just academically but also by nurturing a sense of community and intellectual curiosity within our educational ecosystem.
+
+In addition to the academic offerings, students can delve into a vibrant community where they can engage in discussions, share insights, and foster collaborative learning. The platform's interactive features enable students to comment on course materials, creating a dynamic environment for knowledge exchange. The subscription feature ensures that students stay informed about updates, announcements, and new course offerings, enhancing their educational experience. With a user-friendly interface and diverse resources, our platform strives to make the learning journey seamless, enjoyable, and intellectually rewarding for every student.
+
+
+## Student User Type
+
+Students on our platform enjoy a rich learning experience with a variety of features tailored to their academic journey. They have the privilege to explore and enroll in courses relevant to their interests, interact with peers through course comments, and stay updated by subscribing to their preferred subjects. Our extensive digital library provides students with convenient access to a plethora of softcopy books, fostering a culture of continuous learning. This holistic approach aims to empower students, not just academically but also by nurturing a sense of community and intellectual curiosity within our educational ecosystem.
+
+In addition to the academic offerings, students can delve into a vibrant community where they can engage in discussions, share insights, and foster collaborative learning. The platform's interactive features enable students to comment on course materials, creating a dynamic environment for knowledge exchange. The subscription feature ensures that students stay informed about updates, announcements, and new course offerings, enhancing their educational experience. With a user-friendly interface and diverse resources, our platform strives to make the learning journey seamless, enjoyable, and intellectually rewarding for every student.
+
 ### Key Features
 
 - **Order Repair Services:**
