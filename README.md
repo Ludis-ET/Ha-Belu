@@ -65,7 +65,7 @@
 <!-- ABOUT THE PROJECT -->
 
 [product-screenshot]: media/readme/home-page.png
-![Product Name Screen Shot][product-screenshot](media/readme/home-page.png)
+[![Product Name Screen Shot][product-screenshot]](media/readme/home-page.png)
 
 ## About The Project
 
