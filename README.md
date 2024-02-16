@@ -203,10 +203,10 @@ _Below is an example of how you can instruct your audience on installing and set
    ```sh
    python manage.py runserver
    ```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
 [product-screenshottttt]: media/readme/blog-post.png
 [![Product Name Screen Shot][product-screenshottttt]](media/readme/blog-post.png)
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
