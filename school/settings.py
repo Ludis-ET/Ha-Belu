@@ -127,10 +127,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'webhost.ludis@gmail.com'
-DEFAULT_FROM_EMAIL = 'webhost.ludis@gmail.com'
-SERVER_EMAIL = 'webhost.ludis@gmail.com'
-EMAIL_HOST_PASSWORD = 'zwxqdbjypgraezjy'
+EMAIL_HOST_USER = 'ludispay@gmail.com'
+DEFAULT_FROM_EMAIL = 'ludispay@gmail.com'
+SERVER_EMAIL = 'ludispay@gmail.com'
+EMAIL_HOST_PASSWORD = 'threeBitcoin=21000$'
 
 
 
