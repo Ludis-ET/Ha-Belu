@@ -265,7 +265,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [instagram](https://instagram.com/lulsgd) - leulsegedmelaku1020@gmail.com
+Ludis - [instagram](https://instagram.com/lulsgd) - leulsegedmelaku1020@gmail.com
 
 Project Link: [https://github.com/ludis-et/ha-belu](https://github.com/ludis-et/ha-belu)
 
