@@ -7,8 +7,6 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -28,7 +26,7 @@
     ·
     <a href="https://github.com/Ludis-et/ha-belu/issues">Report Bug</a>
     ·
-    <a href="https://github.com/Ludis-et/ha-belu/issues">Request Feature</a>
+    <a href="https://github.com/Ludis-et/ha-belu/issues">Request Features</a>
   </p>
 </div>
 
